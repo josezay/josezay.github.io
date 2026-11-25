@@ -282,6 +282,10 @@
   const PV = $('#p-video');
   const PC = $('#p-ctrl');
   soundBtns.set(PV, $('[data-sound]', PC));
+  // proporção real do vídeo: a coluna da mídia encolhe até ela (ver .panel--film no CSS)
+  PV.addEventListener('loadedmetadata', () => {
+    if (PV.videoWidth && PV.videoHeight) panel.style.setProperty('--film-ar', PV.videoWidth / PV.videoHeight);
+  });
   function setMedia(mode, userAction) {
     const film = mode === 'video';
     panel.classList.toggle('panel--film', film);
@@ -292,6 +296,7 @@
   function setFilm(f) {
     if (f && f.video) {
       if (PV.getAttribute('src') !== f.video) {
+        panel.style.removeProperty('--film-ar');
         PV.poster = f.poster || f.img;
         PV.src = f.video;
         PV.preload = 'auto';
