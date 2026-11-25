@@ -538,6 +538,8 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/kraken.webp",
    "thumb": "assets/img/fragrancias/kraken-s.webp",
+   "video": "assets/video/kraken.mp4",
+   "poster": "assets/img/fragrancias/kraken-filme.webp",
    "n": 25
   },
   {
