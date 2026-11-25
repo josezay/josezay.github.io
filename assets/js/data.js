@@ -1,4 +1,8 @@
-/* Catálogo Coven 1692 — gerado a partir do site atual (thecoven1692.com). Edite aqui para atualizar produtos. */
+/* Catálogo Coven 1692 — gerado a partir do site atual (thecoven1692.com). Edite aqui para atualizar produtos.
+   Campos opcionais de uma fragrância:
+     "video":    caminho de um MP4 (H.264) — aparece no painel do perfume, com botões Filme / Frasco / Som
+     "poster":   imagem mostrada antes de o vídeo carregar (idealmente o primeiro quadro)
+     "destaque": true — mostra o perfume no banner "Em destaque" (use em apenas um, com vídeo) */
 window.COVEN = {
  "fragrancias": [
   {
@@ -702,6 +706,9 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/matinta.webp",
    "thumb": "assets/img/fragrancias/matinta-s.webp",
+   "video": "assets/video/matinta.mp4",
+   "poster": "assets/img/fragrancias/matinta-filme.webp",
+   "destaque": true,
    "n": 33
   },
   {

@@ -18,6 +18,33 @@
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* sem armazenamento */ } },
   };
 
+  /* ------------------------------------------------------------ filmes (utilitários) */
+  const soundBtns = new Map(); // vídeo -> botão de som
+  const tryPlay = v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  function makeVideo(src, poster, cls) {
+    const v = document.createElement('video');
+    v.className = cls;
+    v.muted = true; v.loop = true; v.playsInline = true;
+    ['muted', 'loop', 'playsinline'].forEach(a => v.setAttribute(a, ''));
+    v.preload = 'metadata';
+    if (poster) v.poster = poster;
+    v.src = src;
+    return v;
+  }
+  function syncSound(v) {
+    const b = soundBtns.get(v);
+    if (!b) return;
+    b.setAttribute('aria-pressed', String(!v.muted));
+    b.textContent = v.muted ? 'Som' : 'Som ligado';
+  }
+  function toggleSound(v) {
+    const on = v.muted;
+    if (on) soundBtns.forEach((_, other) => { if (other !== v && !other.muted) { other.muted = true; syncSound(other); } });
+    v.muted = !on;
+    if (on && v.paused) tryPlay(v);
+    syncSound(v);
+  }
+
   /* ------------------------------------------------------------ contagens */
   const isMatch = (f, k) => k === 'all' || (k === 'vamp' ? f.colab === 'Rede Vamp' : f.tipo === k);
   const counts = {};
@@ -30,10 +57,19 @@
   const hero = $('.hero');
   const hobj = $('.hero-obj');
   const himg = $('.hero-img');
-  const heroSlug = HERO[Math.floor(Math.random() * HERO.length)];
+  // ?capa=<slug> fixa o frasco da capa (útil para demonstrações); senão, sorteia
+  const forced = new URLSearchParams(location.search).get('capa');
+  const heroSlug = F.some(f => f.slug === forced) ? forced : HERO[Math.floor(Math.random() * HERO.length)];
   const heroF = F.find(f => f.slug === heroSlug) || F[0];
-  himg.src = heroF.img;
-  himg.alt = `Frasco do perfume ${heroF.nome}`;
+  let heroVideo = null;
+  if (heroF.video) {
+    heroVideo = makeVideo(heroF.video, heroF.poster || heroF.img, 'hero-img');
+    heroVideo.setAttribute('aria-hidden', 'true');
+    himg.replaceWith(heroVideo);
+  } else {
+    himg.src = heroF.img;
+    himg.alt = `Frasco do perfume ${heroF.nome}`;
+  }
   hobj.setAttribute('aria-label', `Conhecer o perfume ${heroF.nome}`);
   $('.hero-n').textContent = `Nº ${pad(heroF.n)} / ${F.length}`;
   $('.hero-name').textContent = heroF.nome + (heroF.sub ? ' — ' + heroF.sub : '');
@@ -72,6 +108,12 @@
       if (!en.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
     }).observe(hero);
   }
+  // o filme da capa só toca enquanto a capa está visível (e nenhum painel aberto)
+  if (heroVideo && !reduce) {
+    new IntersectionObserver(([en]) => {
+      if (en.isIntersecting && panel.hidden) tryPlay(heroVideo); else heroVideo.pause();
+    }).observe(hero);
+  }
 
   /* ------------------------------------------------------------ índice + galeria */
   const idx = $('#idx');
@@ -84,7 +126,7 @@
 
   grid.innerHTML = F.map(f => `<li data-slug="${f.slug}"><button class="card" type="button" data-slug="${f.slug}">` +
     `<span class="card-img"><img src="${f.thumb}" alt="" loading="lazy" decoding="async"></span>` +
-    `<span class="card-n">Nº ${pad(f.n)}${f.esgotado ? ' · Esgotado' : ''}${f.colab ? ' · ' + esc(f.colab) : ''}</span>` +
+    `<span class="card-n">Nº ${pad(f.n)}${f.esgotado ? ' · Esgotado' : ''}${f.colab ? ' · ' + esc(f.colab) : ''}${f.video ? ' · ▶ Filme' : ''}</span>` +
     `<span class="card-t">${esc(f.nome)}</span>` +
     `<span class="card-m">${tipoCurto(f)} · ${f.volume} · ${f.preco}</span></button></li>`).join('');
 
@@ -146,7 +188,7 @@
       if (!b) { hide(); return; }
       const f = F[F.findIndex(x => x.slug === b.dataset.slug)];
       if (pimg.getAttribute('src') !== f.thumb) pimg.src = f.thumb;
-      pcap.innerHTML = `<b>${esc(f.nome)}</b><br>${tipoCurto(f)} · ${f.volume} · ${f.esgotado ? 'Esgotado' : f.preco}`;
+      pcap.innerHTML = `<b>${esc(f.nome)}</b><br>${tipoCurto(f)} · ${f.volume} · ${f.esgotado ? 'Esgotado' : f.preco}${f.video ? '<br>▶ com filme' : ''}`;
       idx.classList.add('is-hover');
       if (!on) {
         on = true;
@@ -235,6 +277,42 @@
   let lastFocus = null;
   let closeTimer = null;
 
+  // filme no painel: substitui a foto quando o perfume tem "video"
+  const PV = $('#p-video');
+  const PC = $('#p-ctrl');
+  soundBtns.set(PV, $('[data-sound]', PC));
+  function setMedia(mode, userAction) {
+    const film = mode === 'video';
+    panel.classList.toggle('panel--film', film);
+    PV.hidden = !film;
+    $$('[data-media]', PC).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.media === mode)));
+    if (film && (!reduce || userAction)) tryPlay(PV); else PV.pause();
+  }
+  function setFilm(f) {
+    if (f && f.video) {
+      if (PV.getAttribute('src') !== f.video) {
+        PV.poster = f.poster || f.img;
+        PV.src = f.video;
+        PV.preload = 'auto';
+        // URL absoluta: dentro de var() o caminho relativo seria resolvido a partir de assets/css/
+        $('.panel-media', panel).style.setProperty('--film-poster', `url("${new URL(f.poster || f.img, location.href).href}")`);
+      }
+      PC.hidden = false;
+      setMedia(reduce ? 'img' : 'video');
+    } else {
+      PV.pause();
+      PV.hidden = true;
+      PC.hidden = true;
+      panel.classList.remove('panel--film');
+      if (!PV.muted) { PV.muted = true; syncSound(PV); }
+    }
+  }
+  PC.addEventListener('click', e => {
+    const m = e.target.closest('[data-media]');
+    if (m) setMedia(m.dataset.media, true);
+    if (e.target.closest('[data-sound]')) toggleSound(PV);
+  });
+
   const specRows = rows => rows.filter(r => r && r[1])
     .map(([dt, dd, cls]) => `<div><dt>${esc(dt)}</dt><dd${cls ? ` class="${cls}"` : ''}>${esc(dd)}</dd></div>`).join('');
 
@@ -253,6 +331,7 @@
   function renderFrag(f) {
     panel.classList.remove('panel--paper');
     setImage(f.img, `Frasco do perfume ${f.nome}`);
+    setFilm(f);
     P.n.textContent = `Nº ${pad(f.n)} / ${F.length}`;
     P.k.textContent = (f.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura') + (f.colab ? ` · Coven 1692 & ${f.colab}` : '');
     P.title.textContent = f.nome;
@@ -280,6 +359,7 @@
   function renderItem(it, line, i, total, paper) {
     panel.classList.toggle('panel--paper', !!paper);
     setImage(it.img, it.nome);
+    setFilm(null);
     P.n.textContent = `${line.titulo} — ${pad(i + 1)} / ${pad(total)}`;
     P.k.textContent = line.linha || line.titulo;
     P.title.textContent = it.nome;
@@ -313,6 +393,8 @@
     clearTimeout(closeTimer);
     if (panel.hidden) {
       lastFocus = document.activeElement;
+      if (heroVideo) heroVideo.pause();
+      if (featVideo) featVideo.pause();
       panel.hidden = false;
       document.body.classList.add('is-locked');
       requestAnimationFrame(() => panel.classList.add('is-open'));
@@ -324,7 +406,12 @@
     if (panel.hidden) return;
     panel.classList.remove('is-open');
     document.body.classList.remove('is-locked');
-    closeTimer = setTimeout(() => { panel.hidden = true; }, reduce ? 0 : 400);
+    PV.pause();
+    closeTimer = setTimeout(() => {
+      panel.hidden = true;
+      featSync();
+      if (heroVideo && !reduce && hero.getBoundingClientRect().bottom > 0) tryPlay(heroVideo);
+    }, reduce ? 0 : 400);
     if (location.hash.startsWith('#frasco/')) history.replaceState(null, '', '#fragrancias');
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
@@ -370,6 +457,61 @@
     }
   });
 
+  /* ------------------------------------------------------------ banner "Em destaque" (com filme) */
+  const feat = F.find(f => f.destaque && f.video);
+  let featVideo = null;
+  let featVisible = false;
+  let featUserPaused = reduce; // com movimento reduzido, o filme só toca se a pessoa pedir
+  function featSync() {
+    if (!featVideo) return;
+    if (featVisible && !featUserPaused && panel.hidden) tryPlay(featVideo); else featVideo.pause();
+  }
+  if (feat) {
+    const featEl = $('#destaque');
+    const p = feat.piramide || {};
+    featEl.innerHTML = `
+      <div class="sec-k"><span>✶</span><span>Em destaque</span></div>
+      <div class="feature-grid">
+        <div class="feature-text">
+          <p class="k k--accent">${feat.colab ? 'Coven 1692 &amp; ' + esc(feat.colab) : (feat.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura')}</p>
+          <h2 class="feature-title">${esc(feat.nome)}</h2>
+          <p class="feature-frase">“${esc(feat.frase)}”</p>
+          <dl class="p-spec">${specRows([
+            ['Topo', p.topo], ['Coração', p.coracao], ['Fundo', p.fundo], ['Notas', feat.notas],
+            ['Frasco', `${feat.formato} · ${feat.volume}`], ['Valor', feat.preco, 'is-price'],
+          ])}</dl>
+          <div class="p-cta">
+            <button class="cta cta--solid" type="button" data-open>Descobrir ${esc(feat.nome)} →</button>
+            <a class="cta" href="${wa(`Olá, Coven! Tenho interesse no perfume ${feat.nome} (${feat.volume} · ${feat.preco}).`)}" target="_blank" rel="noopener">Reservar ↗</a>
+          </div>
+        </div>
+        <figure class="feature-media">
+          <figcaption class="feature-caption"><span>▶ Filme</span><span>Nº ${pad(feat.n)} — ${esc(feat.nome)}</span></figcaption>
+          <div class="media-ctrl">
+            <button type="button" data-toggle>${reduce ? 'Tocar' : 'Pausar'}</button>
+            <button type="button" data-sound aria-pressed="false">Som</button>
+          </div>
+        </figure>
+      </div>`;
+    featVideo = makeVideo(feat.video, feat.poster || feat.img, 'feature-video');
+    featVideo.setAttribute('aria-label', `Filme do perfume ${feat.nome}`);
+    $('.feature-media', featEl).prepend(featVideo);
+    const toggleBtn = $('[data-toggle]', featEl);
+    soundBtns.set(featVideo, $('[data-sound]', featEl));
+    featVideo.addEventListener('play', () => { toggleBtn.textContent = 'Pausar'; });
+    featVideo.addEventListener('pause', () => { toggleBtn.textContent = 'Tocar'; });
+    toggleBtn.addEventListener('click', () => {
+      featUserPaused = !featVideo.paused;
+      if (featUserPaused) featVideo.pause(); else tryPlay(featVideo);
+    });
+    $('[data-sound]', featEl).addEventListener('click', () => { featUserPaused = false; toggleSound(featVideo); });
+    $('[data-open]', featEl).addEventListener('click', () => openFrag(feat.slug));
+    featEl.hidden = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => { featVisible = en.isIntersecting; featSync(); }, { threshold: 0.35 }).observe($('.feature-media', featEl));
+    }
+  }
+
   const fromHash = () => {
     const m = location.hash.match(/^#frasco\/([\w-]+)/);
     if (m) openFrag(m[1]);
@@ -401,7 +543,7 @@
     $$('main > section[id]').forEach(s => sio.observe(s));
 
     if (!reduce) {
-      const els = $$('.sec-head, .lead, .manifesto-grid, .quote, .facts, .frag-bar, .discovery, .apo-hero, .ch, ' +
+      const els = $$('.sec-head, .lead, .manifesto-grid, .quote, .facts, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
         '.ritual-grid, .ritual-imgs, .blessing, .arte-strip, .loja, .lojas-cta, .rules, .contact, .foot-big');
       els.forEach(el => el.classList.add('rv'));
       const io = new IntersectionObserver(es => es.forEach(en => {

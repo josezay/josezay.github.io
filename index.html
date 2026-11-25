@@ -91,6 +91,9 @@
     </ul>
   </section>
 
+  <!-- ============================================================ EM DESTAQUE (preenchido pelo JS a partir de data.js) -->
+  <section class="feature" id="destaque" aria-label="Em destaque" hidden></section>
+
   <!-- ============================================================ FRAGRÂNCIAS -->
   <section class="frag" id="fragrancias">
     <header class="sec-head">
@@ -255,7 +258,15 @@
 
 <!-- ============================================================ PAINEL DE PRODUTO -->
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-title" hidden>
-  <div class="panel-media"><img id="p-img" alt=""></div>
+  <div class="panel-media">
+    <img id="p-img" alt="">
+    <video id="p-video" muted loop playsinline preload="none" hidden></video>
+    <div class="media-ctrl" id="p-ctrl" hidden>
+      <button type="button" data-media="video" aria-pressed="true">Filme</button>
+      <button type="button" data-media="img" aria-pressed="false">Frasco</button>
+      <button type="button" data-sound aria-pressed="false">Som</button>
+    </div>
+  </div>
   <div class="panel-body">
     <div class="panel-top">
       <span class="k" id="p-n"></span>
