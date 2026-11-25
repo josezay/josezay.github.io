@@ -21,14 +21,19 @@
 
 <header class="site-header">
   <a class="brand" href="#topo" aria-label="Coven 1692, início">Coven 1692</a>
-  <nav class="nav" aria-label="Principal">
-    <a href="#fragrancias">Fragrâncias</a>
-    <a href="#apothecary">Apothecary</a>
-    <a href="#ritual">Ritual</a>
-    <a href="#lojas">Lojas</a>
-    <a href="#info">Info</a>
-  </nav>
-  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Índice</button>
+  <div class="head-r">
+    <nav class="nav" aria-label="Principal">
+      <a href="#fragrancias">Fragrâncias</a>
+      <a href="#apothecary">Apothecary</a>
+      <a href="#ritual">Ritual</a>
+      <a href="#lojas">Lojas</a>
+      <a href="#info">Info</a>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Buscar perfumes" aria-haspopup="dialog" aria-controls="busca" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.3 15.3 21 21"/></svg>
+    </button>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Índice</button>
+  </div>
 </header>
 
 <div class="menu" id="menu" hidden>
@@ -45,6 +50,41 @@
     <a href="https://wa.me/5511913213269" target="_blank" rel="noopener">WhatsApp ↗</a>
     <a href="https://www.instagram.com/coven.1692/" target="_blank" rel="noopener">Instagram ↗</a>
   </p>
+</div>
+
+<!-- ============================================================ BUSCA (a lupa do cabeçalho; atalho: / ou Ctrl+K) -->
+<div class="search" id="busca" role="dialog" aria-modal="true" aria-label="Buscar perfumes" hidden>
+  <div class="search-head">
+    <div class="search-top">
+      <span class="k">Buscar entre <span data-count="all">56</span> frascos</span>
+      <button class="x" type="button" data-search-close>Fechar <span aria-hidden="true">✕</span></button>
+    </div>
+    <form class="search-field" role="search" action="#">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.3 15.3 21 21"/></svg>
+      <label class="vh" for="q">Buscar perfumes por nome, nota, família ou inspiração</label>
+      <input id="q" type="search" placeholder="Nome, nota ou inspiração" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-controls="search-res">
+      <button class="search-clear" type="button" data-search-clear hidden>Limpar</button>
+    </form>
+  </div>
+  <div class="search-body">
+    <div class="search-hint">
+      <span class="k">Experimente</span>
+      <button class="chip" type="button" data-q="Baunilha">Baunilha</button>
+      <button class="chip" type="button" data-q="Jasmim">Jasmim</button>
+      <button class="chip" type="button" data-q="Rosa">Rosa</button>
+      <button class="chip" type="button" data-q="Âmbar">Âmbar</button>
+      <button class="chip" type="button" data-q="Cítrico">Cítrico</button>
+      <button class="chip" type="button" data-q="Gourmand">Gourmand</button>
+      <button class="chip" type="button" data-q="Dior">Dior</button>
+      <button class="chip" type="button" data-q="Tom Ford">Tom Ford</button>
+    </div>
+    <p class="search-status k" id="search-status" role="status" aria-live="polite"></p>
+    <ol class="search-res" id="search-res" aria-label="Resultados da busca"></ol>
+    <div class="search-empty" hidden>
+      <p class="search-empty-t">Nenhum frasco responde a “<span data-q-echo></span>”.</p>
+      <p class="sec-note">Tente uma nota (baunilha, jasmim), uma família (gourmand, cítrico) ou a casa que inspirou a releitura (Dior, Tom Ford). Se preferir, <a href="https://wa.me/5511913213269" target="_blank" rel="noopener">pergunte pelo WhatsApp ↗</a></p>
+    </div>
+  </div>
 </div>
 
 <main>

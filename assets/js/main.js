@@ -17,6 +17,7 @@
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* sem armazenamento */ } },
   };
+  const sEl = $('#busca'); // camada da busca (a lógica fica mais abaixo)
 
   /* ------------------------------------------------------------ filmes (utilitários) */
   const soundBtns = new Map(); // vídeo -> botão de som
@@ -108,10 +109,10 @@
       if (!en.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
     }).observe(hero);
   }
-  // o filme da capa só toca enquanto a capa está visível (e nenhum painel aberto)
+  // o filme da capa só toca enquanto a capa está visível (e nenhum painel ou busca aberto)
   if (heroVideo && !reduce) {
     new IntersectionObserver(([en]) => {
-      if (en.isIntersecting && panel.hidden) tryPlay(heroVideo); else heroVideo.pause();
+      if (en.isIntersecting && panel.hidden && sEl.hidden) tryPlay(heroVideo); else heroVideo.pause();
     }).observe(hero);
   }
 
@@ -402,24 +403,30 @@
     }
   }
 
+  const resumeHero = () => {
+    if (heroVideo && !reduce && panel.hidden && sEl.hidden && hero.getBoundingClientRect().bottom > 0) tryPlay(heroVideo);
+  };
+
   function hide() {
     if (panel.hidden) return;
     panel.classList.remove('is-open');
-    document.body.classList.remove('is-locked');
+    // aberto a partir da busca: ao fechar, volta aos resultados (a página continua travada)
+    document.body.classList.toggle('is-locked', !sEl.hidden);
     PV.pause();
     closeTimer = setTimeout(() => {
       panel.hidden = true;
       featSync();
-      if (heroVideo && !reduce && hero.getBoundingClientRect().bottom > 0) tryPlay(heroVideo);
+      resumeHero();
     }, reduce ? 0 : 400);
     if (location.hash.startsWith('#frasco/')) history.replaceState(null, '', '#fragrancias');
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
 
-  function openFrag(slug) {
-    const i = F.findIndex(f => f.slug === slug);
+  // list: a sequência percorrida por Anterior/Próximo (o catálogo inteiro ou só os resultados da busca)
+  function openFrag(slug, list = F) {
+    const i = list.findIndex(f => f.slug === slug);
     if (i < 0) return;
-    ctx = { type: 'frag', list: F, i };
+    ctx = { type: 'frag', list, i };
     render();
     show();
     const h = '#frasco/' + slug;
@@ -464,7 +471,7 @@
   let featUserPaused = reduce; // com movimento reduzido, o filme só toca se a pessoa pedir
   function featSync() {
     if (!featVideo) return;
-    if (featVisible && !featUserPaused && panel.hidden) tryPlay(featVideo); else featVideo.pause();
+    if (featVisible && !featUserPaused && panel.hidden && sEl.hidden) tryPlay(featVideo); else featVideo.pause();
   }
   if (feat) {
     const featEl = $('#destaque');
@@ -531,6 +538,206 @@
   mbtn.addEventListener('click', () => setMenu(mbtn.getAttribute('aria-expanded') !== 'true'));
   menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
+
+  /* ------------------------------------------------------------ busca (a lupa) */
+  const sBtn = $('.search-btn');
+  const qIn = $('#q');
+  const sRes = $('#search-res');
+  const sStatus = $('#search-status');
+  const sHint = $('.search-hint', sEl);
+  const sEmpty = $('.search-empty', sEl);
+  const sClear = $('[data-search-clear]', sEl);
+  const sHead = $('.search-head', sEl);
+
+  // busca sem acento e sem caixa: "maca verde" encontra "Maçã Verde"
+  const fold = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  // texto dobrado + mapa de volta às posições do original, para grifar o trecho certo
+  const foldMap = text => {
+    let norm = '';
+    const map = [];
+    for (let i = 0; i < text.length; i++) for (const c of fold(text[i])) { norm += c; map.push(i); }
+    return { text, norm, map };
+  };
+  const isStart = (s, at) => at === 0 || !/[a-z0-9]/.test(s[at - 1]);
+  // posições de t em norm; termos de 1–2 letras só valem no começo de uma palavra
+  const hits = (norm, t) => {
+    const out = [];
+    for (let at = norm.indexOf(t); at > -1; at = norm.indexOf(t, at + 1)) if (t.length > 2 || isStart(norm, at)) out.push(at);
+    return out;
+  };
+
+  // campos pesquisáveis: [chave, rótulo mostrado no resultado, peso na ordenação]
+  const FIELDS = [
+    ['nome', '', 100], ['sub', '', 70], ['inspiracao', 'Inspiração', 55], ['colab', 'Colaboração', 40],
+    ['familia', 'Família', 35], ['topo', 'Topo', 30], ['coracao', 'Coração', 30], ['fundo', 'Fundo', 30],
+    ['notas', 'Notas', 30], ['frase', '', 12], ['tipo', '', 8],
+  ];
+  const STOP = new Set(['e', 'de', 'da', 'do', 'das', 'dos', 'com', 'a', 'o', '&']);
+  const INDEX = F.map(f => {
+    const p = f.piramide || {};
+    const src = { ...f, topo: p.topo, coracao: p.coracao, fundo: p.fundo, tipo: f.tipo === 'criacao' ? 'Criação autoral' : 'Releitura' };
+    const fields = FIELDS.filter(([k]) => src[k]).map(([k, label, w]) => ({ k, label, w, ...foldMap(String(src[k])) }));
+    return { f, fields, by: Object.fromEntries(fields.map(x => [x.k, x])) };
+  });
+
+  // todas as palavras precisam aparecer em algum campo; nome pesa mais que notas, notas mais que a frase
+  function find(q) {
+    let toks = [...new Set(fold(q).split(/[\s,;/]+/).filter(Boolean))];
+    if (toks.some(t => !STOP.has(t))) toks = toks.filter(t => !STOP.has(t));
+    if (!toks.length) return null;
+    const out = [];
+    INDEX.forEach(s => {
+      let score = 0;
+      for (const t of toks) {
+        let best = 0;
+        s.fields.forEach(fl => {
+          if (t.length === 1 && fl.k !== 'nome' && fl.k !== 'sub') return; // uma letra só: busca pelo nome
+          const h = hits(fl.norm, t);
+          if (!h.length) return;
+          const v = fl.w * (h.some(at => isStart(fl.norm, at)) ? 1 : 0.6) + (fl.k === 'nome' && h[0] === 0 ? 40 : 0);
+          if (v > best) best = v;
+        });
+        if (!best) return;
+        score += best;
+      }
+      out.push({ s, score });
+    });
+    out.sort((a, b) => b.score - a.score || a.s.f.n - b.s.f.n);
+    return { toks, out };
+  }
+
+  function hl(fl, toks) {
+    const r = [];
+    toks.forEach(t => hits(fl.norm, t).forEach(at => r.push([fl.map[at], fl.map[at + t.length - 1] + 1])));
+    r.sort((a, b) => a[0] - b[0]);
+    let html = '';
+    let pos = 0;
+    r.forEach(([a, b]) => {
+      if (b <= pos) return;
+      a = Math.max(a, pos);
+      html += esc(fl.text.slice(pos, a)) + '<mark>' + esc(fl.text.slice(a, b)) + '</mark>';
+      pos = b;
+    });
+    return html + esc(fl.text.slice(pos));
+  }
+
+  // cada resultado mostra o motivo do encontro: a nota, a família, a inspiração ou a frase
+  function row(s, toks) {
+    const f = s.f;
+    const named = toks.every(t => ['nome', 'sub'].some(k => s.by[k] && hits(s.by[k].norm, t).length));
+    let why = null;
+    if (!named) {
+      let best = 0;
+      s.fields.forEach(fl => {
+        if (fl.k === 'nome' || fl.k === 'sub' || fl.k === 'tipo') return;
+        const n = toks.filter(t => hits(fl.norm, t).length).length;
+        if (n && n * 1000 + fl.w > best) { best = n * 1000 + fl.w; why = fl; }
+      });
+    }
+    let meta;
+    if (why && why.k === 'frase') meta = `<span class="s-m s-m--frase">“${hl(why, toks)}”</span>`;
+    else if (why) meta = `<span class="s-m"><b>${esc(why.label)}</b>${hl(why, toks)}</span>`;
+    else {
+      const def = f.tipo === 'releitura' && f.inspiracao ? `Releitura · ${f.inspiracao}` : `Criação Coven 1692${f.colab ? ' & ' + f.colab : ''}`;
+      meta = `<span class="s-m">${hl(foldMap(def), toks)}</span>`;
+    }
+    return `<li><button class="s-item${f.esgotado ? ' is-out' : ''}" type="button" data-slug="${f.slug}">` +
+      `<span class="s-img"><img src="${f.thumb}" alt="" loading="lazy" decoding="async"></span>` +
+      `<span class="s-n">Nº ${pad(f.n)}</span>` +
+      `<span class="s-main"><span class="s-t"><span class="s-tt">${hl(s.by.nome, toks)}</span>` +
+      `${s.by.sub ? `<span class="s-sub">${hl(s.by.sub, toks)}</span>` : ''}</span>${meta}</span>` +
+      `<span class="s-p">${f.esgotado ? 'Esgotado' : esc(f.preco)}</span></button></li>`;
+  }
+
+  let found = [];
+  function renderSearch() {
+    const q = qIn.value.trim();
+    const r = find(q);
+    found = r ? r.out.map(o => o.s.f) : [];
+    sClear.hidden = !qIn.value;
+    sHint.hidden = !!r;
+    sRes.innerHTML = r ? r.out.map(o => row(o.s, r.toks)).join('') : '';
+    sStatus.textContent = r ? `${found.length} ${found.length === 1 ? 'frasco' : 'frascos'}` : '';
+    sEmpty.hidden = !r || found.length > 0;
+    if (r && !found.length) $('[data-q-echo]', sEmpty).textContent = q;
+  }
+
+  let sLastFocus = null;
+  function openSearch() {
+    if (!sEl.hidden) { qIn.focus(); return; }
+    if (!menu.hidden) setMenu(false);
+    sLastFocus = document.activeElement;
+    sEl.hidden = false;
+    sBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('is-locked');
+    if (heroVideo) heroVideo.pause();
+    featSync();
+    sEl.style.scrollPaddingTop = sHead.offsetHeight + 'px';
+    qIn.focus(); // ainda dentro do toque, para o teclado do celular abrir
+    qIn.select();
+    requestAnimationFrame(() => sEl.classList.add('is-open'));
+  }
+  function closeSearch() {
+    if (sEl.hidden) return;
+    sEl.classList.remove('is-open');
+    sEl.hidden = true;
+    sBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('is-locked');
+    featSync();
+    resumeHero();
+    const back = sLastFocus && sLastFocus !== document.body && document.contains(sLastFocus) ? sLastFocus : sBtn;
+    back.focus({ preventScroll: true });
+  }
+
+  sBtn.addEventListener('click', () => (sEl.hidden ? openSearch() : closeSearch()));
+  $('[data-search-close]', sEl).addEventListener('click', closeSearch);
+  qIn.addEventListener('input', renderSearch);
+  $('.search-field', sEl).addEventListener('submit', e => {
+    e.preventDefault();
+    if (found.length) openFrag(found[0].slug, found);
+  });
+  sClear.addEventListener('click', () => { qIn.value = ''; renderSearch(); qIn.focus(); });
+  sHint.addEventListener('click', e => {
+    const b = e.target.closest('[data-q]');
+    if (b) { qIn.value = b.dataset.q; renderSearch(); qIn.focus(); }
+  });
+  sRes.addEventListener('click', e => {
+    const b = e.target.closest('.s-item');
+    if (b) openFrag(b.dataset.slug, found);
+  });
+
+  // dentro da busca: ↑ ↓ percorrem os resultados, Esc fecha, Tab não escapa da camada
+  sEl.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      const items = $$('.s-item', sRes);
+      const at = items.indexOf(document.activeElement);
+      if (document.activeElement !== qIn && at < 0) return;
+      e.preventDefault();
+      const next = items[e.key === 'ArrowDown' ? at + 1 : at - 1];
+      if (next) { next.focus({ preventScroll: true }); next.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'ArrowUp') qIn.focus();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closeSearch();
+    } else if (e.key === 'Tab') {
+      const f = $$('input, a[href], button:not([hidden])', sEl).filter(el => el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  // atalhos: "/" ou Ctrl/⌘+K abrem a busca de qualquer ponto da página
+  document.addEventListener('keydown', e => {
+    if (!panel.hidden || !sEl.hidden) return;
+    const k = (e.key || '').toLowerCase();
+    const typing = e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]');
+    if ((k === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) || (k === 'k' && (e.ctrlKey || e.metaKey))) {
+      e.preventDefault();
+      openSearch();
+    }
+  });
 
   /* ------------------------------------------------------------ seção atual + revelação */
   if ('IntersectionObserver' in window) {
