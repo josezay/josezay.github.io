@@ -338,7 +338,14 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .nm.is-dim { opacity: .12; }
 @media (hover: hover) and (pointer: fine) {
   .idx.is-hover .nm:not(:hover):not(.is-dim) { opacity: .3; }
-  .nm:hover .nm-t { font-style: italic; }
+  /* destaque sem mudar a largura do texto (evita a linha se reorganizar sob o cursor) */
+  .nm:hover .nm-t { color: #fff; }
+  .nm:not(.is-out):hover .nm-t {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .1em;
+    text-decoration-color: var(--candle);
+  }
 }
 
 .peek {
