@@ -24,6 +24,10 @@
   /* gótica só nos títulos e nomes (Grenze Gotisch: blackletter desenhada para tela, legível);
      textos corridos seguem na Cormorant e etiquetas na Plex Mono */
   --gothic: "Grenze Gotisch", var(--serif);
+  /* esmaecimento suave só nas bordas das fotos de produto (não apaga o produto, ao contrário de um degradê redondo) */
+  --edge-fade:
+    linear-gradient(to right, transparent, #000 6%, #000 94%, transparent),
+    linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
   --gut: clamp(16px, 4vw, 56px);
   --logo: clamp(56px, 6.4vw, 96px);      /* logo no topo da página */
   --logo-s: clamp(40px, 3.4vw, 46px);    /* logo depois de rolar */
@@ -111,19 +115,20 @@ p { margin: 0; }
    ========================================================================== */
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 75;
-  display: flex; align-items: center; justify-content: space-between;
+  /* três colunas: logo | menu | busca — as laterais têm a mesma largura, então o menu fica no centro exato da página */
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 24px;
   padding: var(--head-pad) var(--gut);
   color: #e8e0d2;
   mix-blend-mode: difference;
   transition: padding .45s var(--ease);
 }
 /* a xilogravura da marca, em tom osso; com o mix-blend do cabeçalho ela fica preta sobre o pergaminho */
-.brand { display: block; flex: none; line-height: 0; }
+.brand { display: block; justify-self: start; line-height: 0; }
 .brand img { width: var(--logo); height: var(--logo); transition: width .45s var(--ease), height .45s var(--ease); }
 .site-header.is-compact { padding-top: 12px; padding-bottom: 12px; }
 .site-header.is-compact .brand img { width: var(--logo-s); height: var(--logo-s); }
-.head-r { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
-.nav { display: flex; gap: clamp(14px, 1.6vw, 28px); }
+.head-r { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
+.nav { grid-column: 2; display: flex; gap: clamp(14px, 1.6vw, 28px); }
 .nav a { text-decoration: none; opacity: .72; transition: opacity .3s; }
 .nav a:hover, .nav a[aria-current="true"] { opacity: 1; }
 .nav a[aria-current="true"]::before { content: "● "; font-size: 7px; vertical-align: 2px; }
@@ -379,8 +384,8 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .peek.is-on { opacity: 1; }
 .peek img {
   width: 100%; aspect-ratio: 1; object-fit: contain; background: #000;
-  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent);
-          mask-image: radial-gradient(closest-side, #000 72%, transparent);
+  -webkit-mask-image: var(--edge-fade); -webkit-mask-composite: source-in;
+  mask-image: var(--edge-fade); mask-composite: intersect;
 }
 .peek-cap { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--bone-2); text-align: center; line-height: 1.7; margin-top: -8px; }
 .peek-cap b { color: var(--bone); font-weight: 400; }
@@ -487,7 +492,7 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .item-t { display: block; margin-top: 12px; font-size: 1.3rem; line-height: 1.1; }
 .item-m { display: block; margin-top: 6px; font-family: var(--mono); font-size: 10.5px; line-height: 1.6; letter-spacing: .03em; color: var(--ink-2); }
 .strip .photo { width: clamp(150px, 19vw, 240px); }
-.strip .photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; mix-blend-mode: multiply; }
+.strip .photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: contain; mix-blend-mode: multiply; } /* foto inteira; a sobra fica no papel */
 
 /* ==========================================================================
    Ritual
@@ -655,20 +660,33 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 }
 .panel.is-open { opacity: 1; }
 .panel-media {
+  --pad-x: 2vw; --pad-y: 3vh; /* respiro em volta da foto */
   position: relative; height: 100vh; height: 100svh;
   display: grid; place-items: center;
   background: #000; overflow: hidden;
+  container-type: size;
 }
+/* a caixa da imagem tem a proporção da própria foto (--ar, lida do arquivo pelo JS) e o maior tamanho que cabe
+   na coluna: nunca passa da coluna, então nada é cortado, em nenhuma resolução */
 .panel-media img {
-  width: 100%; height: 100%; object-fit: contain; padding: 3vh 2vw;
-  -webkit-mask-image: radial-gradient(closest-side, #000 80%, transparent);
-          mask-image: radial-gradient(closest-side, #000 80%, transparent);
+  --ar: 1;
+  width: min(100cqw - 2 * var(--pad-x), (100cqh - 2 * var(--pad-y)) * var(--ar));
+  height: auto; aspect-ratio: var(--ar); max-width: none;
+  /* esmaecimento só na borda da foto, para ela se fundir no preto sem esconder o produto */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
+    linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+  mask-composite: intersect;
   transition: opacity .45s var(--ease), transform .9s var(--ease);
 }
 .panel-media img.is-loading { opacity: 0; transform: scale(.98); }
 /* galerias (Fine Art, fotos das lojas): a imagem inteira, sem vinheta; setas sobre ela e deslizar com o dedo */
-.panel--gallery .panel-media { touch-action: pan-y; }
-.panel--gallery .panel-media img { -webkit-mask-image: none; mask-image: none; padding: 5vh 4vw; -webkit-user-drag: none; user-select: none; }
+.panel--gallery .panel-media { --pad-x: 4vw; --pad-y: 5vh; touch-action: pan-y; }
+.panel--gallery .panel-media img { -webkit-mask-image: none; mask-image: none; -webkit-user-drag: none; user-select: none; }
 .media-nav {
   display: none; place-items: center;
   position: absolute; top: 50%; z-index: 3; transform: translateY(-50%);
@@ -688,8 +706,8 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .p-thumbs button:hover { opacity: .85; }
 .p-thumbs button[aria-current="true"] { opacity: 1; outline: 1px solid var(--candle); outline-offset: 2px; }
 .p-thumbs img { width: 100%; height: 100%; object-fit: cover; }
-.panel--paper .panel-media { background: var(--paper-tex); }
-.panel--paper .panel-media img { mix-blend-mode: multiply; -webkit-mask-image: none; mask-image: none; padding: 6vh 4vw; }
+.panel--paper .panel-media { --pad-x: 4vw; --pad-y: 6vh; background: var(--paper-tex); }
+.panel--paper .panel-media img { mix-blend-mode: multiply; -webkit-mask-image: none; mask-image: none; }
 
 .panel-body {
   height: 100vh; height: 100svh; overflow-y: auto;
@@ -890,8 +908,8 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .s-img { display: block; aspect-ratio: 1; background: #000; }
 .s-img img {
   width: 100%; height: 100%; object-fit: contain;
-  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent);
-          mask-image: radial-gradient(closest-side, #000 72%, transparent);
+  -webkit-mask-image: var(--edge-fade); -webkit-mask-composite: source-in;
+  mask-image: var(--edge-fade); mask-composite: intersect;
 }
 .s-n { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--ash); }
 .s-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; }

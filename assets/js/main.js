@@ -294,6 +294,8 @@
     P.img.classList.add('is-loading');
     const next = new Image();
     next.onload = next.onerror = () => {
+      // a proporção da foto dimensiona a caixa da imagem (ver .panel-media img no CSS): cabe inteira, sem cortes
+      if (next.naturalWidth && next.naturalHeight) P.img.style.setProperty('--ar', (next.naturalWidth / next.naturalHeight).toFixed(4));
       P.img.src = src;
       P.img.alt = alt;
       requestAnimationFrame(() => P.img.classList.remove('is-loading'));
