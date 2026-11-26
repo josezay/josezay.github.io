@@ -29,10 +29,10 @@
   /* fundo do site: textura de pedra escura (contínua, repete sem emenda) sob um véu preto.
      --tex-dim regula a intensidade: 0 = textura pura, 1 = preto liso.
      --tex-size é a escala: maior = manchas mais amplas e suaves, menos repetição. */
-  --tex-dim: .8;
+  --tex-dim: .86;
   --tex-size: 924px;
   --bg-tex:
-    linear-gradient(rgba(7, 7, 7, var(--tex-dim)), rgba(7, 7, 7, var(--tex-dim))),
+    linear-gradient(rgba(3, 3, 3, var(--tex-dim)), rgba(3, 3, 3, var(--tex-dim))),
     url("../img/brand/textura.webp") 0 0 / var(--tex-size) auto repeat var(--bg);
 
   /* fundo das seções claras (Apothecary): papel antigo, também contínuo.
@@ -40,7 +40,7 @@
   --paper-dim: 0;
   --paper-tex:
     linear-gradient(rgba(231, 221, 204, var(--paper-dim)), rgba(231, 221, 204, var(--paper-dim))),
-    url("../img/brand/papel.webp") 0 0 / 750px auto repeat var(--paper);
+    url("../img/brand/papel.webp") 0 0 / 600px auto repeat var(--paper); /* arquivo de 750px exibido a 600px: nítido também em telas de alta densidade */
   --sec: clamp(88px, 12vw, 180px);
   --ease: cubic-bezier(.2, .7, .1, 1);
 }
@@ -687,8 +687,6 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
    Filmes — banner "Em destaque" e controles de mídia
    ========================================================================== */
 .feature {
-  background:
-    radial-gradient(ellipse 60% 70% at 72% 50%, rgba(217, 165, 91, .08), transparent 70%);
   overflow: hidden;
 }
 .feature-grid {
