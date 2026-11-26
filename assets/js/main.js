@@ -589,6 +589,12 @@
   window.addEventListener('hashchange', fromHash);
   fromHash();
 
+  /* ------------------------------------------------------------ cabeçalho: a logo encolhe ao rolar */
+  const siteHeader = $('.site-header');
+  const compactHeader = () => siteHeader.classList.toggle('is-compact', scrollY > 40);
+  addEventListener('scroll', compactHeader, { passive: true });
+  compactHeader();
+
   /* ------------------------------------------------------------ menu móvel */
   const mbtn = $('.menu-btn');
   const menu = $('#menu');

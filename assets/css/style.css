@@ -22,6 +22,9 @@
   --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --gut: clamp(16px, 4vw, 56px);
+  --logo: clamp(56px, 6.4vw, 96px);      /* logo no topo da página */
+  --logo-s: clamp(40px, 3.4vw, 46px);    /* logo depois de rolar */
+  --head-pad: 18px;
   --sec: clamp(88px, 12vw, 180px);
   --ease: cubic-bezier(.2, .7, .1, 1);
 }
@@ -68,7 +71,7 @@ body::after {
 .skip:focus { top: 12px; }
 
 /* rótulos mono */
-.k, .sec-k, .brand, .nav a, .menu-btn, .hero-k, .hero-cap, .filters button, .views button,
+.k, .sec-k, .nav a, .menu-btn, .hero-k, .hero-cap, .filters button, .views button,
 .cta, .x, .p-nav button, .link-btn, .foot-meta, .search-clear, .chip {
   font-family: var(--mono);
   font-size: 11px;
@@ -85,11 +88,16 @@ body::after {
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 75;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px var(--gut);
+  padding: var(--head-pad) var(--gut);
   color: #e8e0d2;
   mix-blend-mode: difference;
+  transition: padding .45s var(--ease);
 }
-.brand { text-decoration: none; letter-spacing: .3em; }
+/* a xilogravura da marca, em tom osso; com o mix-blend do cabeçalho ela fica preta sobre o pergaminho */
+.brand { display: block; flex: none; line-height: 0; }
+.brand img { width: var(--logo); height: var(--logo); transition: width .45s var(--ease), height .45s var(--ease); }
+.site-header.is-compact { padding-top: 12px; padding-bottom: 12px; }
+.site-header.is-compact .brand img { width: var(--logo-s); height: var(--logo-s); }
 .head-r { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
 .nav { display: flex; gap: clamp(14px, 1.6vw, 28px); }
 .nav a { text-decoration: none; opacity: .72; transition: opacity .3s; }
@@ -100,7 +108,7 @@ body::after {
 .menu {
   position: fixed; inset: 0; z-index: 70;
   background: var(--bg);
-  padding: 96px var(--gut) 32px;
+  padding: calc(var(--head-pad) + var(--logo) + 30px) var(--gut) 32px;
   display: flex; flex-direction: column; justify-content: space-between;
   overflow-y: auto;
 }
@@ -211,7 +219,7 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
   mix-blend-mode: screen;
 }
 .hero.is-lit .hero-dark, .hero.is-lit .hero-glow { display: none; }
-.hero-k { position: absolute; z-index: 4; top: 92px; color: var(--bone-2); line-height: 1.8; }
+.hero-k { position: absolute; z-index: 4; top: calc(var(--head-pad) + var(--logo) + 26px); color: var(--bone-2); line-height: 1.8; }
 .hero-k--l { left: var(--gut); }
 .hero-k--r { right: var(--gut); text-align: right; }
 
@@ -255,7 +263,7 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
 @media (max-width: 700px) {
-  .hero-k { top: 76px; font-size: 10px; }
+  .hero-k { top: calc(var(--head-pad) + var(--logo) + 18px); font-size: 10px; }
   .hero-obj { top: 44%; }
   .hero-foot { flex-direction: column; align-items: flex-start; gap: 18px; }
   .hero-cap { text-align: left; }
