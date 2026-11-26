@@ -13,10 +13,30 @@
 <link rel="icon" href="assets/img/brand/selo.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Grenze+Gotisch:wght@300..500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<!-- ícones de contato (traço fino, herdam a cor do texto): <svg class="ico"><use href="#i-wa"/></svg> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-wa" viewBox="0 0 24 24">
+    <path d="M12 3.4a8.6 8.6 0 0 0-7.4 13l-1.2 4.2 4.3-1.1A8.6 8.6 0 1 0 12 3.4Z"/>
+    <path fill="currentColor" stroke="none" d="M9.1 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c-.1.2-.1.3 0 .5a6.3 6.3 0 0 0 2.6 2.5c.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.6.4-1.4.6-2.2.4a7.6 7.6 0 0 1-5.8-5.8c-.2-.8 0-1.6.3-2.1Z"/>
+  </symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24">
+    <rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.8"/>
+    <circle cx="12" cy="12" r="3.9"/>
+    <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24">
+    <rect x="3.2" y="5.4" width="17.6" height="13.2" rx="1.6"/>
+    <path d="m3.8 6.4 8.2 6.5 8.2-6.5"/>
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24">
+    <path d="M12 21s-6.4-5.6-6.4-11a6.4 6.4 0 0 1 12.8 0c0 5.4-6.4 11-6.4 11Z"/>
+    <circle cx="12" cy="10" r="2.3"/>
+  </symbol>
+</svg>
 <a class="skip" href="#fragrancias">Pular para as fragrâncias</a>
 
 <header class="site-header">
@@ -134,30 +154,39 @@
     </div>
   </section>
 
-  <!-- ============================================================ LOJAS FÍSICAS (texto do site original, sem alterações) -->
+  <!-- ============================================================ LOJAS FÍSICAS (layout da primeira versão; fotos em grade) -->
   <section class="lojas" id="lojas">
-    <div class="sec-k"><span>II</span><span>Lojas físicas</span></div>
+    <header class="sec-head">
+      <div class="sec-k"><span>II</span><span>Lojas físicas</span></div>
+      <h2 class="sec-title">Galeria do Rock, <em>terceiro andar.</em></h2>
+      <p class="sec-note">Inspiradas no charme misterioso das lojas de Salem e New Orleans: pequenas, acolhedoras e autênticas. Todos são bem-vindos em nosso Coven.</p>
+    </header>
     <div class="lojas-grid">
       <article class="loja">
-        <h3 class="loja-t">Coven 1692 - Witchcraft House - Loja 446</h3>
-        <div class="loja-info">
-          <p class="loja-l"><a href="https://www.google.com/maps/search/?api=1&amp;query=Galeria%20do%20Rock%2C%20Av.%20S%C3%A3o%20Jo%C3%A3o%2C%20439%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Galeria do Rock - Av. São João, 439 - República, São Paulo - Loja 446 - 3 andar</a></p>
-          <p class="loja-l">Horário: de Terça a Sábado das 10:00 as 18:00</p>
-          <p class="loja-w">Welcome to Salem&nbsp;!</p>
-        </div>
+        <p class="k">Loja 446</p>
+        <h3 class="loja-t">Witchcraft House</h3>
+        <p class="loja-w">Welcome to Salem.</p>
+        <dl class="spec">
+          <div><dt>Endereço</dt><dd>Av. São João, 439 — República, São Paulo<br>Galeria do Rock, 3º andar, loja 446</dd></div>
+          <div><dt>Horário</dt><dd>Terça a sábado, das 10h às 18h</dd></div>
+        </dl>
         <ul class="jgrid jgrid--loja" data-loja="loja446" aria-label="Fotos da Witchcraft House"></ul>
       </article>
       <article class="loja">
-        <h3 class="loja-t">Coven 1692 - Hoodoo House - Loja 469</h3>
-        <div class="loja-info">
-          <p class="loja-l"><a href="https://www.google.com/maps/search/?api=1&amp;query=Galeria%20do%20Rock%2C%20Av.%20S%C3%A3o%20Jo%C3%A3o%2C%20439%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Galeria do Rock - Av. São João, 439 - República, São Paulo - Loja 469 - 3 andar</a></p>
-          <p class="loja-l">New Orleans Hoodoo : Old Style Conjure, Rootwork, &amp; Folk Magic</p>
-          <p class="loja-w">Welcome to New Orleans&nbsp;!</p>
-          <p class="loja-l">Horário: Por ser uma loja com suprimentos ritualísticos e atendimento a magistas <a href="https://wa.me/5511913213269?text=Ol%C3%A1%2C%20Coven!%20Quero%20marcar%20uma%20visita%20%C3%A0%20Hoodoo%20House." target="_blank" rel="noopener">marque sua visita</a>.</p>
-        </div>
+        <p class="k">Loja 469</p>
+        <h3 class="loja-t">Hoodoo House</h3>
+        <p class="loja-w">Welcome to New Orleans.</p>
+        <dl class="spec">
+          <div><dt>Endereço</dt><dd>Av. São João, 439 — República, São Paulo<br>Galeria do Rock, 3º andar, loja 469</dd></div>
+          <div><dt>Horário</dt><dd>Com hora marcada — suprimentos ritualísticos e atendimento a magistas</dd></div>
+        </dl>
         <ul class="jgrid jgrid--loja" data-loja="loja469" aria-label="Fotos da Hoodoo House"></ul>
       </article>
     </div>
+    <p class="lojas-cta">
+      <a class="cta" href="https://www.google.com/maps/search/?api=1&amp;query=Galeria%20do%20Rock%2C%20Av.%20S%C3%A3o%20Jo%C3%A3o%2C%20439%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Como chegar ↗</a>
+      <a class="cta cta--ghost" href="https://wa.me/5511913213269?text=Ol%C3%A1%2C%20Coven!%20Quero%20agendar%20uma%20visita%20%C3%A0%20Hoodoo%20House." target="_blank" rel="noopener">Agendar visita ↗</a>
+    </p>
   </section>
 
   <!-- ============================================================ VENDAS ONLINE (texto do site original, sem alterações) -->
@@ -183,9 +212,9 @@
       </div>
       <div class="contact">
         <p class="k">Contato</p>
-        <a class="big-link" href="https://wa.me/5511913213269" target="_blank" rel="noopener">+55-11 91321-3269</a>
-        <a class="big-link" href="mailto:covencoven1692@gmail.com">covencoven1692@gmail.com</a>
-        <a class="big-link" href="https://www.instagram.com/coven.1692/" target="_blank" rel="noopener">@coven.1692</a>
+        <a class="big-link" href="https://wa.me/5511913213269" target="_blank" rel="noopener" aria-label="WhatsApp +55-11 91321-3269"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span>+55-11 91321-3269</span></a>
+        <a class="big-link" href="mailto:covencoven1692@gmail.com" aria-label="E-mail covencoven1692@gmail.com"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>covencoven1692@gmail.com</span></a>
+        <a class="big-link" href="https://www.instagram.com/coven.1692/" target="_blank" rel="noopener" aria-label="Instagram @coven.1692"><svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg><span>@coven.1692</span></a>
       </div>
     </div>
   </section>
@@ -294,6 +323,26 @@
 <footer class="site-footer">
   <img class="woodcut woodcut--s" src="assets/img/brand/logo.webp" alt="" loading="lazy">
   <p class="foot-big">Criamos para quem<br><em>não teme a escuridão.</em></p>
+  <!-- contato resumido: o que a pessoa procura ao chegar no fim da página -->
+  <nav class="foot-contact" aria-label="Contato e endereço">
+    <a class="foot-chip" href="https://wa.me/5511913213269" target="_blank" rel="noopener">
+      <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
+      <span><b>WhatsApp</b>(11) 91321-3269</span>
+    </a>
+    <a class="foot-chip" href="https://www.instagram.com/coven.1692/" target="_blank" rel="noopener">
+      <svg class="ico" aria-hidden="true"><use href="#i-ig"/></svg>
+      <span><b>Instagram</b>@coven.1692</span>
+    </a>
+    <a class="foot-chip" href="mailto:covencoven1692@gmail.com">
+      <svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>
+      <span><b>E-mail</b>covencoven1692@gmail.com</span>
+    </a>
+    <a class="foot-chip" href="https://www.google.com/maps/search/?api=1&amp;query=Galeria%20do%20Rock%2C%20Av.%20S%C3%A3o%20Jo%C3%A3o%2C%20439%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">
+      <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+      <span><b>Galeria do Rock · 3º andar</b>Av. São João, 439</span>
+    </a>
+  </nav>
+  <p class="foot-hours">Witchcraft House, loja 446: terça a sábado, das 10h às 18h <span aria-hidden="true">·</span> Hoodoo House, loja 469: com hora marcada</p>
   <div class="foot-meta">
     <span>Coven 1692 — House of Witchcraft &amp; Hoodoo — Apothecary</span>
     <span>Salem, 1692 · São Paulo, 2020</span>
@@ -327,7 +376,7 @@
     <div class="p-desc" id="p-desc"></div>
     <dl class="p-spec" id="p-spec"></dl>
     <div class="p-cta">
-      <a class="cta cta--solid" id="p-wa" href="#" target="_blank" rel="noopener">Reservar pelo WhatsApp ↗</a>
+      <a class="cta cta--solid" id="p-wa" href="#" target="_blank" rel="noopener">Comprar pelo WhatsApp ↗</a>
       <a class="cta" id="p-ds" href="#" target="_blank" rel="noopener">Pedir no Discovery Set ↗</a>
     </div>
     <div class="p-thumbs" id="p-thumbs" role="group" aria-label="Todas as imagens" hidden></div>

@@ -207,15 +207,17 @@
   const ARTE = { id: 'arte', titulo: 'Fine Art', linha: 'Dspallanzani Fine Art', formato: 'Diversos tamanhos', preco: 'Sob consulta', galeria: true, legenda: true };
   gallery($('#arte-grid'), C.arte.map(a => ({ ...a, rotulo: a.nome, alt: `${a.nome}, obra de Dspallanzani` })), ARTE);
 
-  // fotos das lojas: os textos do visualizador saem do próprio cartão da loja (o texto original, sem acréscimos)
+  // fotos das lojas: os textos do visualizador saem do próprio cartão da loja (nome, número, frase e endereço)
   $$('.jgrid--loja').forEach(ul => {
     const card = ul.closest('.loja');
-    const [, nome = '', loja = ''] = card.querySelector('.loja-t').textContent.split(' - ');
+    const nome = card.querySelector('.loja-t').textContent.trim();
+    const loja = card.querySelector('.k')?.textContent.trim() || '';
     const line = {
       id: ul.dataset.loja, tipo: 'loja', titulo: nome, linha: `Coven 1692 · ${loja}`, galeria: true,
       frase: card.querySelector('.loja-w')?.textContent || '',
     };
-    const endereco = card.querySelector('.loja-l')?.textContent || '';
+    const dd = card.querySelector('.spec dd');
+    const endereco = dd ? [...dd.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).reverse().join(' — ') : '';
     const fotos = (C[ul.dataset.loja] || []).map((f, i) => ({
       ...(typeof f === 'string' ? { img: f } : f), nome, sub: endereco, rotulo: `${nome}, foto ${i + 1}`, alt: `${nome}, foto ${i + 1}`,
     }));
@@ -326,10 +328,10 @@
       ['Frasco', f.volume],
       ['Valor', f.esgotado ? `${f.preco} — esgotado` : f.preco, 'is-price'],
     ]);
-    P.wa.textContent = f.esgotado ? 'Avise-me quando voltar ↗' : 'Reservar pelo WhatsApp ↗';
+    P.wa.textContent = f.esgotado ? 'Avise-me quando voltar ↗' : 'Comprar pelo WhatsApp ↗';
     P.wa.href = wa(f.esgotado
       ? `Olá, Coven! Quero ser avisada(o) quando o perfume ${f.nome} voltar.`
-      : `Olá, Coven! Tenho interesse no perfume ${f.nome} (${f.volume} · ${f.preco}).`);
+      : `Olá, Coven! Quero comprar o perfume ${f.nome} (${f.volume} · ${f.preco}).`);
     P.ds.hidden = false;
     P.ds.href = wa(`Olá, Coven! Quero montar um Discovery Set (6 × 5 ml) incluindo o ${f.nome}.`);
     P.fine.textContent = (f.colab ? `Este frasco é parte da parceria Coven 1692 & ${f.colab}.` : 'Este frasco é parte do projeto Coven 1692.') + ' Álcool de cereais, matéria-prima importada, blends exclusivos e corante cosmético. Vegan & cruelty free. A reposição é contínua, mas respeita sempre o tempo de maceração.';
@@ -369,8 +371,8 @@
       ['Valor', it.preco || line.preco, 'is-price'],
     ]);
     P.wa.hidden = loja; // foto de loja não é produto: sem botão de compra
-    P.wa.textContent = 'Consultar pelo WhatsApp ↗';
-    P.wa.href = wa(`Olá, Coven! Tenho interesse em ${line.titulo}: ${it.nome}.`);
+    P.wa.textContent = line.id === 'arte' ? 'Consultar pelo WhatsApp ↗' : 'Comprar pelo WhatsApp ↗'; // obra é sob consulta
+    P.wa.href = wa(line.id === 'arte' ? `Olá, Coven! Tenho interesse na obra ${it.nome}.` : `Olá, Coven! Quero comprar ${line.titulo}: ${it.nome}.`);
     P.ds.hidden = true;
     P.fine.textContent = loja ? ''
       : line.id === 'arte' ? 'Obras de Dspallanzani Fine Art. Diversos tamanhos, envio para todo o mundo.'
@@ -499,7 +501,7 @@
           ])}</dl>
           <div class="p-cta">
             <button class="cta cta--solid" type="button" data-open>Descobrir ${esc(feat.nome)} →</button>
-            <a class="cta" href="${wa(`Olá, Coven! Tenho interesse no perfume ${feat.nome} (${feat.volume} · ${feat.preco}).`)}" target="_blank" rel="noopener">Reservar ↗</a>
+            <a class="cta" href="${wa(`Olá, Coven! Quero comprar o perfume ${feat.nome} (${feat.volume} · ${feat.preco}).`)}" target="_blank" rel="noopener">Comprar ↗</a>
           </div>
         </div>
         <figure class="feature-media">
@@ -769,7 +771,7 @@
 
     if (!reduce) {
       const els = $$('.sec-head, .sobre-grid, .sobre-big, .quote, .sobre-cols, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
-        '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big');
+        '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big, .foot-contact');
       els.forEach(el => el.classList.add('rv'));
       const io = new IntersectionObserver(es => es.forEach(en => {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
