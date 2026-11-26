@@ -772,7 +772,7 @@
     $$('main > section[id], .ch[id]').forEach(s => sio.observe(s));
 
     if (!reduce) {
-      const els = $$('.sec-head, .sobre-grid, .sobre-big, .quote, .sobre-cols, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
+      const els = $$('.sec-head, .sobre-col > *, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
         '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big, .foot-contact');
       els.forEach(el => el.classList.add('rv'));
       const io = new IntersectionObserver(es => es.forEach(en => {
