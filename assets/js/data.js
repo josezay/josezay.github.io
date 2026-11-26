@@ -2,7 +2,10 @@
    Campos opcionais de uma fragrância:
      "video":    caminho de um MP4 (H.264) — aparece no painel do perfume, com botões Filme / Frasco / Som
      "poster":   imagem mostrada antes de o vídeo carregar (idealmente o primeiro quadro)
-     "destaque": true — mostra o perfume no banner "Em destaque" (use em apenas um, com vídeo) */
+     "destaque": true — mostra o perfume no banner "Em destaque" (use em apenas um, com vídeo)
+     "colab":    nome do parceiro (ex.: "Rede Vamp") — o painel do perfume mostra o selo "Parceria Coven 1692 & …"
+   Campo opcional de uma linha do apothecary:
+     "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la. */
 window.COVEN = {
  "fragrancias": [
   {
@@ -1556,6 +1559,7 @@ window.COVEN = {
   },
   {
    "id": "cremes",
+   "oculta": true,
    "titulo": "Cremes Hidratantes",
    "linha": "Linha Deliciously",
    "formato": "50 g",
@@ -1635,6 +1639,7 @@ window.COVEN = {
   },
   {
    "id": "sabonetes",
+   "oculta": true,
    "titulo": "Sabonetes",
    "linha": "Linhas Pope & Bapho e Black Sheep",
    "formato": "barra · líquido · espuma",
@@ -1696,6 +1701,7 @@ window.COVEN = {
   },
   {
    "id": "oleos",
+   "oculta": true,
    "titulo": "Óleos Bifásicos",
    "linha": "Corpo & Cabelo",
    "formato": "40 ml",
@@ -1718,6 +1724,7 @@ window.COVEN = {
   },
   {
    "id": "incensos",
+   "oculta": true,
    "titulo": "Incensos",
    "linha": "Linha Dr. Plague",
    "formato": "cone · lata com 30",
@@ -1874,6 +1881,7 @@ window.COVEN = {
   },
   {
    "id": "rede-vamp",
+   "oculta": true,
    "titulo": "Rede Vamp",
    "linha": "Parceria Coven 1692 & Rede Vampyrica",
    "formato": "objetos rituais",

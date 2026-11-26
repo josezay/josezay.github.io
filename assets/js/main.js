@@ -13,10 +13,6 @@
   const wa = msg => 'https://wa.me/5511913213269?text=' + encodeURIComponent(msg);
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const store = {
-    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* sem armazenamento */ } },
-  };
   const sEl = $('#busca'); // camada da busca (a lógica fica mais abaixo)
 
   /* ------------------------------------------------------------ filmes (utilitários) */
@@ -47,9 +43,10 @@
   }
 
   /* ------------------------------------------------------------ contagens */
-  const isMatch = (f, k) => k === 'all' || (k === 'vamp' ? f.colab === 'Rede Vamp' : f.tipo === k);
+  // parcerias (ex.: Rede Vamp) não são categoria: os perfumes ficam em Criações/Releituras e o painel mostra o selo
+  const isMatch = (f, k) => k === 'all' || f.tipo === k;
   const counts = {};
-  ['all', 'criacao', 'releitura', 'vamp'].forEach(k => { counts[k] = F.filter(f => isMatch(f, k)).length; });
+  ['all', 'criacao', 'releitura'].forEach(k => { counts[k] = F.filter(f => isMatch(f, k)).length; });
   $$('[data-count]').forEach(el => { el.textContent = counts[el.dataset.count]; });
 
   /* ------------------------------------------------------------ herói */
@@ -127,7 +124,7 @@
 
   grid.innerHTML = F.map(f => `<li data-slug="${f.slug}"><button class="card" type="button" data-slug="${f.slug}">` +
     `<span class="card-img"><img src="${f.thumb}" alt="" loading="lazy" decoding="async"></span>` +
-    `<span class="card-n">Nº ${pad(f.n)}${f.esgotado ? ' · Esgotado' : ''}${f.colab ? ' · ' + esc(f.colab) : ''}${f.video ? ' · ▶ Filme' : ''}</span>` +
+    `<span class="card-n">Nº ${pad(f.n)}${f.esgotado ? ' · Esgotado' : ''}${f.video ? ' · ▶ Filme' : ''}</span>` +
     `<span class="card-t">${esc(f.nome)}</span>` +
     `<span class="card-m">${tipoCurto(f)} · ${f.volume} · ${f.preco}</span></button></li>`).join('');
 
@@ -144,14 +141,13 @@
     });
   }));
 
+  // abre sempre na galeria; o índice só aparece se a pessoa escolher
   const setView = v => {
     $$('.views button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === v)));
     idx.hidden = v !== 'index';
     grid.hidden = v !== 'grid';
-    store.set('coven-view', v);
   };
   $$('.views button').forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
-  if (store.get('coven-view') === 'grid') setView('grid');
 
   [idx, grid].forEach(el => el.addEventListener('click', e => {
     const b = e.target.closest('button[data-slug]');
@@ -204,7 +200,8 @@
 
   /* ------------------------------------------------------------ apothecary */
   const chapters = $('#chapters');
-  chapters.innerHTML = C.linhas.map((l, li) => {
+  const LINHAS = C.linhas.filter(l => !l.oculta); // "oculta": true no data.js tira a linha do site
+  chapters.innerHTML = LINHAS.map((l, li) => {
     const meta = [l.linha, l.formato, l.preco].filter(Boolean).join(' · ');
     const extra = l.id === 'rede-vamp'
       ? `<p class="ch-comp"><span>Saiba mais</span><a href="https://redevampyrica.com/" target="_blank" rel="noopener">redevampyrica.com ↗</a></p>`
@@ -240,9 +237,21 @@
     }
     const item = e.target.closest('.item');
     if (item) {
-      const l = C.linhas[+item.dataset.line];
+      const l = LINHAS[+item.dataset.line];
       openItem(l.itens, +item.dataset.i, l, true);
     }
+  });
+
+  // links do menu para uma linha (#ap-body-splash etc.) abrem o capítulo antes de rolar até ele
+  function openChapter(id) {
+    const head = $(`#ap-${CSS.escape(id)} .ch-head`);
+    if (!head) return;
+    head.setAttribute('aria-expanded', 'true');
+    document.getElementById(head.getAttribute('aria-controls')).hidden = false;
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#ap-"]');
+    if (a) openChapter(a.getAttribute('href').slice(4));
   });
 
   /* ------------------------------------------------------------ fine art + lojas */
@@ -264,7 +273,7 @@
   const blessingItem = [{
     nome: 'Blessing Spell', sub: 'New Orleans Hoodoo', preco: 'R$ 80', img: 'assets/img/ritual/blessing.webp',
     texto: ['Entre pela porta com paz e toda a paz irá com você.',
-      'Entre com verdadeira reverência em seu coração e receba suas bênçãos. Deixe seus desejos no altar e todas as coisas serão recompensadas. Use a magia com justificativa e sabedoria. Honre seus ancestrais — eles estão sempre ao seu lado.'],
+      'Entre com verdadeira reverência em seu coração e receba suas bênçãos. Deixe seus desejos no altar e todas as coisas serão recompensadas. Use a magia com justificativa e sabedoria. Honre seus ancestrais...Eles estão sempre ao seu lado. No silêncio encontraremos Deus e as respostas lançadas ao universo serão atendidas pela fé que emana do seu coração'],
   }];
   $('[data-blessing]').addEventListener('click', () => openItem(blessingItem, 0, BLESSING, false));
 
@@ -273,7 +282,10 @@
   const P = {
     img: $('#p-img'), n: $('#p-n'), k: $('#p-k'), title: $('#p-title'), sub: $('#p-sub'),
     frase: $('#p-frase'), desc: $('#p-desc'), spec: $('#p-spec'), wa: $('#p-wa'), ds: $('#p-ds'), fine: $('#p-fine'),
+    colab: $('#p-colab'),
   };
+  // site de cada parceiro, mostrado no selo de parceria do painel
+  const PARCEIROS = { 'Rede Vamp': 'https://redevampyrica.com/' };
   let ctx = null;
   let lastFocus = null;
   let closeTimer = null;
@@ -339,9 +351,15 @@
     setImage(f.img, `Frasco do perfume ${f.nome}`);
     setFilm(f);
     P.n.textContent = `Nº ${pad(f.n)} / ${F.length}`;
-    P.k.textContent = (f.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura') + (f.colab ? ` · Coven 1692 & ${f.colab}` : '');
+    P.k.textContent = f.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura';
     P.title.textContent = f.nome;
     P.sub.textContent = [f.sub, `${f.formato} · ${f.volume}`].filter(Boolean).join(' — ');
+    const site = PARCEIROS[f.colab];
+    P.colab.hidden = !f.colab;
+    P.colab.innerHTML = f.colab
+      ? `<span class="p-colab-t"><span aria-hidden="true">✶</span> Parceria Coven 1692 &amp; ${esc(f.colab)}</span>` +
+        (site ? `<a href="${site}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/|\/$/g, ''))} ↗</a>` : '')
+      : '';
     P.frase.textContent = `“${f.frase}”`;
     P.desc.innerHTML = '';
     const p = f.piramide || {};
@@ -359,7 +377,7 @@
       : `Olá, Coven! Tenho interesse no perfume ${f.nome} (${f.volume} · ${f.preco}).`);
     P.ds.hidden = false;
     P.ds.href = wa(`Olá, Coven! Quero montar um Discovery Set (6 × 5 ml) incluindo o ${f.nome}.`);
-    P.fine.textContent = 'Este frasco é parte do projeto Coven 1692. Álcool de cereais, matéria-prima importada, blends exclusivos e corante cosmético. Vegan & cruelty free. A reposição é contínua, mas respeita sempre o tempo de maceração.';
+    P.fine.textContent = (f.colab ? `Este frasco é parte da parceria Coven 1692 & ${f.colab}.` : 'Este frasco é parte do projeto Coven 1692.') + ' Álcool de cereais, matéria-prima importada, blends exclusivos e corante cosmético. Vegan & cruelty free. A reposição é contínua, mas respeita sempre o tempo de maceração.';
   }
 
   function renderItem(it, line, i, total, paper) {
@@ -370,6 +388,7 @@
     P.k.textContent = line.linha || line.titulo;
     P.title.textContent = it.nome;
     P.sub.textContent = it.sub || line.titulo;
+    P.colab.hidden = true;
     const texto = (it.texto || []).slice();
     const poetic = line.id === 'rede-vamp' || line.id === 'blessing';
     P.frase.textContent = poetic && texto.length ? `“${texto.shift()}”` : '';
@@ -522,11 +541,15 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(([en]) => { featVisible = en.isIntersecting; featSync(); }, { threshold: 0.35 }).observe($('.feature-media', featEl));
     }
+  } else {
+    // sem perfume em destaque (com filme), o item "Destaque" sai dos menus
+    $$('a[href="#destaque"]').forEach(a => { a.hidden = true; });
   }
 
   const fromHash = () => {
     const m = location.hash.match(/^#frasco\/([\w-]+)/);
     if (m) openFrag(m[1]);
+    else if (location.hash.startsWith('#ap-')) openChapter(location.hash.slice(4));
   };
   window.addEventListener('hashchange', fromHash);
   fromHash();
@@ -573,7 +596,7 @@
 
   // campos pesquisáveis: [chave, rótulo mostrado no resultado, peso na ordenação]
   const FIELDS = [
-    ['nome', '', 100], ['sub', '', 70], ['inspiracao', 'Inspiração', 55], ['colab', 'Colaboração', 40],
+    ['nome', '', 100], ['sub', '', 70], ['inspiracao', 'Inspiração', 55], ['colab', 'Parceria', 40],
     ['familia', 'Família', 35], ['topo', 'Topo', 30], ['coracao', 'Coração', 30], ['fundo', 'Fundo', 30],
     ['notas', 'Notas', 30], ['frase', '', 12], ['tipo', '', 8],
   ];
@@ -752,11 +775,11 @@
       const a = byId[en.target.id];
       if (a && en.isIntersecting) links.forEach(x => x.setAttribute('aria-current', String(x === a)));
     }), { rootMargin: '-45% 0px -50% 0px' });
-    $$('main > section[id]').forEach(s => sio.observe(s));
+    $$('main > section[id], .ch[id]').forEach(s => sio.observe(s));
 
     if (!reduce) {
-      const els = $$('.sec-head, .lead, .manifesto-grid, .quote, .facts, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
-        '.ritual-grid, .ritual-imgs, .blessing, .arte-strip, .loja, .lojas-cta, .rules, .contact, .foot-big');
+      const els = $$('.sec-head, .sobre-grid, .sobre-big, .quote, .sobre-cols, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
+        '.ritual-grid, .ritual-imgs, .blessing, .arte-strip, .loja, .vendas-lead, .vendas-text, .contact, .foot-big');
       els.forEach(el => el.classList.add('rv'));
       const io = new IntersectionObserver(es => es.forEach(en => {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
