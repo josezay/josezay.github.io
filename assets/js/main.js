@@ -190,23 +190,36 @@
     if (a) openChapter(a.getAttribute('href').slice(4));
   });
 
-  /* ------------------------------------------------------------ fine art + lojas */
-  const ARTE = { id: 'arte', titulo: 'Fine Art', linha: 'Dspallanzani Fine Art', formato: 'Diversos tamanhos', preco: 'Sob consulta' };
-  // galeria em linhas justificadas: cada obra ocupa largura proporcional ao formato (--ar), todas com a mesma altura na linha
-  const arteAr = a => (a.w && a.h ? a.w / a.h : 0.75);
-  $('#arte-grid').innerHTML = C.arte.map((a, i) =>
-    `<li style="--ar:${arteAr(a).toFixed(3)}"><button type="button" data-art="${i}">` +
-    `<img src="${a.img}" alt=""${a.w && a.h ? ` width="${a.w}" height="${a.h}"` : ''} loading="lazy" decoding="async">` +
-    `<span class="k">${esc(a.nome)}</span></button></li>`).join('');
-  $('#arte-grid').addEventListener('click', e => {
-    const b = e.target.closest('[data-art]');
-    if (b) openItem(C.arte, +b.dataset.art, ARTE, false);
-  });
+  /* ------------------------------------------------------------ galerias: fine art + fotos das lojas */
+  // linhas justificadas: cada imagem ocupa largura proporcional ao formato (--ar), todas com a mesma altura na linha.
+  // Um clique abre o visualizador em modo galeria (setas, deslizar, miniaturas).
+  const ratio = a => (a.w && a.h ? a.w / a.h : 0.75);
+  function gallery(ul, list, line) {
+    ul.innerHTML = list.map((a, i) =>
+      `<li style="--ar:${ratio(a).toFixed(3)}"><button type="button" data-i="${i}"${line.legenda ? '' : ` aria-label="${esc(a.rotulo)}"`}>` +
+      `<img src="${a.img}" alt=""${a.w && a.h ? ` width="${a.w}" height="${a.h}"` : ''} loading="lazy" decoding="async">` +
+      `${line.legenda ? `<span class="k">${esc(a.nome)}</span>` : ''}</button></li>`).join('');
+    ul.addEventListener('click', e => {
+      const b = e.target.closest('[data-i]');
+      if (b) openItem(list, +b.dataset.i, line, false);
+    });
+  }
+  const ARTE = { id: 'arte', titulo: 'Fine Art', linha: 'Dspallanzani Fine Art', formato: 'Diversos tamanhos', preco: 'Sob consulta', galeria: true, legenda: true };
+  gallery($('#arte-grid'), C.arte.map(a => ({ ...a, rotulo: a.nome, alt: `${a.nome}, obra de Dspallanzani` })), ARTE);
 
-  $$('.photo-strip').forEach(ul => {
-    const nome = ul.closest('.loja').querySelector('.loja-t').textContent;
-    ul.innerHTML = (C[ul.dataset.loja] || []).map((src, i) =>
-      `<li><img src="${src}" alt="${esc(nome)}, foto ${i + 1}" loading="lazy" decoding="async"></li>`).join('');
+  // fotos das lojas: os textos do visualizador saem do próprio cartão da loja (o texto original, sem acréscimos)
+  $$('.jgrid--loja').forEach(ul => {
+    const card = ul.closest('.loja');
+    const [, nome = '', loja = ''] = card.querySelector('.loja-t').textContent.split(' - ');
+    const line = {
+      id: ul.dataset.loja, tipo: 'loja', titulo: nome, linha: `Coven 1692 · ${loja}`, galeria: true,
+      frase: card.querySelector('.loja-w')?.textContent || '',
+    };
+    const endereco = card.querySelector('.loja-l')?.textContent || '';
+    const fotos = (C[ul.dataset.loja] || []).map((f, i) => ({
+      ...(typeof f === 'string' ? { img: f } : f), nome, sub: endereco, rotulo: `${nome}, foto ${i + 1}`, alt: `${nome}, foto ${i + 1}`,
+    }));
+    gallery(ul, fotos, line);
   });
 
   const BLESSING = { id: 'blessing', titulo: 'Ritual', linha: 'New Orleans Hoodoo', formato: 'Feitiço', preco: '' };
@@ -287,8 +300,9 @@
   }
 
   function renderFrag(f) {
-    panel.classList.remove('panel--paper', 'panel--art');
+    panel.classList.remove('panel--paper', 'panel--gallery');
     P.thumbs.hidden = true;
+    P.wa.hidden = false;
     setImage(f.img, `Frasco do perfume ${f.nome}`);
     setFilm(f);
     P.n.textContent = `Nº ${pad(f.n)} / ${F.length}`;
@@ -322,15 +336,23 @@
   }
 
   function renderItem(it, line, i, total, paper) {
-    const art = line.id === 'arte';
+    const gal = !!line.galeria;
+    const loja = line.tipo === 'loja';
     panel.classList.toggle('panel--paper', !!paper);
-    panel.classList.toggle('panel--art', art);
-    setImage(it.img, art ? `${it.nome}, obra de Dspallanzani` : it.nome);
+    panel.classList.toggle('panel--gallery', gal);
+    setImage(it.img, it.alt || it.nome);
     setFilm(null);
-    P.thumbs.hidden = !art;
-    if (art) {
+    P.thumbs.hidden = !gal;
+    if (gal) {
+      // miniaturas da galeria aberta (refeitas só quando se troca de galeria)
+      if (P.thumbs.dataset.line !== line.id) {
+        P.thumbs.innerHTML = ctx.list.map((a, j) =>
+          `<button type="button" data-thumb="${j}" aria-label="${esc(a.rotulo || a.nome)}"><img src="${a.img}" alt="" loading="lazy" decoding="async"></button>`).join('');
+        P.thumbs.setAttribute('aria-label', loja ? 'Todas as fotos' : 'Todas as obras');
+        P.thumbs.dataset.line = line.id;
+      }
       $$('button', P.thumbs).forEach((b, j) => b.setAttribute('aria-current', String(j === i)));
-      // a obra seguinte e a anterior já ficam carregadas, para as setas responderem na hora
+      // a imagem seguinte e a anterior já ficam carregadas, para as setas responderem na hora
       [1, -1].forEach(d => { new Image().src = ctx.list[(i + d + total) % total].img; });
     }
     P.n.textContent = `${line.titulo} — ${pad(i + 1)} / ${pad(total)}`;
@@ -340,17 +362,18 @@
     P.colab.hidden = true;
     const texto = (it.texto || []).slice();
     const poetic = line.id === 'rede-vamp' || line.id === 'blessing';
-    P.frase.textContent = poetic && texto.length ? `“${texto.shift()}”` : '';
+    P.frase.textContent = line.frase || (poetic && texto.length ? `“${texto.shift()}”` : '');
     P.desc.innerHTML = texto.map(t => `<p>${esc(t)}</p>`).join('');
     P.spec.innerHTML = specRows([
       ['Formato', it.sub ? '' : line.formato],
       ['Valor', it.preco || line.preco, 'is-price'],
     ]);
+    P.wa.hidden = loja; // foto de loja não é produto: sem botão de compra
     P.wa.textContent = 'Consultar pelo WhatsApp ↗';
     P.wa.href = wa(`Olá, Coven! Tenho interesse em ${line.titulo}: ${it.nome}.`);
     P.ds.hidden = true;
-    P.fine.textContent = line.id === 'arte'
-      ? 'Obras de Dspallanzani Fine Art. Diversos tamanhos, envio para todo o mundo.'
+    P.fine.textContent = loja ? ''
+      : line.id === 'arte' ? 'Obras de Dspallanzani Fine Art. Diversos tamanhos, envio para todo o mundo.'
       : 'Produção artesanal, sob encomenda ou em pequenos lotes limitados. Consulte a disponibilidade ou faça sua reserva.';
   }
 
@@ -417,10 +440,8 @@
   $('[data-prev]', panel).addEventListener('click', () => step(-1));
   $('[data-next]', panel).addEventListener('click', () => step(1));
 
-  // Fine Art: setas sobre a imagem, deslizar com o dedo e miniaturas para pular direto a uma obra
+  // galerias (Fine Art, fotos das lojas): setas sobre a imagem, deslizar com o dedo e miniaturas para pular direto
   $$('[data-step]', panel).forEach(b => b.addEventListener('click', () => step(+b.dataset.step)));
-  P.thumbs.innerHTML = C.arte.map((a, j) =>
-    `<button type="button" data-thumb="${j}" aria-label="${esc(a.nome)}"><img src="${a.img}" alt="" loading="lazy" decoding="async"></button>`).join('');
   P.thumbs.addEventListener('click', e => {
     const b = e.target.closest('[data-thumb]');
     if (b && ctx) { ctx.i = +b.dataset.thumb; render(); }
@@ -428,7 +449,7 @@
   const media = $('.panel-media', panel);
   let swipe = null;
   media.addEventListener('pointerdown', e => {
-    swipe = panel.classList.contains('panel--art') && e.isPrimary ? { x: e.clientX, y: e.clientY } : null;
+    swipe = panel.classList.contains('panel--gallery') && e.isPrimary ? { x: e.clientX, y: e.clientY } : null;
   });
   media.addEventListener('pointerup', e => {
     if (!swipe) return;
@@ -437,7 +458,7 @@
     if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
   });
   media.addEventListener('pointercancel', () => { swipe = null; });
-  media.addEventListener('dragstart', e => { if (panel.classList.contains('panel--art')) e.preventDefault(); });
+  media.addEventListener('dragstart', e => { if (panel.classList.contains('panel--gallery')) e.preventDefault(); });
 
   document.addEventListener('keydown', e => {
     if (panel.hidden) return;
@@ -748,7 +769,7 @@
 
     if (!reduce) {
       const els = $$('.sec-head, .sobre-grid, .sobre-big, .quote, .sobre-cols, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
-        '.ritual-grid, .ritual-imgs, .blessing, .arte-grid, .loja, .vendas-lead, .vendas-text, .contact, .foot-big');
+        '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big');
       els.forEach(el => el.classList.add('rv'));
       const io = new IntersectionObserver(es => es.forEach(en => {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }

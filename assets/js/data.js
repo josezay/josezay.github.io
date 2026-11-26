@@ -7,7 +7,8 @@
    Campo opcional de uma linha do apothecary:
      "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
    Campos de uma obra (Fine Art):
-     "w", "h":   largura e altura da imagem em px — a galeria usa a proporção para montar as linhas sem saltos */
+     "w", "h":   largura e altura da imagem em px — a galeria usa a proporção para montar as linhas sem saltos
+   Fotos das lojas (loja446, loja469): { "img", "w", "h" }, com os mesmos "w"/"h" das obras */
 window.COVEN = {
  "fragrancias": [
   {
@@ -2065,31 +2066,127 @@ window.COVEN = {
   }
  ],
  "loja446": [
-  "assets/img/lojas/446-01.webp",
-  "assets/img/lojas/446-02.webp",
-  "assets/img/lojas/446-03.webp",
-  "assets/img/lojas/446-04.webp",
-  "assets/img/lojas/446-05.webp",
-  "assets/img/lojas/446-06.webp",
-  "assets/img/lojas/446-07.webp",
-  "assets/img/lojas/446-08.webp",
-  "assets/img/lojas/446-09.webp",
-  "assets/img/lojas/446-10.webp",
-  "assets/img/lojas/446-11.webp",
-  "assets/img/lojas/446-12.webp"
+  {
+   "img": "assets/img/lojas/446-01.webp",
+   "w": 972,
+   "h": 972
+  },
+  {
+   "img": "assets/img/lojas/446-02.webp",
+   "w": 1000,
+   "h": 783
+  },
+  {
+   "img": "assets/img/lojas/446-03.webp",
+   "w": 1000,
+   "h": 750
+  },
+  {
+   "img": "assets/img/lojas/446-04.webp",
+   "w": 1000,
+   "h": 1333
+  },
+  {
+   "img": "assets/img/lojas/446-05.webp",
+   "w": 1000,
+   "h": 781
+  },
+  {
+   "img": "assets/img/lojas/446-06.webp",
+   "w": 1000,
+   "h": 750
+  },
+  {
+   "img": "assets/img/lojas/446-07.webp",
+   "w": 768,
+   "h": 1024
+  },
+  {
+   "img": "assets/img/lojas/446-08.webp",
+   "w": 999,
+   "h": 748
+  },
+  {
+   "img": "assets/img/lojas/446-09.webp",
+   "w": 999,
+   "h": 602
+  },
+  {
+   "img": "assets/img/lojas/446-10.webp",
+   "w": 1000,
+   "h": 1333
+  },
+  {
+   "img": "assets/img/lojas/446-11.webp",
+   "w": 1000,
+   "h": 1250
+  },
+  {
+   "img": "assets/img/lojas/446-12.webp",
+   "w": 960,
+   "h": 1280
+  }
  ],
  "loja469": [
-  "assets/img/lojas/469-01.webp",
-  "assets/img/lojas/469-02.webp",
-  "assets/img/lojas/469-03.webp",
-  "assets/img/lojas/469-04.webp",
-  "assets/img/lojas/469-05.webp",
-  "assets/img/lojas/469-06.webp",
-  "assets/img/lojas/469-07.webp",
-  "assets/img/lojas/469-08.webp",
-  "assets/img/lojas/469-09.webp",
-  "assets/img/lojas/469-10.webp",
-  "assets/img/lojas/469-11.webp",
-  "assets/img/lojas/469-12.webp"
+  {
+   "img": "assets/img/lojas/469-01.webp",
+   "w": 966,
+   "h": 1288
+  },
+  {
+   "img": "assets/img/lojas/469-02.webp",
+   "w": 966,
+   "h": 1288
+  },
+  {
+   "img": "assets/img/lojas/469-03.webp",
+   "w": 1000,
+   "h": 1333
+  },
+  {
+   "img": "assets/img/lojas/469-04.webp",
+   "w": 966,
+   "h": 1288
+  },
+  {
+   "img": "assets/img/lojas/469-05.webp",
+   "w": 966,
+   "h": 1288
+  },
+  {
+   "img": "assets/img/lojas/469-06.webp",
+   "w": 829,
+   "h": 1022
+  },
+  {
+   "img": "assets/img/lojas/469-07.webp",
+   "w": 1000,
+   "h": 750
+  },
+  {
+   "img": "assets/img/lojas/469-08.webp",
+   "w": 1000,
+   "h": 1110
+  },
+  {
+   "img": "assets/img/lojas/469-09.webp",
+   "w": 1000,
+   "h": 626
+  },
+  {
+   "img": "assets/img/lojas/469-10.webp",
+   "w": 1000,
+   "h": 750
+  },
+  {
+   "img": "assets/img/lojas/469-11.webp",
+   "w": 1000,
+   "h": 1333
+  },
+  {
+   "img": "assets/img/lojas/469-12.webp",
+   "w": 1000,
+   "h": 562
+  }
  ]
 };
