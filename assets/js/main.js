@@ -49,70 +49,6 @@
   ['all', 'criacao', 'releitura'].forEach(k => { counts[k] = F.filter(f => isMatch(f, k)).length; });
   $$('[data-count]').forEach(el => { el.textContent = counts[el.dataset.count]; });
 
-  /* ------------------------------------------------------------ herói */
-  const HERO = ['lilith', 'kirin', 'matinta', 'stregheria', 'santa-muerte', 'draconis-fabula', 'cotton-candy',
-    'black-magic', 'tenebris', 'fireflies', 'rhiannon', 'kraken', 'dorian-gray', 'midsommar', 'moonflower'];
-  const hero = $('.hero');
-  const hobj = $('.hero-obj');
-  const himg = $('.hero-img');
-  // ?capa=<slug> fixa o frasco da capa (útil para demonstrações); senão, sorteia
-  const forced = new URLSearchParams(location.search).get('capa');
-  const heroSlug = F.some(f => f.slug === forced) ? forced : HERO[Math.floor(Math.random() * HERO.length)];
-  const heroF = F.find(f => f.slug === heroSlug) || F[0];
-  let heroVideo = null;
-  if (heroF.video) {
-    heroVideo = makeVideo(heroF.video, heroF.poster || heroF.img, 'hero-img');
-    heroVideo.setAttribute('aria-hidden', 'true');
-    himg.replaceWith(heroVideo);
-  } else {
-    himg.src = heroF.img;
-    himg.alt = `Frasco do perfume ${heroF.nome}`;
-  }
-  hobj.setAttribute('aria-label', `Conhecer o perfume ${heroF.nome}`);
-  $('.hero-n').textContent = `Nº ${pad(heroF.n)} / ${F.length}`;
-  $('.hero-name').textContent = heroF.nome + (heroF.sub ? ' — ' + heroF.sub : '');
-  $('.hero-frase').textContent = heroF.frase;
-  hobj.addEventListener('click', () => openFrag(heroF.slug));
-
-  // a vela: uma luz que percorre a capa inteira, segue o cursor (ou o dedo) e vagueia quando parado
-  if (reduce) {
-    hero.classList.add('is-lit');
-  } else {
-    let tx = 50, ty = 46, cx = 50, cy = 46, raf = null, lastMove = -1e9;
-    const t0 = performance.now();
-    hero.addEventListener('pointermove', e => {
-      const r = hero.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width) * 100;
-      ty = ((e.clientY - r.top) / r.height) * 100;
-      lastMove = performance.now();
-    });
-    const loop = now => {
-      const t = (now - t0) / 1000;
-      if (now - lastMove > 3500) {
-        tx = 50 + Math.sin(t * 0.37) * 32;
-        ty = 52 + Math.sin(t * 0.53 + 1.2) * 26;
-      }
-      cx += (tx - cx) * 0.07;
-      cy += (ty - cy) * 0.07;
-      // chama: o raio oscila de leve, como uma vela
-      const flick = 1 + Math.sin(t * 9.3) * 0.018 + Math.sin(t * 23.1 + 2) * 0.012 + Math.sin(t * 3.7) * 0.02;
-      hero.style.setProperty('--x', cx.toFixed(2) + '%');
-      hero.style.setProperty('--y', cy.toFixed(2) + '%');
-      hero.style.setProperty('--r', (30 * flick).toFixed(2) + 'vmax');
-      raf = requestAnimationFrame(loop);
-    };
-    new IntersectionObserver(([en]) => {
-      if (en.isIntersecting && !raf) raf = requestAnimationFrame(loop);
-      if (!en.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; }
-    }).observe(hero);
-  }
-  // o filme da capa só toca enquanto a capa está visível (e nenhum painel ou busca aberto)
-  if (heroVideo && !reduce) {
-    new IntersectionObserver(([en]) => {
-      if (en.isIntersecting && panel.hidden && sEl.hidden) tryPlay(heroVideo); else heroVideo.pause();
-    }).observe(hero);
-  }
-
   /* ------------------------------------------------------------ índice + galeria */
   const idx = $('#idx');
   const grid = $('#grid');
@@ -431,7 +367,6 @@
     clearTimeout(closeTimer);
     if (panel.hidden) {
       lastFocus = document.activeElement;
-      if (heroVideo) heroVideo.pause();
       if (featVideo) featVideo.pause();
       panel.hidden = false;
       document.body.classList.add('is-locked');
@@ -439,10 +374,6 @@
       $('[data-close]', panel).focus({ preventScroll: true });
     }
   }
-
-  const resumeHero = () => {
-    if (heroVideo && !reduce && panel.hidden && sEl.hidden && hero.getBoundingClientRect().bottom > 0) tryPlay(heroVideo);
-  };
 
   function hide() {
     if (panel.hidden) return;
@@ -453,7 +384,6 @@
     closeTimer = setTimeout(() => {
       panel.hidden = true;
       featSync();
-      resumeHero();
     }, reduce ? 0 : 400);
     if (location.hash.startsWith('#frasco/')) history.replaceState(null, '', '#fragrancias');
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
@@ -739,7 +669,6 @@
     sEl.hidden = false;
     sBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('is-locked');
-    if (heroVideo) heroVideo.pause();
     featSync();
     sEl.style.scrollPaddingTop = sHead.offsetHeight + 'px';
     qIn.focus(); // ainda dentro do toque, para o teclado do celular abrir
@@ -753,7 +682,6 @@
     sBtn.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('is-locked');
     featSync();
-    resumeHero();
     const back = sLastFocus && sLastFocus !== document.body && document.contains(sLastFocus) ? sLastFocus : sBtn;
     back.focus({ preventScroll: true });
   }

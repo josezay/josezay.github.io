@@ -71,7 +71,7 @@ body::after {
 .skip:focus { top: 12px; }
 
 /* rótulos mono */
-.k, .sec-k, .nav a, .menu-btn, .hero-k, .hero-cap, .filters button, .views button,
+.k, .sec-k, .nav a, .menu-btn, .hero-cap, .filters button, .views button,
 .cta, .x, .p-nav button, .link-btn, .foot-meta, .search-clear, .chip {
   font-family: var(--mono);
   font-size: 11px;
@@ -188,85 +188,67 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 .rv.is-in { opacity: 1; transform: none; }
 
 /* ==========================================================================
-   Hero — um único frasco, iluminado por uma vela
+   Hero — a ilustração Coven 1692 Apothecary, com as bordas se dissolvendo no preto
    ========================================================================== */
 .hero {
-  --x: 50%; --y: 46%; --r: 30vmax;
   min-height: 100vh; min-height: 100svh;
-  padding: 0 var(--gut) !important;
+  padding: calc(var(--head-pad) + var(--logo) + 20px) var(--gut) clamp(22px, 4vh, 40px) !important;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(18px, 3.4vh, 40px);
   overflow: hidden;
-  isolation: isolate;
 }
-/* a escuridão cobre o fundo da capa inteira; a vela abre um círculo de luz onde estiver.
-   Os textos ficam acima das camadas de luz e sombra, sempre legíveis. */
-.hero-dark, .hero-glow { position: absolute; inset: 0; pointer-events: none; }
-.hero-dark {
-  z-index: 1;
-  background: radial-gradient(circle at var(--x) var(--y),
-    rgba(7, 7, 7, 0) 0,
-    rgba(7, 7, 7, .04) calc(var(--r) * .28),
-    rgba(7, 7, 7, .42) calc(var(--r) * .58),
-    rgba(7, 7, 7, .8) calc(var(--r) * .92),
-    rgba(7, 7, 7, .88) calc(var(--r) * 1.5));
-  animation: appear 2.4s var(--ease) both;
-}
-.hero-glow {
-  z-index: 2;
-  background: radial-gradient(circle at var(--x) var(--y),
-    rgba(217, 165, 91, .15) 0,
-    rgba(217, 165, 91, .05) calc(var(--r) * .32),
-    transparent calc(var(--r) * .7));
-  mix-blend-mode: screen;
-}
-.hero.is-lit .hero-dark, .hero.is-lit .hero-glow { display: none; }
-.hero-k { position: absolute; z-index: 4; top: calc(var(--head-pad) + var(--logo) + 26px); color: var(--bone-2); line-height: 1.8; }
-.hero-k--l { left: var(--gut); }
-.hero-k--r { right: var(--gut); text-align: right; }
-
-.hero-obj {
-  position: absolute; left: 50%; top: 47%;
-  width: min(84vh, 94vw); width: min(84svh, 94vw);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  cursor: pointer;
+/* a figura ocupa o espaço livre da capa; a imagem cabe nele inteira (cqw/cqh), sem cortes */
+.hero-fig {
+  margin: 0;
+  min-height: min(60vw, 52svh);
+  container-type: size;
+  display: grid; place-items: center;
 }
 .hero-img {
-  width: 100%; height: 100%; object-fit: contain;
-  -webkit-mask-image: radial-gradient(closest-side, #000 74%, transparent);
-          mask-image: radial-gradient(closest-side, #000 74%, transparent);
+  width: min(100cqw, 100cqh * 5 / 3); height: auto; aspect-ratio: 5 / 3;
+  /* leve fade nas bordas, como nas outras imagens do site: a ilustração clara se dissolve no fundo escuro.
+     No topo o fade é curto para não apagar o título "Coven 1692 Apothecary" da ilustração. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 90%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 90%, transparent);
+  mask-composite: intersect;
   animation: appear 2.4s var(--ease) both;
 }
 @keyframes appear { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: none; } }
 
-.hero-foot {
-  position: absolute; z-index: 4; left: var(--gut); right: var(--gut); bottom: clamp(22px, 4vh, 40px);
-  display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
-  pointer-events: none;
-}
+.hero-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
 .hero-title {
   margin: 0;
   font-weight: 300;
-  font-size: clamp(2.7rem, 7.6vw, 8rem);
-  line-height: .88;
+  font-size: clamp(2.6rem, 5.4vw, 6.4rem);
+  line-height: .9;
   letter-spacing: -.02em;
   animation: rise 1.6s .3s var(--ease) both;
 }
+.hero-title span, .hero-title em { white-space: nowrap; } /* se quebrar, quebra entre as duas metades */
 .hero-title em { color: var(--bone-2); }
 .hero-cap {
-  display: grid; gap: 6px; text-align: right; max-width: 300px;
-  color: var(--bone-2);
+  flex: none;
+  display: grid; gap: 10px; text-align: right;
+  color: var(--bone-2); line-height: 1.8;
   animation: rise 1.6s .6s var(--ease) both;
 }
-.hero-name { color: var(--bone); }
-.hero-frase { font-family: var(--serif); font-style: italic; font-size: 17px; letter-spacing: 0; text-transform: none; line-height: 1.35; }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
+/* telas em pé: a ilustração é horizontal, então a capa fica com a altura do conteúdo (sem faixas vazias) */
+@media (orientation: portrait) {
+  .hero { min-height: 0; }
+  .hero-fig { min-height: 0; height: calc((100vw - 2 * var(--gut)) * .6); }
+}
 @media (max-width: 700px) {
-  .hero-k { top: calc(var(--head-pad) + var(--logo) + 18px); font-size: 10px; }
-  .hero-obj { top: 44%; }
+  .hero-fig { margin: 0 calc(var(--gut) * -1); height: 60vw; } /* de ponta a ponta no celular; o fade cuida das laterais */
   .hero-foot { flex-direction: column; align-items: flex-start; gap: 18px; }
-  .hero-cap { text-align: left; }
+  .hero-cap { display: flex; justify-content: space-between; width: 100%; text-align: left; font-size: 10px; }
+  .hero-cap span + span { text-align: right; }
 }
 
 /* ==========================================================================
@@ -770,12 +752,6 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
   content: ""; position: absolute; inset: -60px;
   background: var(--film-poster, none) center / cover no-repeat;
   filter: blur(42px) brightness(.42) saturate(1.1);
-}
-/* filme na capa: vertical, com vinheta oval em vez de bordas duras */
-.hero-obj video.hero-img {
-  width: auto; height: 100%; aspect-ratio: 9 / 16; margin: 0 auto; object-fit: cover;
-  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent);
-          mask-image: radial-gradient(closest-side, #000 58%, transparent);
 }
 
 /* ==========================================================================
