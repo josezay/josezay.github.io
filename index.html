@@ -289,7 +289,7 @@
         Several Sizes / Worldwide Shipping<br>
         <a href="https://www.instagram.com/danispallart/" target="_blank" rel="noopener">@danispallart</a></p>
     </header>
-    <ul class="arte-strip" id="arte-strip" aria-label="Obras"></ul>
+    <ul class="arte-grid" id="arte-grid" aria-label="Obras"></ul>
   </section>
 </main>
 
@@ -308,6 +308,8 @@
   <div class="panel-media">
     <img id="p-img" alt="">
     <video id="p-video" muted playsinline preload="none" hidden></video>
+    <button class="media-nav media-nav--prev" type="button" data-step="-1" aria-label="Obra anterior">←</button>
+    <button class="media-nav media-nav--next" type="button" data-step="1" aria-label="Próxima obra">→</button>
     <div class="media-ctrl" id="p-ctrl" hidden>
       <button type="button" data-media="video" aria-pressed="true">Filme</button>
       <button type="button" data-media="img" aria-pressed="false">Frasco</button>
@@ -330,6 +332,7 @@
       <a class="cta cta--solid" id="p-wa" href="#" target="_blank" rel="noopener">Reservar pelo WhatsApp ↗</a>
       <a class="cta" id="p-ds" href="#" target="_blank" rel="noopener">Pedir no Discovery Set ↗</a>
     </div>
+    <div class="p-thumbs" id="p-thumbs" role="group" aria-label="Todas as obras" hidden></div>
     <p class="p-fine" id="p-fine"></p>
     <nav class="p-nav" aria-label="Navegar entre produtos">
       <button type="button" data-prev>← Anterior</button>

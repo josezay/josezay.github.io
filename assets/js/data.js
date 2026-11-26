@@ -5,7 +5,9 @@
      "destaque": true — mostra o perfume no banner "Em destaque" (use em apenas um, com vídeo)
      "colab":    nome do parceiro (ex.: "Rede Vamp") — o painel do perfume mostra o selo "Parceria Coven 1692 & …"
    Campo opcional de uma linha do apothecary:
-     "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la. */
+     "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
+   Campos de uma obra (Fine Art):
+     "w", "h":   largura e altura da imagem em px — a galeria usa a proporção para montar as linhas sem saltos */
 window.COVEN = {
  "fragrancias": [
   {
@@ -1955,75 +1957,111 @@ window.COVEN = {
  "arte": [
   {
    "nome": "Baba Yaga",
-   "img": "assets/img/arte/baba-yaga.webp"
+   "img": "assets/img/arte/baba-yaga.webp",
+   "w": 900,
+   "h": 603
   },
   {
    "nome": "Release the Magic",
-   "img": "assets/img/arte/release-the-magic.webp"
+   "img": "assets/img/arte/release-the-magic.webp",
+   "w": 900,
+   "h": 1324
   },
   {
    "nome": "Saint George",
-   "img": "assets/img/arte/saint-george.webp"
+   "img": "assets/img/arte/saint-george.webp",
+   "w": 896,
+   "h": 1280
   },
   {
    "nome": "Lullaby",
-   "img": "assets/img/arte/lullaby.webp"
+   "img": "assets/img/arte/lullaby.webp",
+   "w": 900,
+   "h": 1096
   },
   {
    "nome": "Aquelarre",
-   "img": "assets/img/arte/aquelarre.webp"
+   "img": "assets/img/arte/aquelarre.webp",
+   "w": 900,
+   "h": 1200
   },
   {
    "nome": "Lacrima",
-   "img": "assets/img/arte/lacrima.webp"
+   "img": "assets/img/arte/lacrima.webp",
+   "w": 900,
+   "h": 1308
   },
   {
    "nome": "Watcher",
-   "img": "assets/img/arte/watcher.webp"
+   "img": "assets/img/arte/watcher.webp",
+   "w": 900,
+   "h": 1131
   },
   {
    "nome": "Farm",
-   "img": "assets/img/arte/farm.webp"
+   "img": "assets/img/arte/farm.webp",
+   "w": 900,
+   "h": 1129
   },
   {
    "nome": "Testament",
-   "img": "assets/img/arte/testament.webp"
+   "img": "assets/img/arte/testament.webp",
+   "w": 900,
+   "h": 1291
   },
   {
    "nome": "Winter Night",
-   "img": "assets/img/arte/winter-night.webp"
+   "img": "assets/img/arte/winter-night.webp",
+   "w": 900,
+   "h": 786
   },
   {
    "nome": "Ostara",
-   "img": "assets/img/arte/ostara.webp"
+   "img": "assets/img/arte/ostara.webp",
+   "w": 900,
+   "h": 1125
   },
   {
    "nome": "Angelis Nocturnus",
-   "img": "assets/img/arte/angelis-nocturnus.webp"
+   "img": "assets/img/arte/angelis-nocturnus.webp",
+   "w": 871,
+   "h": 1280
   },
   {
    "nome": "Spring Dream",
-   "img": "assets/img/arte/spring-dream.webp"
+   "img": "assets/img/arte/spring-dream.webp",
+   "w": 900,
+   "h": 1428
   },
   {
    "nome": "Entrance to Eden",
-   "img": "assets/img/arte/entrance-to-eden.webp"
+   "img": "assets/img/arte/entrance-to-eden.webp",
+   "w": 900,
+   "h": 1125
   },
   {
    "nome": "Luciferian",
-   "img": "assets/img/arte/luciferian.webp"
+   "img": "assets/img/arte/luciferian.webp",
+   "w": 900,
+   "h": 1200
   },
   {
    "nome": "Pool of Damned",
-   "img": "assets/img/arte/pool-of-damned.webp"
+   "img": "assets/img/arte/pool-of-damned.webp",
+   "w": 900,
+   "h": 1324
   },
   {
    "nome": "Communion",
-   "img": "assets/img/arte/communion.webp"
+   "img": "assets/img/arte/communion.webp",
+   "w": 900,
+   "h": 613
   },
   {
    "nome": "Bring Balloons",
-   "img": "assets/img/arte/bring-balloons.webp"
+   "img": "assets/img/arte/bring-balloons.webp",
+   "w": 900,
+   "h": 1279
   }
  ],
  "loja446": [

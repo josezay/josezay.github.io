@@ -453,7 +453,7 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
 }
 
 /* faixas horizontais */
-.strip, .arte-strip, .photo-strip {
+.strip, .photo-strip {
   list-style: none; margin: 0; padding: 4px var(--gut) 18px 0;
   margin-right: calc(var(--gut) * -1);
   display: flex; gap: clamp(12px, 1.6vw, 22px);
@@ -461,7 +461,7 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
   scroll-snap-type: x proximity;
   scrollbar-width: thin;
 }
-.strip > li, .arte-strip > li, .photo-strip > li { flex: none; scroll-snap-align: start; }
+.strip > li, .photo-strip > li { flex: none; scroll-snap-align: start; }
 .apo .strip { scrollbar-color: var(--ink-2) transparent; }
 .strip > li { width: clamp(150px, 19vw, 240px); }
 .item { display: block; width: 100%; }
@@ -509,11 +509,20 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
    Fine Art
    ========================================================================== */
 .arte { background: var(--bg-2); }
-.arte-strip { margin-top: clamp(48px, 6vw, 88px); }
-.arte-strip button { display: block; }
-.arte-strip img { height: clamp(260px, 40vw, 520px); width: auto; max-width: none; transition: opacity .5s; }
-.arte-strip button:hover img { opacity: .82; }
-.arte-strip .k { display: block; margin-top: 12px; color: var(--bone-2); }
+/* todas as obras à vista, em linhas justificadas: a largura de cada uma segue o formato (--ar), sem cortes */
+.arte-grid {
+  --row: clamp(200px, 20vw, 300px);
+  list-style: none; margin: clamp(48px, 6vw, 88px) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap;
+  gap: clamp(26px, 3vw, 40px) clamp(10px, 1.2vw, 18px);
+}
+.arte-grid > li { flex: var(--ar) 1 calc(var(--ar) * var(--row)); min-width: 0; }
+.arte-grid::after { content: ""; flex: 999999 1 0; } /* a última linha não estica */
+.arte-grid button { display: block; width: 100%; }
+.arte-grid img { width: 100%; height: auto; aspect-ratio: var(--ar); object-fit: cover; background: #000; transition: opacity .5s; }
+.arte-grid button:hover img { opacity: .82; }
+.arte-grid .k { display: block; margin-top: 10px; color: var(--bone-2); transition: color .3s; }
+.arte-grid button:hover .k { color: var(--bone); }
 
 /* ==========================================================================
    Lojas físicas — texto do site original
@@ -600,6 +609,28 @@ main > section { position: relative; padding: var(--sec) var(--gut); }
   transition: opacity .45s var(--ease), transform .9s var(--ease);
 }
 .panel-media img.is-loading { opacity: 0; transform: scale(.98); }
+/* Fine Art: a obra inteira, sem vinheta; setas sobre a imagem e deslizar com o dedo */
+.panel--art .panel-media { touch-action: pan-y; }
+.panel--art .panel-media img { -webkit-mask-image: none; mask-image: none; padding: 5vh 4vw; -webkit-user-drag: none; user-select: none; }
+.media-nav {
+  display: none; place-items: center;
+  position: absolute; top: 50%; z-index: 3; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: rgba(7, 7, 7, .55);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  font-family: var(--mono); font-size: 16px; color: var(--bone);
+  transition: background .3s, color .3s, border-color .3s;
+}
+.media-nav--prev { left: clamp(10px, 1.6vw, 24px); }
+.media-nav--next { right: clamp(10px, 1.6vw, 24px); }
+.media-nav:hover { background: var(--bone); color: var(--bg); border-color: var(--bone); }
+.panel--art .media-nav { display: grid; }
+.p-thumbs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin-top: 28px; }
+.p-thumbs button { aspect-ratio: 1; overflow: hidden; opacity: .45; transition: opacity .3s; }
+.p-thumbs button:hover { opacity: .85; }
+.p-thumbs button[aria-current="true"] { opacity: 1; outline: 1px solid var(--candle); outline-offset: 2px; }
+.p-thumbs img { width: 100%; height: 100%; object-fit: cover; }
 .panel--paper .panel-media { background: var(--paper); }
 .panel--paper .panel-media img { mix-blend-mode: multiply; -webkit-mask-image: none; mask-image: none; padding: 6vh 4vw; }
 
