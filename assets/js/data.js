@@ -11,6 +11,52 @@
 window.COVEN = {
  "fragrancias": [
   {
+   "slug": "666",
+   "nome": "666",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Giorgio Armani — Acqua di Giò",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O número da besta, em notas marinhas e cítricas. Ninguém desconfia.",
+   "piramide": {
+    "topo": "Lima, Limão, Bergamota, Jasmim, Laranja, Mandarina e Néroli",
+    "coracao": "Notas Oceânicas, Jasmim, Calone, Alecrim, Pêssego, Frésia, Jacinto, Cíclame, Violeta, Coentro, Rosa, Noz-moscada e Resedá",
+    "fundo": "Almíscar Branco, Cedro, Musgo de Carvalho, Patchouli e Âmbar"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/666.webp",
+   "thumb": "assets/img/fragrancias/666-s.webp",
+   "n": 1
+  },
+  {
+   "slug": "agnus-dei",
+   "nome": "Agnus Dei",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 180",
+   "tipo": "releitura",
+   "inspiracao": "Calvin Klein — Euphoria",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Romã e orquídea negra deixadas no altar do cordeiro.",
+   "piramide": {
+    "topo": "Romã, Caqui e Acorde Verde",
+    "coracao": "Orquídea Negra, Lótus e Champaca",
+    "fundo": "Mogno, Âmbar, Violeta Negra e Chantilly"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/agnus-dei.webp",
+   "thumb": "assets/img/fragrancias/agnus-dei-s.webp",
+   "n": 2
+  },
+  {
    "slug": "alice-in-wonderland",
    "nome": "Alice in Wonderland",
    "sub": "",
@@ -27,7 +73,72 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/alice-in-wonderland.webp",
    "thumb": "assets/img/fragrancias/alice-in-wonderland-s.webp",
-   "n": 1
+   "n": 3
+  },
+  {
+   "slug": "amor-vincit-omnia",
+   "nome": "Amor Vincit Omnia",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 180",
+   "tipo": "releitura",
+   "inspiracao": "Mugler — Angel",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O amor vence tudo, e chega trazendo caramelo e patchouli.",
+   "piramide": {
+    "topo": "Algodão-Doce, Coco, Cassis, Melão, Jasmim, Bergamota, Abacaxi e Mandarina",
+    "coracao": "Mel, Bagas Vermelhas, Amora, Ameixa, Damasco, Pêssego, Jasmim, Noz-moscada, Alcarávia, Orquídea, Rosa e Lírio-do-Vale",
+    "fundo": "Patchouli, Chocolate, Caramelo, Baunilha, Fava Tonka, Âmbar, Almíscar e Sândalo"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/amor-vincit-omnia.webp",
+   "thumb": "assets/img/fragrancias/amor-vincit-omnia-s.webp",
+   "n": 4
+  },
+  {
+   "slug": "anima-sola",
+   "nome": "Anima Sola",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Floral fresco aquático",
+   "frase": "A alma solitária pede alívio entre as chamas, e recebe pera, pepino e água fresca.",
+   "piramide": null,
+   "notas": "Pera, peônia, jasmim, magnólia, melão, pepino, frésia, violeta, cedro, musk, baunilha, limão",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/anima-sola.webp",
+   "thumb": "assets/img/fragrancias/anima-sola-s.webp",
+   "n": 5
+  },
+  {
+   "slug": "aqua-tofana",
+   "nome": "Aqua Tofana",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Parfums de Marly — Althaïr",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Um frasco de beleza com segredo: pralinê, canela e baunilha.",
+   "piramide": {
+    "topo": "Canela, Cardamomo, Flor de Laranjeira e Bergamota",
+    "coracao": "Baunilha de Bourbon e Elemi",
+    "fundo": "Pralinê, Almíscar, Ambroxan, Madeira Guaiac, Amêndoa Cristalizada e Fava Tonka"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/aqua-tofana.webp",
+   "thumb": "assets/img/fragrancias/aqua-tofana-s.webp",
+   "n": 6
   },
   {
    "slug": "aquelarre",
@@ -50,7 +161,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/aquelarre.webp",
    "thumb": "assets/img/fragrancias/aquelarre-s.webp",
-   "n": 2
+   "n": 7
+  },
+  {
+   "slug": "aradia",
+   "nome": "Aradia",
+   "sub": "Queen of Witches",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Dior — J'adore",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O evangelho das bruxas, lido em jasmim, tuberosa e pera.",
+   "piramide": {
+    "topo": "Pera, Melão, Magnólia, Pêssego, Mandarina e Bergamota",
+    "coracao": "Jasmim, Lírio-do-Vale, Tuberosa, Frésia, Rosa, Orquídea, Ameixa e Violeta",
+    "fundo": "Almíscar, Baunilha, Cedro e Amora"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/aradia.webp",
+   "thumb": "assets/img/fragrancias/aradia-s.webp",
+   "n": 8
   },
   {
    "slug": "asmodeus",
@@ -73,7 +207,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/asmodeus.webp",
    "thumb": "assets/img/fragrancias/asmodeus-s.webp",
-   "n": 3
+   "n": 9
   },
   {
    "slug": "babalon",
@@ -92,7 +226,95 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/babalon.webp",
    "thumb": "assets/img/fragrancias/babalon-s.webp",
-   "n": 4
+   "n": 10
+  },
+  {
+   "slug": "baphomet",
+   "nome": "Baphomet",
+   "sub": "Solve et Coagula",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Louis Vuitton — L'Immensité",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Oriental especiado",
+   "frase": "O que se dissolve em toranja e sal se fixa em âmbar e ládano.",
+   "piramide": {
+    "topo": "Toranja, Gengibre e Bergamota",
+    "coracao": "Notas Aquáticas, Alecrim, Sálvia e Gerânio",
+    "fundo": "Ambroxan, Âmbar e Ládano"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/baphomet.webp",
+   "thumb": "assets/img/fragrancias/baphomet-s.webp",
+   "n": 11
+  },
+  {
+   "slug": "baron-samedi",
+   "nome": "Baron Samedi",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Issey Miyake — L'Eau d'Issey Pour Homme",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "De cartola e charuto, o Barão espera no portão do cemitério, entre yuzu e tabaco.",
+   "piramide": {
+    "topo": "Yuzu, Limão, Bergamota, Lúcia-lima, Mandarina, Cipreste, Calone, Coentro, Estragão e Sálvia",
+    "coracao": "Lótus Azul, Noz-moscada, Lírio-do-Vale, Gerânio Bourbon, Açafrão, Canela do Ceilão e Resedá",
+    "fundo": "Vetiver do Tahiti, Almíscar, Cedro, Sândalo, Âmbar e Tabaco"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/baron-samedi.webp",
+   "thumb": "assets/img/fragrancias/baron-samedi-s.webp",
+   "n": 12
+  },
+  {
+   "slug": "bastet",
+   "nome": "Bastet",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Chanel — Coco Mademoiselle",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "A deusa gata se espreguiça entre laranjas e patchouli.",
+   "piramide": {
+    "topo": "Laranja, Mandarina, Bergamota e Flor de Laranjeira",
+    "coracao": "Rosa Turca, Jasmim, Mimosa e Ylang Ylang",
+    "fundo": "Patchouli, Almíscar Branco, Baunilha, Vetiver, Fava Tonka e Opoponax"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/bastet.webp",
+   "thumb": "assets/img/fragrancias/bastet-s.webp",
+   "n": 13
+  },
+  {
+   "slug": "baudelaire",
+   "nome": "Baudelaire",
+   "sub": "Fleurs du Mal",
+   "volume": "60 ml",
+   "preco": "R$ 175",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Gourmand vinoso",
+   "frase": "As flores do mal, servidas em veludo vermelho e vinho tinto.",
+   "piramide": null,
+   "notas": "Red velvet, vinho tinto, cacau, chantilly, baunilha, sândalo, patchouli, âmbar, nozes, canela, frutas vermelhas",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/baudelaire.webp",
+   "thumb": "assets/img/fragrancias/baudelaire-s.webp",
+   "n": 14
   },
   {
    "slug": "black-magic",
@@ -111,7 +333,53 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/black-magic.webp",
    "thumb": "assets/img/fragrancias/black-magic-s.webp",
-   "n": 5
+   "n": 15
+  },
+  {
+   "slug": "black-mamba",
+   "nome": "Black Mamba",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 180",
+   "tipo": "releitura",
+   "inspiracao": "Parfums de Marly — Cassili",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Ameixa e mimosa, e um bote que ninguém vê chegar.",
+   "piramide": {
+    "topo": "Groselha Vermelha, Notas Florais e Rosa Búlgara",
+    "coracao": "Jasmim-Manga, Ameixa, Petalia e Mimosa",
+    "fundo": "Baunilha, Fava Tonka e Sândalo"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/black-mamba.webp",
+   "thumb": "assets/img/fragrancias/black-mamba-s.webp",
+   "n": 16
+  },
+  {
+   "slug": "black-swan",
+   "nome": "Black Swan",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Mugler — Alien",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "No último ato, o cisne dança de preto: jasmim e âmbar branco.",
+   "piramide": {
+    "topo": "Cítricos e Mandarina",
+    "coracao": "Jasmim Marroquino e Flores Brancas",
+    "fundo": "Âmbar Branco e Cashmeran"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/black-swan.webp",
+   "thumb": "assets/img/fragrancias/black-swan-s.webp",
+   "n": 17
   },
   {
    "slug": "black-widow",
@@ -134,7 +402,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/black-widow.webp",
    "thumb": "assets/img/fragrancias/black-widow-s.webp",
-   "n": 6
+   "n": 18
+  },
+  {
+   "slug": "blood-mary",
+   "nome": "Blood Mary",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Tom Ford — Lost Cherry",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Diga o nome três vezes diante do espelho. A cereja preta responde.",
+   "piramide": {
+    "topo": "Amêndoa Amarga, Cereja Preta e Licor de Cereja",
+    "coracao": "Cereja Amarga, Ameixa, Rosa Turca e Jasmim Sambac",
+    "fundo": "Baunilha, Fava Tonka, Canela, Bálsamo do Peru, Benjoim, Sândalo, Cravo-da-Índia, Cedro, Patchouli e Vetiver"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/blood-mary.webp",
+   "thumb": "assets/img/fragrancias/blood-mary-s.webp",
+   "n": 19
   },
   {
    "slug": "cabinet-of-curiosities",
@@ -153,7 +444,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/cabinet-of-curiosities.webp",
    "thumb": "assets/img/fragrancias/cabinet-of-curiosities-s.webp",
-   "n": 7
+   "n": 20
   },
   {
    "slug": "carmilla",
@@ -176,7 +467,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/carmilla.webp",
    "thumb": "assets/img/fragrancias/carmilla-s.webp",
-   "n": 8
+   "n": 21
+  },
+  {
+   "slug": "cerberus",
+   "nome": "Cerberus",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Dior — Sauvage",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Três pimentas, uma para cada cabeça do guardião.",
+   "piramide": {
+    "topo": "Bergamota da Calábria e Pimenta",
+    "coracao": "Pimenta de Szechuan, Lavanda, Pimenta Rosa, Vetiver, Patchouli, Gerânio e Elemi",
+    "fundo": "Ambroxan, Cedro e Ládano"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/cerberus.webp",
+   "thumb": "assets/img/fragrancias/cerberus-s.webp",
+   "n": 22
   },
   {
    "slug": "claire-de-lune",
@@ -199,7 +513,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/claire-de-lune.webp",
    "thumb": "assets/img/fragrancias/claire-de-lune-s.webp",
-   "n": 9
+   "n": 23
+  },
+  {
+   "slug": "cleopatra",
+   "nome": "Cleopatra",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Creed — Queen of Silk",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Seda, açafrão e oud para a última rainha do Nilo.",
+   "piramide": {
+    "topo": "Açafrão, Osmanthus e Magnólia",
+    "coracao": "Maracujá, Tuberosa, Patchouli e Agarwood (Oud)",
+    "fundo": "Baunilha de Madagascar, Ambroxan, Almíscar, Mirra, Incenso e Cedro"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/cleopatra.webp",
+   "thumb": "assets/img/fragrancias/cleopatra-s.webp",
+   "n": 24
   },
   {
    "slug": "coffin",
@@ -222,7 +559,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/coffin.webp",
    "thumb": "assets/img/fragrancias/coffin-s.webp",
-   "n": 10
+   "n": 25
+  },
+  {
+   "slug": "constantine",
+   "nome": "Constantine",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Tom Ford — Tobacco Vanille",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Tabaco e baunilha, e mais um cigarro para enganar o inferno.",
+   "piramide": {
+    "topo": "Folha de Tabaco e Notas Especiadas",
+    "coracao": "Baunilha, Cacau, Fava Tonka e Flor de Tabaco",
+    "fundo": "Frutas Secas e Notas Amadeiradas"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/constantine.webp",
+   "thumb": "assets/img/fragrancias/constantine-s.webp",
+   "n": 26
   },
   {
    "slug": "cotton-candy",
@@ -245,7 +605,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/cotton-candy.webp",
    "thumb": "assets/img/fragrancias/cotton-candy-s.webp",
-   "n": 11
+   "n": 27
+  },
+  {
+   "slug": "devilish",
+   "nome": "Devilish",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 185",
+   "tipo": "releitura",
+   "inspiracao": "Victoria's Secret — Bombshell",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Maracujá e peônia, com um par de chifres bem escondido.",
+   "piramide": {
+    "topo": "Maracujá, Toranja, Abacaxi, Tangerina e Morango",
+    "coracao": "Peônia, Orquídea Baunilha, Bagas Vermelhas, Jasmim e Lírio-do-Vale",
+    "fundo": "Almíscar, Notas Amadeiradas e Musgo de Carvalho"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/devilish.webp",
+   "thumb": "assets/img/fragrancias/devilish-s.webp",
+   "n": 28
   },
   {
    "slug": "dorian-gray",
@@ -268,7 +651,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/dorian-gray.webp",
    "thumb": "assets/img/fragrancias/dorian-gray-s.webp",
-   "n": 12
+   "n": 29
   },
   {
    "slug": "draconis-fabula",
@@ -291,7 +674,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/draconis-fabula.webp",
    "thumb": "assets/img/fragrancias/draconis-fabula-s.webp",
-   "n": 13
+   "n": 30
   },
   {
    "slug": "drakulya",
@@ -310,7 +693,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/drakulya.webp",
    "thumb": "assets/img/fragrancias/drakulya-s.webp",
-   "n": 14
+   "n": 31
   },
   {
    "slug": "elsa-mars",
@@ -329,7 +712,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/elsa-mars.webp",
    "thumb": "assets/img/fragrancias/elsa-mars-s.webp",
-   "n": 15
+   "n": 32
   },
   {
    "slug": "fatum",
@@ -348,7 +731,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/fatum.webp",
    "thumb": "assets/img/fragrancias/fatum-s.webp",
-   "n": 16
+   "n": 33
   },
   {
    "slug": "fenrir",
@@ -371,7 +754,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/fenrir.webp",
    "thumb": "assets/img/fragrancias/fenrir-s.webp",
-   "n": 17
+   "n": 34
+  },
+  {
+   "slug": "fire-queen",
+   "nome": "Fire Queen",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "DKNY — Red Delicious",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Maçã vermelha e couro, coroada em brasa.",
+   "piramide": {
+    "topo": "Framboesa e Lichia",
+    "coracao": "Maçã, Rosa e Patchouli",
+    "fundo": "Couro, Âmbar e Fava de Baunilha"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/fire-queen.webp",
+   "thumb": "assets/img/fragrancias/fire-queen-s.webp",
+   "n": 35
   },
   {
    "slug": "fire-walk-with-me",
@@ -394,7 +800,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/fire-walk-with-me.webp",
    "thumb": "assets/img/fragrancias/fire-walk-with-me-s.webp",
-   "n": 18
+   "n": 36
   },
   {
    "slug": "fireflies",
@@ -417,7 +823,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/fireflies.webp",
    "thumb": "assets/img/fragrancias/fireflies-s.webp",
-   "n": 19
+   "n": 37
   },
   {
    "slug": "fortune-teller",
@@ -440,7 +846,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/fortune-teller.webp",
    "thumb": "assets/img/fragrancias/fortune-teller-s.webp",
-   "n": 20
+   "n": 38
   },
   {
    "slug": "ghost-whisperer",
@@ -463,7 +869,53 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/ghost-whisperer.webp",
    "thumb": "assets/img/fragrancias/ghost-whisperer-s.webp",
-   "n": 21
+   "n": 39
+  },
+  {
+   "slug": "grimoire",
+   "nome": "Grimoire",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Kenzo — Flower by Kenzo",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Uma violeta prensada entre as páginas do livro de feitiços.",
+   "piramide": {
+    "topo": "Rosa Búlgara, Espinheiro Branco, Groselha Preta e Mandarina",
+    "coracao": "Violeta de Parma, Rosa, Opoponax e Jasmim",
+    "fundo": "Baunilha, Almíscar Branco e Incenso"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/grimoire.webp",
+   "thumb": "assets/img/fragrancias/grimoire-s.webp",
+   "n": 40
+  },
+  {
+   "slug": "hecate",
+   "nome": "Hécate",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Yves Saint Laurent — Libre",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Lavanda e flor de laranjeira na encruzilhada das três estradas.",
+   "piramide": {
+    "topo": "Lavanda, Mandarina, Groselha Preta e Petitgrain",
+    "coracao": "Lavanda, Flor de Laranjeira e Jasmim",
+    "fundo": "Baunilha de Madagascar, Almíscar, Cedro e Âmbar Cinzento"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/hecate.webp",
+   "thumb": "assets/img/fragrancias/hecate-s.webp",
+   "n": 41
   },
   {
    "slug": "holy-grail",
@@ -486,7 +938,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/holy-grail.webp",
    "thumb": "assets/img/fragrancias/holy-grail-s.webp",
-   "n": 22
+   "n": 42
   },
   {
    "slug": "infernal-blossom",
@@ -505,7 +957,87 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/infernal-blossom.webp",
    "thumb": "assets/img/fragrancias/infernal-blossom-s.webp",
-   "n": 23
+   "n": 43
+  },
+  {
+   "slug": "ixchel",
+   "nome": "Ixchel",
+   "sub": "Lunar Goddess",
+   "volume": "110 ml",
+   "preco": "R$ 200",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Gardênia e tuberosa abertas para a deusa maia da lua.",
+   "piramide": null,
+   "notas": "Gardênia branca, jasmim-manga, madressilva, lírio-do-vale, musk, sândalo, tuberosa suave, baunilha, fava tonka",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/ixchel.webp",
+   "thumb": "assets/img/fragrancias/ixchel-s.webp",
+   "n": 44
+  },
+  {
+   "slug": "jezebel",
+   "nome": "Jezebel",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Frutado tropical",
+   "frase": "A rainha pinta os olhos antes de descer: pitanga preta e flores tropicais.",
+   "piramide": null,
+   "notas": "Pitanga preta, pomelo, bambu, frésia, mandarina, musk branco, flores tropicais",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/jezebel.webp",
+   "thumb": "assets/img/fragrancias/jezebel-s.webp",
+   "n": 45
+  },
+  {
+   "slug": "kali-ma",
+   "nome": "Kali Ma",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 195",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Cítrico, terroso, incensado, especiado",
+   "frase": "Olíbano e especiarias para a mãe que devora o tempo.",
+   "piramide": null,
+   "notas": "Bergamota, limão, groselha negra, madeiras nobres, especiarias, olíbano, benjoim, musgo de carvalho",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/kali-ma.webp",
+   "thumb": "assets/img/fragrancias/kali-ma-s.webp",
+   "n": 46
+  },
+  {
+   "slug": "king-paimon",
+   "nome": "King Paimon",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Tom Ford — Mandarino di Amalfi",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O rei chega montado num dromedário, ao som de trombetas, com limão e manjericão.",
+   "piramide": {
+    "topo": "Limão, Toranja, Hortelã, Manjericão, Estragão e Groselha Preta",
+    "coracao": "Flor de Laranjeira, Jasmim, Sálvia Esclaréia, Shissô, Coentro e Pimenta Preta",
+    "fundo": "Almíscar, Vetiver, Âmbar, Ládano e Civeta"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/king-paimon.webp",
+   "thumb": "assets/img/fragrancias/king-paimon-s.webp",
+   "n": 47
   },
   {
    "slug": "kirin",
@@ -524,7 +1056,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/kirin.webp",
    "thumb": "assets/img/fragrancias/kirin-s.webp",
-   "n": 24
+   "n": 48
   },
   {
    "slug": "kraken",
@@ -545,7 +1077,7 @@ window.COVEN = {
    "thumb": "assets/img/fragrancias/kraken-s.webp",
    "video": "assets/video/kraken.mp4",
    "poster": "assets/img/fragrancias/kraken-filme.webp",
-   "n": 25
+   "n": 49
   },
   {
    "slug": "la-casati",
@@ -564,7 +1096,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/la-casati.webp",
    "thumb": "assets/img/fragrancias/la-casati-s.webp",
-   "n": 26
+   "n": 50
   },
   {
    "slug": "lasher",
@@ -587,7 +1119,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/lasher.webp",
    "thumb": "assets/img/fragrancias/lasher-s.webp",
-   "n": 27
+   "n": 51
   },
   {
    "slug": "lilith",
@@ -606,7 +1138,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/lilith.webp",
    "thumb": "assets/img/fragrancias/lilith-s.webp",
-   "n": 28
+   "n": 52
   },
   {
    "slug": "lioncourt",
@@ -629,7 +1161,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/lioncourt.webp",
    "thumb": "assets/img/fragrancias/lioncourt-s.webp",
-   "n": 29
+   "n": 53
   },
   {
    "slug": "loch-ness",
@@ -648,7 +1180,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/loch-ness.webp",
    "thumb": "assets/img/fragrancias/loch-ness-s.webp",
-   "n": 30
+   "n": 54
   },
   {
    "slug": "lord-shiva",
@@ -667,7 +1199,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/lord-shiva.webp",
    "thumb": "assets/img/fragrancias/lord-shiva-s.webp",
-   "n": 31
+   "n": 55
   },
   {
    "slug": "lucifer",
@@ -690,7 +1222,53 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/lucifer.webp",
    "thumb": "assets/img/fragrancias/lucifer-s.webp",
-   "n": 32
+   "n": 56
+  },
+  {
+   "slug": "maria-callas",
+   "nome": "Maria Callas",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Cartier — Baiser Volé",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Lírio do começo ao fim, como uma ária sustentada até o último fôlego.",
+   "piramide": {
+    "topo": "Lírio",
+    "coracao": "Lírio",
+    "fundo": "Lírio e Notas Verdes"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/maria-callas.webp",
+   "thumb": "assets/img/fragrancias/maria-callas-s.webp",
+   "n": 57
+  },
+  {
+   "slug": "marie-laveau",
+   "nome": "Marie Laveau",
+   "sub": "Voodoo Queen",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Chloé — Chloé Eau de Parfum",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Magnólias no túmulo da rainha, e três cruzes marcadas a giz.",
+   "piramide": {
+    "topo": "Peônia, Lichia e Frésia",
+    "coracao": "Rosa, Lírio-do-Vale e Magnólia",
+    "fundo": "Cedro da Virgínia e Âmbar"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/marie-laveau.webp",
+   "thumb": "assets/img/fragrancias/marie-laveau-s.webp",
+   "n": 58
   },
   {
    "slug": "matinta",
@@ -715,7 +1293,7 @@ window.COVEN = {
    "thumb": "assets/img/fragrancias/matinta-s.webp",
    "video": "assets/video/matinta.mp4",
    "poster": "assets/img/fragrancias/matinta-filme.webp",
-   "n": 33
+   "n": 59
   },
   {
    "slug": "mayfair",
@@ -734,7 +1312,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/mayfair.webp",
    "thumb": "assets/img/fragrancias/mayfair-s.webp",
-   "n": 34
+   "n": 60
+  },
+  {
+   "slug": "mea-culpa",
+   "nome": "Mea Culpa",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Creed — Carmina",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Minha culpa, minha máxima culpa, confessada em cereja preta e olíbano.",
+   "piramide": {
+    "topo": "Cereja Preta, Açafrão e Pimenta Rosa",
+    "coracao": "Rosa de Maio, Peônia, Violeta e Madeira de Cashmere",
+    "fundo": "Almíscar, Ambroxan, Mirra e Olíbano"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/mea-culpa.webp",
+   "thumb": "assets/img/fragrancias/mea-culpa-s.webp",
+   "n": 61
   },
   {
    "slug": "medusa",
@@ -757,7 +1358,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/medusa.webp",
    "thumb": "assets/img/fragrancias/medusa-s.webp",
-   "n": 35
+   "n": 62
   },
   {
    "slug": "midsommar",
@@ -776,7 +1377,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/midsommar.webp",
    "thumb": "assets/img/fragrancias/midsommar-s.webp",
-   "n": 36
+   "n": 63
+  },
+  {
+   "slug": "minotaur",
+   "nome": "Minotaur",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Tom Ford — Soleil Blanc",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O sol de Creta lá fora; no centro do labirinto, coco e tuberosa.",
+   "piramide": {
+    "topo": "Pistache, Bergamota, Cardamomo e Pimenta Rosa",
+    "coracao": "Tuberosa, Ylang Ylang e Jasmim",
+    "fundo": "Coco, Âmbar, Fava Tonka e Benjoim"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/minotaur.webp",
+   "thumb": "assets/img/fragrancias/minotaur-s.webp",
+   "n": 64
   },
   {
    "slug": "moonflower",
@@ -799,7 +1423,122 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/moonflower.webp",
    "thumb": "assets/img/fragrancias/moonflower-s.webp",
-   "n": 37
+   "n": 65
+  },
+  {
+   "slug": "muse-calliope",
+   "nome": "Muse Calliope",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Calvin Klein — CK One",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "A musa da poesia épica escreve em chá verde e cítricos.",
+   "piramide": {
+    "topo": "Limão, Notas Verdes, Bergamota, Mandarina, Abacaxi, Cardamomo e Mamão Papaia",
+    "coracao": "Lírio-do-Vale, Jasmim, Violeta, Rosa, Noz-moscada, Frésia e Raiz de Orris",
+    "fundo": "Acorde Verde, Almíscar, Cedro, Chá Verde, Sândalo, Musgo de Carvalho e Âmbar"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/muse-calliope.webp",
+   "thumb": "assets/img/fragrancias/muse-calliope-s.webp",
+   "n": 66
+  },
+  {
+   "slug": "nefertiti",
+   "nome": "Nefertiti",
+   "sub": "",
+   "volume": "60 ml",
+   "preco": "R$ 170",
+   "tipo": "releitura",
+   "inspiracao": "Carolina Herrera — La Bomba",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Oriental floral",
+   "frase": "A bela chegou, e trouxe pitaia e peônia vermelha.",
+   "piramide": {
+    "topo": "Pitaia",
+    "coracao": "Peônia Vermelha e Jasmim-Manga",
+    "fundo": "Baunilha e Patchouli"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/nefertiti.webp",
+   "thumb": "assets/img/fragrancias/nefertiti-s.webp",
+   "n": 67
+  },
+  {
+   "slug": "nemesis",
+   "nome": "Nemesis",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Jo Malone — Mimosa & Cardamom",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Cardamomo, mimosa e fava tonka. A vingança vem na medida exata.",
+   "piramide": {
+    "topo": "Cardamomo",
+    "coracao": "Mimosa",
+    "fundo": "Fava Tonka"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/nemesis.webp",
+   "thumb": "assets/img/fragrancias/nemesis-s.webp",
+   "n": 68
+  },
+  {
+   "slug": "nevermore",
+   "nome": "Nevermore",
+   "sub": "",
+   "volume": "110 ml",
+   "preco": "R$ 200",
+   "tipo": "releitura",
+   "inspiracao": "Givenchy — Blue Label",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Amadeirado especiado",
+   "frase": "Lavanda e olíbano à luz da lamparina. Disse o corvo: nunca mais.",
+   "piramide": {
+    "topo": "Toranja e Bergamota",
+    "coracao": "Pimenta, Lavanda, Cardamomo e Artemísia",
+    "fundo": "Cedro, Vetiver e Olíbano"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/nevermore.webp",
+   "thumb": "assets/img/fragrancias/nevermore-s.webp",
+   "n": 69
+  },
+  {
+   "slug": "new-orleans",
+   "nome": "New Orleans",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Parfums de Marly — Delina",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Rosa e lichia numa varanda do French Quarter. Lá dentro, incenso aceso.",
+   "piramide": {
+    "topo": "Lichia, Ruibarbo, Bergamota e Noz-moscada",
+    "coracao": "Rosa Turca, Peônia, Almíscar, Petalia e Baunilha",
+    "fundo": "Cashmeran, Incenso, Cedro e Vetiver do Haiti"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/new-orleans.webp",
+   "thumb": "assets/img/fragrancias/new-orleans-s.webp",
+   "n": 70
   },
   {
    "slug": "nosferatu",
@@ -822,7 +1561,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/nosferatu.webp",
    "thumb": "assets/img/fragrancias/nosferatu-s.webp",
-   "n": 38
+   "n": 71
+  },
+  {
+   "slug": "olympus",
+   "nome": "Olympus",
+   "sub": "",
+   "volume": "110 ml",
+   "preco": "R$ 195",
+   "tipo": "releitura",
+   "inspiracao": "Orientica — Royal Amber",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Melão, abacaxi e âmbar: o banquete servido no alto do monte.",
+   "piramide": {
+    "topo": "Bergamota e Notas Verdes",
+    "coracao": "Notas Doces, Melão, Abacaxi e Âmbar",
+    "fundo": "Notas Amadeiradas, Almíscar e Baunilha"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/olympus.webp",
+   "thumb": "assets/img/fragrancias/olympus-s.webp",
+   "n": 72
   },
   {
    "slug": "once-upon-a-time",
@@ -845,7 +1607,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/once-upon-a-time.webp",
    "thumb": "assets/img/fragrancias/once-upon-a-time-s.webp",
-   "n": 39
+   "n": 73
   },
   {
    "slug": "ouija-board",
@@ -868,7 +1630,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/ouija-board.webp",
    "thumb": "assets/img/fragrancias/ouija-board-s.webp",
-   "n": 40
+   "n": 74
   },
   {
    "slug": "paganini",
@@ -891,7 +1653,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/paganini.webp",
    "thumb": "assets/img/fragrancias/paganini-s.webp",
-   "n": 41
+   "n": 75
   },
   {
    "slug": "peculiar",
@@ -914,7 +1676,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/peculiar.webp",
    "thumb": "assets/img/fragrancias/peculiar-s.webp",
-   "n": 42
+   "n": 76
+  },
+  {
+   "slug": "pipistrello",
+   "nome": "Pipistrello",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Xerjoff — Accento",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Chipre floral",
+   "frase": "O morcego sai ao anoitecer, entre íris e jacinto.",
+   "piramide": {
+    "topo": "Abacaxi e Jacinto",
+    "coracao": "Íris, Pimenta Rosa e Jasmim",
+    "fundo": "Almíscar, Âmbar, Vetiver, Baunilha e Patchouli"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/pipistrello.webp",
+   "thumb": "assets/img/fragrancias/pipistrello-s.webp",
+   "n": 77
   },
   {
    "slug": "pixie-dust",
@@ -937,7 +1722,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/pixie-dust.webp",
    "thumb": "assets/img/fragrancias/pixie-dust-s.webp",
-   "n": 43
+   "n": 78
+  },
+  {
+   "slug": "poseidon",
+   "nome": "Poseidon",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Chanel — Bleu de Chanel",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O tridente toca a água: toranja, gengibre e incenso.",
+   "piramide": {
+    "topo": "Toranja, Limão, Hortelã e Pimenta Rosa",
+    "coracao": "Gengibre, Noz-moscada, Jasmim e Iso E Super",
+    "fundo": "Incenso, Vetiver, Cedro, Sândalo, Patchouli, Ládano e Almíscar Branco"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/poseidon.webp",
+   "thumb": "assets/img/fragrancias/poseidon-s.webp",
+   "n": 79
   },
   {
    "slug": "queen-of-hearts",
@@ -960,7 +1768,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/queen-of-hearts.webp",
    "thumb": "assets/img/fragrancias/queen-of-hearts-s.webp",
-   "n": 44
+   "n": 80
   },
   {
    "slug": "rhiannon",
@@ -979,7 +1787,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/rhiannon.webp",
    "thumb": "assets/img/fragrancias/rhiannon-s.webp",
-   "n": 45
+   "n": 81
+  },
+  {
+   "slug": "salem-1692",
+   "nome": "Salem 1692",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Dior — Hypnotic Poison",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "O ano que dá nome a esta casa, lembrado em amêndoa e baunilha.",
+   "piramide": {
+    "topo": "Coco, Ameixa e Damasco",
+    "coracao": "Pau-Rosa, Jasmim, Alcarávia, Tuberosa, Rosa e Lírio-do-Vale",
+    "fundo": "Baunilha, Amêndoa, Sândalo e Almíscar"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/salem-1692.webp",
+   "thumb": "assets/img/fragrancias/salem-1692-s.webp",
+   "n": 82
   },
   {
    "slug": "samhain",
@@ -998,7 +1829,7 @@ window.COVEN = {
    "formato": "Extrait de Parfum",
    "img": "assets/img/fragrancias/samhain.webp",
    "thumb": "assets/img/fragrancias/samhain-s.webp",
-   "n": 46
+   "n": 83
   },
   {
    "slug": "santa-muerte",
@@ -1017,7 +1848,53 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/santa-muerte.webp",
    "thumb": "assets/img/fragrancias/santa-muerte-s.webp",
-   "n": 47
+   "n": 84
+  },
+  {
+   "slug": "sinner",
+   "nome": "Sinner",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Gucci — Guilty",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Pêssego e patchouli, e nenhum arrependimento.",
+   "piramide": {
+    "topo": "Pimenta Rosa, Mandarina e Bergamota",
+    "coracao": "Lilás, Pêssego, Gerânio, Jasmim e Groselha Preta",
+    "fundo": "Patchouli, Âmbar, Almíscar Branco e Baunilha"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/sinner.webp",
+   "thumb": "assets/img/fragrancias/sinner-s.webp",
+   "n": 85
+  },
+  {
+   "slug": "siren",
+   "nome": "Siren",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Dolce & Gabbana — Light Blue",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Limão siciliano e um canto que vem do rochedo. Tape os ouvidos.",
+   "piramide": {
+    "topo": "Limão Siciliano, Maçã, Cedro e Campânula",
+    "coracao": "Bambu, Jasmim e Rosa Branca",
+    "fundo": "Cedro, Almíscar e Âmbar"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/siren.webp",
+   "thumb": "assets/img/fragrancias/siren-s.webp",
+   "n": 86
   },
   {
    "slug": "solsticium",
@@ -1040,7 +1917,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/solsticium.webp",
    "thumb": "assets/img/fragrancias/solsticium-s.webp",
-   "n": 48
+   "n": 87
   },
   {
    "slug": "stregheria",
@@ -1063,7 +1940,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/stregheria.webp",
    "thumb": "assets/img/fragrancias/stregheria-s.webp",
-   "n": 49
+   "n": 88
   },
   {
    "slug": "strigoi",
@@ -1082,7 +1959,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/strigoi.webp",
    "thumb": "assets/img/fragrancias/strigoi-s.webp",
-   "n": 50
+   "n": 89
   },
   {
    "slug": "sweet-evil",
@@ -1105,7 +1982,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/sweet-evil.webp",
    "thumb": "assets/img/fragrancias/sweet-evil-s.webp",
-   "n": 51
+   "n": 90
   },
   {
    "slug": "tenebris",
@@ -1124,7 +2001,49 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/tenebris.webp",
    "thumb": "assets/img/fragrancias/tenebris-s.webp",
-   "n": 52
+   "n": 91
+  },
+  {
+   "slug": "the-lost-unicorn",
+   "nome": "The Lost Unicorn",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 195",
+   "tipo": "criacao",
+   "inspiracao": "",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Floral branco",
+   "frase": "Dois jasmins, um carnal e outro aveludado, no rastro do último unicórnio.",
+   "piramide": null,
+   "notas": "Jasminum sambac, Jasminum grandiflorum, musk branco, lírio-do-vale, ambroxan",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/the-lost-unicorn.webp",
+   "thumb": "assets/img/fragrancias/the-lost-unicorn-s.webp",
+   "n": 92
+  },
+  {
+   "slug": "the-seven-wonders",
+   "nome": "The Seven Wonders",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Burberry — Her",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Sete frutas no topo, uma para cada maravilha do mundo antigo.",
+   "piramide": {
+    "topo": "Morango, Framboesa, Amora, Cereja Amarga, Groselha Preta, Mandarina e Limão",
+    "coracao": "Violeta e Jasmim",
+    "fundo": "Almíscar, Baunilha, Cashmeran, Notas Amadeiradas, Âmbar, Musgo de Carvalho e Patchouli"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/the-seven-wonders.webp",
+   "thumb": "assets/img/fragrancias/the-seven-wonders-s.webp",
+   "n": 93
   },
   {
    "slug": "tooth-fairy",
@@ -1143,7 +2062,30 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/tooth-fairy.webp",
    "thumb": "assets/img/fragrancias/tooth-fairy-s.webp",
-   "n": 53
+   "n": 94
+  },
+  {
+   "slug": "valhalla",
+   "nome": "Valhalla",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Carolina Herrera — 212 VIP Men",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Um brinde no salão dos guerreiros: gin, vodka e couro.",
+   "piramide": {
+    "topo": "Maracujá, Lima, Pimenta e Gengibre",
+    "coracao": "Vodka, Gin, Hortelã e Especiarias",
+    "fundo": "Âmbar, Couro e Notas Amadeiradas"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/valhalla.webp",
+   "thumb": "assets/img/fragrancias/valhalla-s.webp",
+   "n": 95
   },
   {
    "slug": "vanessa-ives",
@@ -1162,7 +2104,99 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/vanessa-ives.webp",
    "thumb": "assets/img/fragrancias/vanessa-ives-s.webp",
-   "n": 54
+   "n": 96
+  },
+  {
+   "slug": "vixen",
+   "nome": "Vixen",
+   "sub": "",
+   "volume": "60 ml",
+   "preco": "R$ 175",
+   "tipo": "releitura",
+   "inspiracao": "Bvlgari — Rose Goldea",
+   "colab": "",
+   "esgotado": false,
+   "familia": "Floral amadeirado almiscarado",
+   "frase": "Rosa e romã, e um olhar de raposa por cima do ombro.",
+   "piramide": {
+    "topo": "Rosa, Almíscar, Romã e Bergamota",
+    "coracao": "Rosa Damascena, Peônia, Jasmim e Pêssego",
+    "fundo": "Almíscar, Sândalo, Olíbano e Baunilha"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/vixen.webp",
+   "thumb": "assets/img/fragrancias/vixen-s.webp",
+   "n": 97
+  },
+  {
+   "slug": "walpurgis-night",
+   "nome": "Walpurgis Night",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Valentino — Donna Born in Roma",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Na véspera de maio, as fogueiras ardem em três tons de jasmim.",
+   "piramide": {
+    "topo": "Groselha Preta, Pimenta Rosa e Bergamota",
+    "coracao": "Jasmim, Jasmim Sambac e Chá de Jasmim",
+    "fundo": "Baunilha de Bourbon, Cashmeran e Madeira Guaiac"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/walpurgis-night.webp",
+   "thumb": "assets/img/fragrancias/walpurgis-night-s.webp",
+   "n": 98
+  },
+  {
+   "slug": "wendigo",
+   "nome": "Wendigo",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Versace — Pour Homme",
+   "colab": "",
+   "esgotado": true,
+   "familia": "Aromático fougère",
+   "frase": "A fome que anda na neve, entre folha de figo e pimenta-preta.",
+   "piramide": {
+    "topo": "Bergamota da Calábria, Notas Aquáticas, Toranja e Folha de Figo",
+    "coracao": "Ambroxan, Pimenta Preta, Patchouli, Folha de Violeta e Papiro",
+    "fundo": "Incenso, Almíscar, Fava Tonka e Açafrão"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/wendigo.webp",
+   "thumb": "assets/img/fragrancias/wendigo-s.webp",
+   "n": 99
+  },
+  {
+   "slug": "werewolf",
+   "nome": "Werewolf",
+   "sub": "",
+   "volume": "100 ml",
+   "preco": "R$ 190",
+   "tipo": "releitura",
+   "inspiracao": "Creed — Aventus",
+   "colab": "",
+   "esgotado": false,
+   "familia": "",
+   "frase": "Abacaxi de dia, vidoeiro defumado quando a lua enche.",
+   "piramide": {
+    "topo": "Bergamota, Groselha Preta, Maçã, Limão e Pimenta Rosa",
+    "coracao": "Abacaxi, Patchouli e Jasmim Marroquino",
+    "fundo": "Vidoeiro, Almíscar, Musgo de Carvalho, Ambroxan e Cedro"
+   },
+   "notas": "",
+   "formato": "Parfum",
+   "img": "assets/img/fragrancias/werewolf.webp",
+   "thumb": "assets/img/fragrancias/werewolf-s.webp",
+   "n": 100
   },
   {
    "slug": "witch",
@@ -1185,7 +2219,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/witch.webp",
    "thumb": "assets/img/fragrancias/witch-s.webp",
-   "n": 55
+   "n": 101
   },
   {
    "slug": "wuthering-heights",
@@ -1208,7 +2242,7 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/wuthering-heights.webp",
    "thumb": "assets/img/fragrancias/wuthering-heights-s.webp",
-   "n": 56
+   "n": 102
   }
  ],
  "linhas": [
