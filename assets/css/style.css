@@ -1,6 +1,6 @@
 /* ==========================================================================
    COVEN 1692 — site conceitual
-   Preto absoluto para os frascos; pergaminho para o apothecary.
+   Preto absoluto em todas as páginas, dos frascos ao apothecary.
    Serifada literária (Cormorant Garamond) + mono de etiqueta (IBM Plex Mono).
    ========================================================================== */
 
@@ -13,11 +13,6 @@
   --line: rgba(232, 224, 210, .14);
   --blood: #a3221f;
   --candle: #d9a55b;
-
-  --paper: #e7ddcc;
-  --ink: #1a1613;
-  --ink-2: #5e554b;
-  --p-line: rgba(26, 22, 19, .16);
 
   --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -41,13 +36,6 @@
   --bg-tex:
     linear-gradient(rgba(3, 3, 3, var(--tex-dim)), rgba(3, 3, 3, var(--tex-dim))),
     url("../img/brand/textura.webp") 0 0 / var(--tex-size) auto repeat var(--bg);
-
-  /* fundo das seções claras (Apothecary): papel antigo, também contínuo.
-     --paper-dim: 0 = textura como está, 1 = bege liso. */
-  --paper-dim: 0;
-  --paper-tex:
-    linear-gradient(rgba(231, 221, 204, var(--paper-dim)), rgba(231, 221, 204, var(--paper-dim))),
-    url("../img/brand/papel.webp") 0 0 / 600px auto repeat var(--paper); /* arquivo de 750px exibido a 600px: nítido também em telas de alta densidade */
   --sec: clamp(88px, 12vw, 180px);
   --ease: cubic-bezier(.2, .7, .1, 1);
 }
@@ -122,7 +110,7 @@ p { margin: 0; }
   mix-blend-mode: difference;
   transition: padding .45s var(--ease);
 }
-/* a xilogravura da marca, em tom osso; com o mix-blend do cabeçalho ela fica preta sobre o pergaminho */
+/* a xilogravura da marca, em tom osso (o mix-blend do cabeçalho a inverte sobre fundos claros) */
 .brand { display: block; justify-self: start; line-height: 0; }
 .brand img { width: var(--logo); height: var(--logo); transition: width .45s var(--ease), height .45s var(--ease); }
 .site-header.is-compact { padding-top: 12px; padding-bottom: 12px; }
@@ -138,7 +126,7 @@ p { margin: 0; }
    O que rola por baixo some atrás deles e o cabeçalho fica sempre legível; como repetem o fundo, eles mesmos não aparecem.
    Ficam fora do <header> porque o mix-blend-mode do cabeçalho misturaria o véu ao conteúdo em vez de cobri-lo.
    Cada um é uma camada do tamanho da tela (a textura casa com a do body::before) recortada pelo clip-path no
-   retângulo --v-l/--v-t/--v-w/--v-h; o main.js copia o fundo da seção que passa por trás (--veil-tint, pergaminho). */
+   retângulo --v-l/--v-t/--v-w/--v-h; o main.js copia o véu da seção que passa por trás (--veil-tint). */
 .veil {
   position: fixed; inset: 0; z-index: 74;
   pointer-events: none;
@@ -146,7 +134,6 @@ p { margin: 0; }
   clip-path: inset(var(--v-t) calc(100% - var(--v-l) - var(--v-w)) calc(100% - var(--v-t) - var(--v-h)) var(--v-l) round var(--v-r));
 }
 .veil.is-on { transition: clip-path .45s var(--ease); } /* acompanha o cabeçalho encolhendo */
-.veil.is-paper { background: var(--paper-tex); background-position: var(--paper-x, 0) var(--paper-y, 0); }
 body.is-locked .veil { display: none; } /* Índice, busca ou perfume abertos: não há o que apagar */
 /* logo: o quadrado da xilogravura com 10px de folga */
 .veil--brand {
@@ -457,31 +444,20 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 }
 
 /* ==========================================================================
-   Apothecary — seção em pergaminho
+   Apothecary — mesmo fundo preto, filtros e cartões da perfumaria (.frag-bar, .filters, .grid, .card)
    ========================================================================== */
-.apo { background: var(--paper-tex); color: var(--ink); } /* papel antigo; as fotos em multiply se fundem nele */
-.apo .sec-k { border-color: var(--p-line); color: var(--ink-2); }
-.apo .sec-title em, .apo .sec-note { color: var(--ink-2); }
-.apo ::selection { background: var(--ink); color: var(--paper); }
-
-/* filtros e cartões iguais aos da perfumaria (.frag-bar, .filters, .grid, .card), nas cores do papel */
-.apo .frag-bar { border-color: var(--p-line); }
-.apo .filters button, .apo .filters sup { color: var(--ink-2); }
-.apo .filters button:hover, .apo .filters button[aria-pressed="true"] { color: var(--ink); }
-.apo .card-n, .apo .card-m { color: var(--ink-2); }
-
 /* uma linha (Body Splash, Home Spray…): título, texto e composição sobre a grade */
 .apo-lines { display: flex; flex-direction: column; gap: clamp(56px, 7vw, 96px); margin-top: clamp(28px, 3vw, 40px); }
 .apo-line-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
 .apo-line-t { margin: 0; font-size: clamp(1.5rem, 2.4vw, 2.2rem); line-height: 1; }
-.apo-line-head .k { color: var(--ink-2); }
+.apo-line-head .k { color: var(--bone-2); }
 .apo-intro {
   display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 64px);
   margin-top: clamp(10px, 1.4vw, 16px);
 }
 .apo-text { font-size: clamp(1.02rem, 1.3vw, 1.15rem); line-height: 1.35; font-style: italic; }
-.apo-comp { font-family: var(--mono); font-size: 11px; line-height: 1.65; color: var(--ink-2); }
-.apo-comp span { display: block; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; color: var(--ink); }
+.apo-comp { font-family: var(--mono); font-size: 11px; line-height: 1.65; color: var(--bone-2); }
+.apo-comp span { display: block; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; color: var(--bone); }
 .apo-line .grid { margin-top: clamp(20px, 2.4vw, 32px); }
 @media (max-width: 700px) {
   .apo-intro { grid-template-columns: 1fr; }
@@ -706,8 +682,6 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .p-thumbs button:hover { opacity: .85; }
 .p-thumbs button[aria-current="true"] { opacity: 1; outline: 1px solid var(--candle); outline-offset: 2px; }
 .p-thumbs img { width: 100%; height: 100%; object-fit: cover; }
-.panel--paper .panel-media { --pad-x: 4vw; --pad-y: 6vh; background: var(--paper-tex); }
-.panel--paper .panel-media img { mix-blend-mode: multiply; -webkit-mask-image: none; mask-image: none; }
 
 .panel-body {
   height: 100vh; height: 100svh; overflow-y: auto;

@@ -184,7 +184,7 @@
     const b = e.target.closest('.card[data-line]');
     if (!b) return;
     const l = LINHAS[+b.dataset.line];
-    openItem(l.itens, +b.dataset.i, l, true);
+    openItem(l.itens, +b.dataset.i, l);
   });
 
   /* ------------------------------------------------------------ galerias: fine art + fotos das lojas */
@@ -198,7 +198,7 @@
       `${line.legenda ? `<span class="k">${esc(a.nome)}</span>` : ''}</button></li>`).join('');
     ul.addEventListener('click', e => {
       const b = e.target.closest('[data-i]');
-      if (b) openItem(list, +b.dataset.i, line, false);
+      if (b) openItem(list, +b.dataset.i, line);
     });
   }
   const ARTE = { id: 'arte', titulo: 'Fine Art', linha: 'Dspallanzani Fine Art', formato: 'Diversos tamanhos', preco: 'Sob consulta', galeria: true, legenda: true };
@@ -293,7 +293,7 @@
   }
 
   function renderFrag(f) {
-    panel.classList.remove('panel--paper', 'panel--gallery');
+    panel.classList.remove('panel--gallery');
     P.thumbs.hidden = true;
     P.wa.hidden = false;
     setImage(f.img, `Frasco do perfume ${f.nome}`);
@@ -328,10 +328,9 @@
     P.fine.textContent = (f.colab ? `Este frasco é parte da parceria Coven 1692 & ${f.colab}.` : 'Este frasco é parte do projeto Coven 1692.') + ' Álcool de cereais, matéria-prima importada, blends exclusivos e corante cosmético. Vegan & cruelty free. A reposição é contínua, mas respeita sempre o tempo de maceração.';
   }
 
-  function renderItem(it, line, i, total, paper) {
+  function renderItem(it, line, i, total) {
     const gal = !!line.galeria;
     const loja = line.tipo === 'loja';
-    panel.classList.toggle('panel--paper', !!paper);
     panel.classList.toggle('panel--gallery', gal);
     setImage(it.img, it.alt || it.nome);
     setFilm(null);
@@ -373,7 +372,7 @@
   function render() {
     const it = ctx.list[ctx.i];
     if (ctx.type === 'frag') renderFrag(it);
-    else renderItem(it, ctx.line, ctx.i, ctx.list.length, ctx.paper);
+    else renderItem(it, ctx.line, ctx.i, ctx.list.length);
     $('.p-nav', panel).hidden = ctx.list.length < 2;
     $('.panel-body', panel).scrollTop = 0;
     panel.scrollTop = 0;
@@ -412,8 +411,8 @@
     if (location.hash !== h) history.replaceState(null, '', h);
   }
 
-  function openItem(list, i, line, paper) {
-    ctx = { type: 'item', list, i, line, paper };
+  function openItem(list, i, line) {
+    ctx = { type: 'item', list, i, line };
     render();
     show();
   }
@@ -739,7 +738,7 @@
 
   /* ------------------------------------------------------------ véus atrás da logo e do menu */
   // os véus (ver .veil no CSS) copiam o fundo do que passa por trás deles:
-  // textura pura, textura com véu escuro (Lojas, Fine Art) ou o pergaminho do Apothecary, alinhado à seção
+  // textura pura ou textura com véu escuro (Lojas, Fine Art)
   const brandEl = $('.brand');
   const navEl = $('.nav');
   const veils = $$('.veil');
@@ -749,21 +748,13 @@
   const paintVeils = () => {
     const b = brandEl.getBoundingClientRect(); // logo e menu dividem a mesma linha: o fundo no meio dela vale para os dois
     const y = b.top + b.height / 2;
-    let r = null;
     const under = backs.find(el => {
       if (el.hidden) return false;
-      r = el.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
       return r.top <= y && r.bottom > y;
     });
-    const cs = under && getComputedStyle(under);
-    const paper = !!cs && cs.backgroundImage !== 'none';
-    veils.forEach(v => {
-      v.classList.toggle('is-paper', paper);
-      if (paper) {
-        v.style.setProperty('--paper-x', r.left + 'px');
-        v.style.setProperty('--paper-y', r.top + 'px');
-      } else v.style.setProperty('--veil-tint', cs ? cs.backgroundColor : 'transparent');
-    });
+    const tint = under ? getComputedStyle(under).backgroundColor : 'transparent';
+    veils.forEach(v => v.style.setProperty('--veil-tint', tint));
   };
   new ResizeObserver(fitVeil).observe(navEl); // a largura muda quando a fonte carrega e ao marcar a página atual
   addEventListener('scroll', paintVeils, { passive: true });
