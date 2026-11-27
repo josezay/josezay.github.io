@@ -47,6 +47,7 @@
   const grupo = f => (f.colab ? 'colab:' + f.colab : f.tipo);
   const isMatch = (f, k) => k === 'all' || grupo(f) === k;
   const PARCERIAS = [...new Set(F.filter(f => f.colab).map(f => f.colab))];
+  const PARC = C.parcerias || {}; // apresentação e site de cada parceiro
   const fragFilters = $('#frag-filters');
   fragFilters.insertAdjacentHTML('beforeend', PARCERIAS.map(c =>
     `<button type="button" data-f="colab:${esc(c)}" aria-pressed="false">${esc(c)} <sup data-count="colab:${esc(c)}"></sup></button>`).join(''));
@@ -72,6 +73,21 @@
   const nmBySlug = Object.fromEntries($$('.nm', idx).map(b => [b.dataset.slug, b]));
   const liBySlug = Object.fromEntries($$('li', grid).map(li => [li.dataset.slug, li]));
 
+  // filtro de uma parceria: a apresentação dela ("parcerias" no data.js) aparece ao lado dos frascos, fixa enquanto
+  // eles rolam (no celular, acima deles); o endereço do site, quando aparece no texto, vira link
+  const parcEl = $('#parceria');
+  function setParceria(k) {
+    const nome = k.startsWith('colab:') ? k.slice(6) : '';
+    const p = PARC[nome];
+    parcEl.hidden = !p;
+    $('#frag-body').classList.toggle('frag-body--parceria', !!p);
+    if (!p) return;
+    const host = p.site ? p.site.replace(/^https?:\/\/|\/$/g, '') : '';
+    const link = t => (host ? esc(t).replace(host, `<a href="${esc(p.site)}" target="_blank" rel="noopener">${host} ↗</a>`) : esc(t));
+    parcEl.innerHTML = `<header class="apo-line-head"><h3 class="apo-line-t">${esc(nome)}</h3>${p.linha ? `<p class="k">${esc(p.linha)}</p>` : ''}</header>` +
+      `<div class="parceria-text">${(p.texto || []).map(t => `<p>${link(t)}</p>`).join('')}</div>`;
+  }
+
   $$('button', fragFilters).forEach(b => b.addEventListener('click', () => {
     const k = b.dataset.f;
     $$('button', fragFilters).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
@@ -80,6 +96,7 @@
       nmBySlug[f.slug].classList.toggle('is-dim', !on);
       liBySlug[f.slug].hidden = !on;
     });
+    setParceria(k);
   }));
 
   // abre sempre na galeria; o índice só aparece se a pessoa escolher
@@ -152,7 +169,7 @@
       ? `<p class="apo-comp"><span>Saiba mais</span><a href="https://redevampyrica.com/" target="_blank" rel="noopener">redevampyrica.com ↗</a></p>`
       : (l.composicao ? `<p class="apo-comp"><span>Composição</span>${esc(l.composicao)}</p>` : '');
     const cards = l.itens.map((it, i) => `<li><button class="card" type="button" data-line="${li}" data-i="${i}">` +
-      `<span class="card-img"><img src="${it.img}" alt="" loading="lazy" decoding="async"></span>` +
+      `<span class="card-img"><img src="${it.thumb || it.img}" alt="" loading="lazy" decoding="async"></span>` +
       `<span class="card-n">Nº ${pad(i + 1)}</span>` +
       `<span class="card-t">${esc(it.nome)}</span>` +
       `<span class="card-m">${esc([it.sub || l.formato, it.preco || l.preco].filter(Boolean).join(' · '))}</span></button></li>`).join('');
@@ -228,8 +245,6 @@
     frase: $('#p-frase'), desc: $('#p-desc'), spec: $('#p-spec'), wa: $('#p-wa'), ds: $('#p-ds'), fine: $('#p-fine'),
     colab: $('#p-colab'), thumbs: $('#p-thumbs'), strip: $('#p-fotos'),
   };
-  // site de cada parceiro, mostrado no selo de parceria do painel
-  const PARCEIROS = { 'Rede Vamp': 'https://redevampyrica.com/' };
   let ctx = null;
   let lastFocus = null;
   let closeTimer = null;
@@ -323,7 +338,7 @@
     P.k.textContent = f.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura';
     P.title.textContent = f.nome;
     P.sub.textContent = [f.sub, `${f.formato} · ${f.volume}`].filter(Boolean).join(' — ');
-    const site = PARCEIROS[f.colab];
+    const site = PARC[f.colab]?.site; // site do parceiro, mostrado no selo de parceria
     P.colab.hidden = !f.colab;
     P.colab.innerHTML = f.colab
       ? `<span class="p-colab-t"><span aria-hidden="true">✶</span> Parceria Coven 1692 &amp; ${esc(f.colab)}</span>` +

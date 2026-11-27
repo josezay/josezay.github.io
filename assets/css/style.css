@@ -367,6 +367,26 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .filters button[aria-pressed="true"], .views button[aria-pressed="true"] { color: var(--bone); }
 .filters button[aria-pressed="true"]::before, .views button[aria-pressed="true"]::before { content: "● "; font-size: 7px; vertical-align: 2px; color: var(--candle); }
 .filters sup { font-size: 9px; color: var(--ash); }
+/* apresentação da parceria (filtro Rede Vamp…): mesmo cabeçalho das linhas do Apothecary, texto corrido abaixo.
+   No celular fica acima dos frascos; a partir de 900px, numa coluna à esquerda, fixa logo abaixo do cabeçalho
+   (compacto ao rolar: 12px + logo + 12px) enquanto os frascos rolam. Texto mais alto que a tela rola por dentro. */
+.parceria { margin-top: clamp(28px, 3vw, 40px); }
+@media (min-width: 900px) {
+  .frag-body--parceria {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr); gap: clamp(32px, 4vw, 72px); align-items: start;
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+  .frag-body--parceria .parceria {
+    position: sticky; top: calc(var(--logo-s) + 48px); margin-top: 0;
+    max-height: calc(100vh - var(--logo-s) - 72px); max-height: calc(100svh - var(--logo-s) - 72px);
+    overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+  }
+  .shop .frag-body--parceria .grid, .frag-body--parceria .idx { margin-top: 0; }
+  .frag-body--parceria .apo-line-head { flex-direction: column; align-items: start; }
+}
+.parceria-text { display: grid; gap: 12px; max-width: 68ch; margin-top: clamp(10px, 1.4vw, 16px); font-size: clamp(1.02rem, 1.3vw, 1.15rem); line-height: 1.5; color: var(--bone-2); }
+.parceria-text a { color: var(--bone); border-bottom: 1px solid var(--candle); }
+.parceria-text a:hover { color: var(--candle); }
 
 .idx {
   list-style: none;

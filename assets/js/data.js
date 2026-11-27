@@ -6,8 +6,13 @@
      "fotos":    lista de fotos extras do frasco, além de "img" (ex.: o verso) — o painel mostra miniaturas na lateral da foto para trocar
      "fonte":    crédito da frase, quando ela é uma citação (ex.: "Eggers, Robert 2025") — aparece logo abaixo dela
      "texto":    lista de parágrafos de descrição, mostrados abaixo da frase (ex.: a história da parceria)
+   "parcerias": apresentação de cada parceiro, pelo mesmo nome usado em "colab" (ex.: "Rede Vamp"):
+     "linha":    subtítulo ao lado do nome · "site": endereço do parceiro (vira link no texto e no selo do painel)
+     "texto":    parágrafos mostrados na Perfumaria, acima dos frascos, quando o filtro da parceria está ativo
    Campo opcional de uma linha do apothecary:
      "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
+   Campo opcional de um item do apothecary:
+     "thumb":    versão pequena da foto (560px) para o cartão da grade; o painel usa "img" (1400px)
    Campos de uma obra (Fine Art):
      "w", "h":   largura e altura da imagem em px — a galeria usa a proporção para montar as linhas sem saltos
    Fotos das lojas (loja446, loja469): { "img", "w", "h" }, com os mesmos "w"/"h" das obras */
@@ -2254,6 +2259,16 @@ window.COVEN = {
    "n": 102
   }
  ],
+ "parcerias": {
+  "Rede Vamp": {
+   "linha": "Parceria Coven 1692 & Rede Vampyrica",
+   "site": "https://redevampyrica.com/",
+   "texto": [
+    "A Rede Vampyrica, mais conhecida por seu apelido afetuoso Rede Vamp é uma plataforma online voltada a produção cultural, fashionismo, espiritualidade e mística Vampyrica/vampírica – ou resumidamente Vamp – de uma comunidade que existe há 50 anos no hemisfério norte e há 21 anos no hemisfério sul. Nela encontramos bem mais de 900 artigos, Podcasts, vídeos, produção literária, loja online e um amplo compendio sobre o vampirismo em diversas camadas sempre com bibliografia, origens e muita cultura. O projeto se iniciou ainda em 2003 agregando e reunindo sites e blogs do autor e Dj internacional Lord A:. (Andreas Sahjaza). É responsável por bem mais de 600 eventos realizados e entregues à comunidade e também o público que aprecia tudo isso.",
+    "Pode ser acessada na redevampyrica.com"
+   ]
+  }
+ },
  "linhas": [
   {
    "id": "body-splash",
@@ -2343,7 +2358,8 @@ window.COVEN = {
       "Fruta do Conde",
       "Uma fragrância exótica, doce e cremosa. Ela captura o aroma da Annona squamosa, uma fruta tropical com notas suaves e levemente amanteigadas."
      ],
-     "img": "assets/img/apothecary/body-splash/pinha-fruit.webp"
+     "img": "assets/img/apothecary/body-splash/pinha-fruit.webp",
+     "thumb": "assets/img/apothecary/body-splash/pinha-fruit-s.webp"
     },
     {
      "nome": "Sea Storm",
@@ -2381,7 +2397,8 @@ window.COVEN = {
       "Uma brisa oceânica de outono",
       "Floral suave solar, amadeirado e almiscarado, marinho, lactônico, floral branco"
      ],
-     "img": "assets/img/apothecary/body-splash/autumn-ocean-breeze.webp"
+     "img": "assets/img/apothecary/body-splash/autumn-ocean-breeze.webp",
+     "thumb": "assets/img/apothecary/body-splash/autumn-ocean-breeze-s.webp"
     },
     {
      "nome": "Love Spell VS",
@@ -2389,7 +2406,8 @@ window.COVEN = {
       "Fragrância inspirada : Love Spell Victoria´s Secret",
       "As notas de topo são: Pêssego, Flor de Cerejeira e Maçã Vermelha. As notas de coração são: Lilás, Jasmim e Lírio-do-Vale. As notas de fundo são: Almíscar, Tamarindo e Madeiras Brancas."
      ],
-     "img": "assets/img/apothecary/body-splash/love-spell-vc.webp"
+     "img": "assets/img/apothecary/body-splash/love-spell-vc.webp",
+     "thumb": "assets/img/apothecary/body-splash/love-spell-vc-s.webp"
     },
     {
      "nome": "Green Herbs",

@@ -236,8 +236,13 @@
     </div>
 
     <noscript><p class="sec-note">Ative o JavaScript para ver o catálogo completo.</p></noscript>
-    <ul class="grid" id="grid" aria-label="Galeria de fragrâncias"></ul>
-    <ol class="idx" id="idx" aria-label="Índice de fragrâncias" hidden></ol>
+    <!-- com o filtro de uma parceria (Rede Vamp…), a apresentação dela aparece ao lado dos frascos, fixa enquanto eles rolam
+         (texto em "parcerias" no data.js; ver .frag-body--parceria no CSS) -->
+    <div class="frag-body" id="frag-body">
+      <div class="parceria" id="parceria" hidden></div>
+      <ul class="grid" id="grid" aria-label="Galeria de fragrâncias"></ul>
+      <ol class="idx" id="idx" aria-label="Índice de fragrâncias" hidden></ol>
+    </div>
 
     <aside class="discovery" aria-label="Discovery Set">
       <img src="assets/img/brand/selo.webp" alt="" loading="lazy">
