@@ -2285,21 +2285,24 @@ window.COVEN = {
       "Fragrância floral branca, suave, atalcada, sensação de conforto e limpeza.",
       "Anis, cedro, musk, pêssego, lírio do vale"
      ],
-     "img": "assets/img/apothecary/body-splash/soap-bubbles.webp"
+     "img": "assets/img/apothecary/body-splash/soap-bubbles.webp",
+     "thumb": "assets/img/apothecary/body-splash/soap-bubbles-s.webp"
     },
     {
      "nome": "Hibiscus",
      "texto": [
       "Aroma floral frutado com notas levemente adocicadas que transmitem sensações de calma, conforto e sensualidade, nas notas encontramos o hibisco que é o protagonista, junto com a romã, pitanga preta, groselha, e acordes levemente amadeirados"
      ],
-     "img": "assets/img/apothecary/body-splash/hibiscus.webp"
+     "img": "assets/img/apothecary/body-splash/hibiscus.webp",
+     "thumb": "assets/img/apothecary/body-splash/hibiscus-s.webp"
     },
     {
      "nome": "Passion Fruit and Cassis",
      "texto": [
       "Flor de Maracujá e Cassis combina a doçura exótica e o toque floral suave da flor de maracujá com a vivacidade frutada e marcante das bagas de cassis."
      ],
-     "img": "assets/img/apothecary/body-splash/passion-fruit-and-cassis.webp"
+     "img": "assets/img/apothecary/body-splash/passion-fruit-and-cassis.webp",
+     "thumb": "assets/img/apothecary/body-splash/passion-fruit-and-cassis-s.webp"
     },
     {
      "nome": "Woods and Roots",
@@ -2307,21 +2310,24 @@ window.COVEN = {
       "Madeiras e Raizes",
       "Notas verdes,  frescor das folhas orvalhadas e da grama recém-cortada, delicadas notas de flores frescas, musgo de carvalho e terra"
      ],
-     "img": "assets/img/apothecary/body-splash/woods-and-roots.webp"
+     "img": "assets/img/apothecary/body-splash/woods-and-roots.webp",
+     "thumb": "assets/img/apothecary/body-splash/woods-and-roots-s.webp"
     },
     {
      "nome": "Frangipani & Néroli",
      "texto": [
       "Frangipani e Neroli combina o frescor cítrico-floral do neroli (flor da laranjeira) com a doçura exótica e intensa do frangipani, resultando em uma fragrância sofisticada, levemente frutada e tropical."
      ],
-     "img": "assets/img/apothecary/body-splash/frangipani-neroli.webp"
+     "img": "assets/img/apothecary/body-splash/frangipani-neroli.webp",
+     "thumb": "assets/img/apothecary/body-splash/frangipani-neroli-s.webp"
     },
     {
      "nome": "Sweet Floral",
      "texto": [
       "Fragrância Floral , tuberosa, lírio do campo, com o toque aveludado do pêssego e a suavidade do musk"
      ],
-     "img": "assets/img/apothecary/body-splash/sweet-floral.webp"
+     "img": "assets/img/apothecary/body-splash/sweet-floral.webp",
+     "thumb": "assets/img/apothecary/body-splash/sweet-floral-s.webp"
     },
     {
      "nome": "Matcha & Lime",
@@ -2329,28 +2335,32 @@ window.COVEN = {
       "Combina o frescor cítrico do limão com as notas herbais e terrosas do chá verde japonês, criando um aroma revigorante, equilibrado e sofisticado.",
       "Matcha, lima-da-pérsia, folhas verdes, limão."
      ],
-     "img": "assets/img/apothecary/body-splash/matcha-lime.webp"
+     "img": "assets/img/apothecary/body-splash/matcha-lime.webp",
+     "thumb": "assets/img/apothecary/body-splash/matcha-lime-s.webp"
     },
     {
      "nome": "Lychee & Pomegranate",
      "texto": [
       "Uma fragrância frutal exótica, refrescante e envolvente, que mistura o doce vibrante e suculento da lichia com o toque levemente ácido, moderno e sofisticado da romã"
      ],
-     "img": "assets/img/apothecary/body-splash/lychee-pomegranate.webp"
+     "img": "assets/img/apothecary/body-splash/lychee-pomegranate.webp",
+     "thumb": "assets/img/apothecary/body-splash/lychee-pomegranate-s.webp"
     },
     {
      "nome": "Pear & Vanilla",
      "texto": [
       "Pera e Vanilla combina o frescor suculento da pera com a doçura cremosa da baunilha, criando um aroma oriental, doce, aconchegante e envolvente"
      ],
-     "img": "assets/img/apothecary/body-splash/pear-vanilla.webp"
+     "img": "assets/img/apothecary/body-splash/pear-vanilla.webp",
+     "thumb": "assets/img/apothecary/body-splash/pear-vanilla-s.webp"
     },
     {
      "nome": "Musk & Freesia",
      "texto": [
       "Uma fragrância cítrica, floral e almiscarada. Tem nas notas, almíscar, musk, folhas de violeta, patchouli, cassis, freesia, bergamota. Sensação de um sabonete fino e aconchegante"
      ],
-     "img": "assets/img/apothecary/body-splash/musk-freesia.webp"
+     "img": "assets/img/apothecary/body-splash/musk-freesia.webp",
+     "thumb": "assets/img/apothecary/body-splash/musk-freesia-s.webp"
     },
     {
      "nome": "Pinha Fruit",
@@ -2366,7 +2376,8 @@ window.COVEN = {
      "texto": [
       "Uma reminiscência do cheiro do mar, notas marinhas frescas e tons suaves de musgo branco, limão, lavanda e sálvia, gerânio, cardamomo, musk e patchouli"
      ],
-     "img": "assets/img/apothecary/body-splash/sea-storm.webp"
+     "img": "assets/img/apothecary/body-splash/sea-storm.webp",
+     "thumb": "assets/img/apothecary/body-splash/sea-storm-s.webp"
     },
     {
      "nome": "Strawberry & Champagne",
@@ -2374,14 +2385,16 @@ window.COVEN = {
       "Morango e Champagne",
       "Aroma frutal doce e sofisticado. Combina notas efervescentes de champagne com morango maduro, além de toques florais e de baunilha."
      ],
-     "img": "assets/img/apothecary/body-splash/strawberry-champagne.webp"
+     "img": "assets/img/apothecary/body-splash/strawberry-champagne.webp",
+     "thumb": "assets/img/apothecary/body-splash/strawberry-champagne-s.webp"
     },
     {
      "nome": "Peach Tea",
      "texto": [
       "A doçura suave do chá de pêssego"
      ],
-     "img": "assets/img/apothecary/body-splash/peach-tea.webp"
+     "img": "assets/img/apothecary/body-splash/peach-tea.webp",
+     "thumb": "assets/img/apothecary/body-splash/peach-tea-s.webp"
     },
     {
      "nome": "Dark Chocolate",
@@ -2389,7 +2402,8 @@ window.COVEN = {
       "Chocolate, baunilha, caramelo",
       "Um aromático que captura o aroma rico e reconfortante do chocolate."
      ],
-     "img": "assets/img/apothecary/body-splash/dark-chocolate.webp"
+     "img": "assets/img/apothecary/body-splash/dark-chocolate.webp",
+     "thumb": "assets/img/apothecary/body-splash/dark-chocolate-s.webp"
     },
     {
      "nome": "Autumn Ocean Breeze",
@@ -2415,7 +2429,8 @@ window.COVEN = {
       "Notas cítricas e herbáceas",
       "Aroma que se mistura com notas de água doce e verdes para criar um aroma refrescante e revigorante."
      ],
-     "img": "assets/img/apothecary/body-splash/green-herbs.webp"
+     "img": "assets/img/apothecary/body-splash/green-herbs.webp",
+     "thumb": "assets/img/apothecary/body-splash/green-herbs-s.webp"
     }
    ],
    "fotos": [
