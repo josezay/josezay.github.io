@@ -1075,8 +1075,6 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/kraken.webp",
    "thumb": "assets/img/fragrancias/kraken-s.webp",
-   "video": "assets/video/kraken.mp4",
-   "poster": "assets/img/fragrancias/kraken-filme.webp",
    "n": 49
   },
   {
@@ -1291,8 +1289,6 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/matinta.webp",
    "thumb": "assets/img/fragrancias/matinta-s.webp",
-   "video": "assets/video/matinta.mp4",
-   "poster": "assets/img/fragrancias/matinta-filme.webp",
    "n": 59
   },
   {
@@ -1815,13 +1811,13 @@ window.COVEN = {
   {
    "slug": "samhain",
    "nome": "Samhain",
-   "sub": "Edição limitada",
+   "sub": "Pumpkin Spice Latte · Edição limitada",
    "volume": "50 ml",
    "preco": "R$ 190",
    "tipo": "criacao",
    "inspiracao": "",
    "colab": "",
-   "esgotado": true,
+   "esgotado": false,
    "familia": "Gourmand especiado",
    "frase": "A última colheita antes do inverno, servida quente na noite em que o véu se afina.",
    "piramide": null,
@@ -1953,7 +1949,7 @@ window.COVEN = {
    "colab": "Rede Vamp",
    "esgotado": false,
    "familia": "Floral almiscarado aquático",
-   "frase": "A fragrância que floresce em silêncio nos prados dos imortais.",
+   "frase": "Experimente a fragrância que floresce silenciosamente na escuridão nos prados dos imortais.",
    "piramide": null,
    "notas": "Floral, almiscarado, aquático, verde, atalcado",
    "formato": "Parfum",
