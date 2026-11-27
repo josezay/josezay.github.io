@@ -330,7 +330,8 @@
         (site ? `<a href="${site}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/|\/$/g, ''))} ↗</a>` : '')
       : '';
     P.frase.innerHTML = `“${esc(f.frase)}”` + (f.fonte ? `<cite class="p-fonte">— ${esc(f.fonte)}</cite>` : '');
-    P.desc.innerHTML = '';
+    P.frase.classList.toggle('p-frase--longa', f.frase.length > 140); // citação longa: letra menor, linha mais larga
+    P.desc.innerHTML = (f.texto || []).map(t => `<p>${esc(t)}</p>`).join('');
     const p = f.piramide || {};
     P.spec.innerHTML = specRows([
       f.tipo === 'releitura' && ['Inspiração', f.inspiracao],
@@ -377,6 +378,7 @@
     const texto = (it.texto || []).slice();
     const poetic = line.id === 'rede-vamp';
     P.frase.textContent = line.frase || (poetic && texto.length ? `“${texto.shift()}”` : '');
+    P.frase.classList.remove('p-frase--longa');
     P.desc.innerHTML = texto.map(t => `<p>${esc(t)}</p>`).join('');
     P.spec.innerHTML = specRows([
       ['Formato', it.sub ? '' : line.formato],

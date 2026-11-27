@@ -712,6 +712,7 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .p-sub { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
 .p-frase { margin-top: clamp(24px, 4vh, 40px); font-style: italic; font-weight: 300; font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.22; max-width: 26ch; }
 .p-frase:empty, .p-desc:empty, .p-sub:empty { display: none; }
+.p-frase--longa { font-size: clamp(1.15rem, 1.45vw, 1.4rem); line-height: 1.38; max-width: 40ch; }
 /* crédito da frase quando ela é uma citação ("fonte" no data.js) */
 .p-fonte { display: block; margin-top: 14px; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ash); }
 /* selo de parceria (ex.: Rede Vamp) — os perfumes da parceria ficam nas releituras, sem categoria própria */

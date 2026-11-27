@@ -5,6 +5,7 @@
      "colab":    nome do parceiro (ex.: "Rede Vamp") — o painel do perfume mostra o selo "Parceria Coven 1692 & …"
      "fotos":    lista de fotos extras do frasco, além de "img" (ex.: o verso) — o painel mostra miniaturas na lateral da foto para trocar
      "fonte":    crédito da frase, quando ela é uma citação (ex.: "Eggers, Robert 2025") — aparece logo abaixo dela
+     "texto":    lista de parágrafos de descrição, mostrados abaixo da frase (ex.: a história da parceria)
    Campo opcional de uma linha do apothecary:
      "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
    Campos de uma obra (Fine Art):
@@ -459,7 +460,11 @@ window.COVEN = {
    "colab": "Rede Vamp",
    "esgotado": false,
    "familia": "",
-   "frase": "O amor é sempre egoísta; quanto mais ardente, mais egoísta.",
+   "frase": "Está próximo o momento em que saberás de tudo. Vais me achar cruel, muito egoísta, mas o amor é sempre egoísta; quanto mais ardente, mais egoísta. Não sabes como sou ciumenta. Tens que vir comigo, amando-me, para a morte; ou então me odeie, mas vem comigo, e me odeie na morte e depois dela.",
+   "fonte": "Carmilla, Sheridan Le Fanu",
+   "texto": [
+    "Inspirado no clássico da literatura vampírica e na atmosfera do maior evento Vampyrico da América Latina e Portugal."
+   ],
    "piramide": {
     "topo": "Íris, peônia, lírio-do-vale",
     "coracao": "Rosa, damasco, pêssego",
