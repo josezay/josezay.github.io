@@ -737,6 +737,40 @@
   $('.skip').addEventListener('click', e => { e.preventDefault(); $('#conteudo').focus(); });
   route(false);
 
+  /* ------------------------------------------------------------ véu atrás do menu */
+  // o véu (ver .nav-veil no CSS) tem a largura do menu e copia o fundo do que passa por trás dele:
+  // textura pura, textura com véu escuro (Lojas, Fine Art) ou o pergaminho do Apothecary, alinhado à seção
+  const navEl = $('.nav');
+  const veil = $('.nav-veil');
+  const backs = [...PAGES, $('.site-footer')];
+  const fitVeil = () => veil.style.setProperty('--nav-w', navEl.offsetWidth + 'px');
+  const paintVeil = () => {
+    const n = navEl.getBoundingClientRect();
+    if (!n.width) return; // abaixo de 1280px o menu vira o Índice e o véu não aparece
+    const y = n.top + n.height / 2;
+    let r = null;
+    const under = backs.find(el => {
+      if (el.hidden) return false;
+      r = el.getBoundingClientRect();
+      return r.top <= y && r.bottom > y;
+    });
+    const cs = under && getComputedStyle(under);
+    const paper = !!cs && cs.backgroundImage !== 'none';
+    veil.classList.toggle('is-paper', paper);
+    if (paper) {
+      veil.style.setProperty('--paper-x', r.left + 'px');
+      veil.style.setProperty('--paper-y', r.top + 'px');
+    } else veil.style.setProperty('--veil-tint', cs ? cs.backgroundColor : 'transparent');
+  };
+  new ResizeObserver(() => { fitVeil(); paintVeil(); }).observe(navEl); // a largura muda quando a fonte carrega
+  addEventListener('scroll', paintVeil, { passive: true });
+  addEventListener('resize', paintVeil);
+  addEventListener('hashchange', paintVeil);
+  fitVeil();
+  paintVeil();
+  void veil.offsetWidth; // fixa a medida inicial antes de ligar a transição: o véu não "cresce" ao abrir a página
+  veil.classList.add('is-on');
+
   /* ------------------------------------------------------------ revelação */
   if ('IntersectionObserver' in window && !reduce) {
     const els = $$('.sec-head, .sobre-col > *, .frag-bar, .discovery, .apo-line, ' +

@@ -134,6 +134,24 @@ p { margin: 0; }
 .nav a[aria-current="page"]::before { content: "● "; font-size: 7px; vertical-align: 2px; }
 .menu-btn { display: none; }
 
+/* véu atrás dos links do menu: um retângulo arredondado com o próprio fundo da página, entre o conteúdo e o cabeçalho.
+   O que rola por baixo some atrás dele e o menu fica sempre legível; como repete o fundo, ele mesmo não aparece.
+   Fica fora do <header> porque o mix-blend-mode do cabeçalho misturaria o véu ao conteúdo em vez de cobri-lo.
+   É uma camada do tamanho da tela (a textura casa com a do body::before) recortada pelo clip-path;
+   o main.js mede a largura do menu (--nav-w) e copia o fundo da seção que passa por trás (--veil-tint, pergaminho). */
+.nav-veil {
+  --veil-h: 40px;
+  --veil-t: calc(var(--head-pad) + var(--logo) / 2 - var(--veil-h) / 2);
+  --veil-x: calc(50% - var(--nav-w, 0px) / 2 - 24px);
+  position: fixed; inset: 0; z-index: 74;
+  pointer-events: none;
+  background: linear-gradient(var(--veil-tint, transparent), var(--veil-tint, transparent)), var(--bg-tex);
+  clip-path: inset(var(--veil-t) var(--veil-x) calc(100% - var(--veil-t) - var(--veil-h)) var(--veil-x) round var(--veil-h));
+}
+.site-header.is-compact + .nav-veil { --veil-t: calc(12px + var(--logo-s) / 2 - var(--veil-h) / 2); }
+.nav-veil.is-on { transition: clip-path .45s var(--ease); } /* acompanha o cabeçalho encolhendo */
+.nav-veil.is-paper { background: var(--paper-tex); background-position: var(--paper-x, 0) var(--paper-y, 0); }
+
 .menu {
   position: fixed; inset: 0; z-index: 70;
   background: var(--bg-tex);
@@ -152,7 +170,7 @@ p { margin: 0; }
 
 /* dez itens no menu: só cabem a partir de 1280px; abaixo disso vão para o Índice em tela cheia */
 @media (max-width: 1279px) {
-  .nav { display: none; }
+  .nav, .nav-veil { display: none; }
   .menu-btn { display: block; }
 }
 
