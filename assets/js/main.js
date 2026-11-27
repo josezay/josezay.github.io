@@ -221,14 +221,6 @@
     gallery(ul, fotos, line);
   });
 
-  const BLESSING = { id: 'blessing', titulo: 'Ritual', linha: 'New Orleans Hoodoo', formato: 'Feitiço', preco: '' };
-  const blessingItem = [{
-    nome: 'Blessing Spell', sub: 'New Orleans Hoodoo', preco: 'R$ 80', img: 'assets/img/ritual/blessing.webp',
-    texto: ['Entre pela porta com paz e toda a paz irá com você.',
-      'Entre com verdadeira reverência em seu coração e receba suas bênçãos. Deixe seus desejos no altar e todas as coisas serão recompensadas. Use a magia com justificativa e sabedoria. Honre seus ancestrais...Eles estão sempre ao seu lado. No silêncio encontraremos Deus e as respostas lançadas ao universo serão atendidas pela fé que emana do seu coração'],
-  }];
-  $('[data-blessing]').addEventListener('click', () => openItem(blessingItem, 0, BLESSING, false));
-
   /* ------------------------------------------------------------ painel */
   const panel = $('#panel');
   const P = {
@@ -362,7 +354,7 @@
     P.sub.textContent = it.sub || line.titulo;
     P.colab.hidden = true;
     const texto = (it.texto || []).slice();
-    const poetic = line.id === 'rede-vamp' || line.id === 'blessing';
+    const poetic = line.id === 'rede-vamp';
     P.frase.textContent = line.frase || (poetic && texto.length ? `“${texto.shift()}”` : '');
     P.desc.innerHTML = texto.map(t => `<p>${esc(t)}</p>`).join('');
     P.spec.innerHTML = specRows([
