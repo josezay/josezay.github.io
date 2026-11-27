@@ -694,7 +694,7 @@ window.COVEN = {
    "colab": "Rede Vamp",
    "esgotado": false,
    "familia": "Amadeirado floral almiscarado",
-   "frase": "Figo e vetiver no castelo, pouco antes do amanhecer.",
+   "frase": "I’ve crossed oceans of time to find you.",
    "piramide": null,
    "notas": "Néroli, manjericão, vetiver, figo",
    "formato": "Parfum",
