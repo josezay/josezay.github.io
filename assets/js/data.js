@@ -2,7 +2,6 @@
    Campos opcionais de uma fragrância:
      "video":    caminho de um MP4 (H.264) — aparece no painel do perfume, com botões Filme / Frasco / Som
      "poster":   imagem mostrada antes de o vídeo carregar (idealmente o primeiro quadro)
-     "destaque": true — mostra o perfume no banner "Em destaque" (use em apenas um, com vídeo)
      "colab":    nome do parceiro (ex.: "Rede Vamp") — o painel do perfume mostra o selo "Parceria Coven 1692 & …"
    Campo opcional de uma linha do apothecary:
      "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
@@ -716,7 +715,6 @@ window.COVEN = {
    "thumb": "assets/img/fragrancias/matinta-s.webp",
    "video": "assets/video/matinta.mp4",
    "poster": "assets/img/fragrancias/matinta-filme.webp",
-   "destaque": true,
    "n": 33
   },
   {

@@ -9,7 +9,6 @@
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const pad = n => String(n).padStart(2, '0');
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1).replace(/[\s,;.]+\S*$/, '') + '…' : s);
   const wa = msg => 'https://wa.me/5511913213269?text=' + encodeURIComponent(msg);
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,17 +41,23 @@
     syncSound(v);
   }
 
-  /* ------------------------------------------------------------ contagens */
-  // parcerias (ex.: Rede Vamp) não são categoria: os perfumes ficam em Criações/Releituras e o painel mostra o selo
-  const isMatch = (f, k) => k === 'all' || f.tipo === k;
+  /* ------------------------------------------------------------ filtros + contagens */
+  // cada perfume fica em um só filtro: Criações, Releituras ou o da sua parceria ("colab" no data.js).
+  // Cada parceria (Rede Vamp, Encantaria…) ganha um filtro próprio, criado aqui.
+  const grupo = f => (f.colab ? 'colab:' + f.colab : f.tipo);
+  const isMatch = (f, k) => k === 'all' || grupo(f) === k;
+  const PARCERIAS = [...new Set(F.filter(f => f.colab).map(f => f.colab))];
+  const fragFilters = $('#frag-filters');
+  fragFilters.insertAdjacentHTML('beforeend', PARCERIAS.map(c =>
+    `<button type="button" data-f="colab:${esc(c)}" aria-pressed="false">${esc(c)} <sup data-count="colab:${esc(c)}"></sup></button>`).join(''));
   const counts = {};
-  ['all', 'criacao', 'releitura'].forEach(k => { counts[k] = F.filter(f => isMatch(f, k)).length; });
+  ['all', 'criacao', 'releitura', ...PARCERIAS.map(c => 'colab:' + c)].forEach(k => { counts[k] = F.filter(f => isMatch(f, k)).length; });
   $$('[data-count]').forEach(el => { el.textContent = counts[el.dataset.count]; });
 
   /* ------------------------------------------------------------ índice + galeria */
   const idx = $('#idx');
   const grid = $('#grid');
-  const tipoCurto = f => (f.tipo === 'criacao' ? 'Criação' : 'Releitura');
+  const tipoCurto = f => f.colab || (f.tipo === 'criacao' ? 'Criação' : 'Releitura');
 
   idx.innerHTML = F.map(f => `<li><button class="nm${f.esgotado ? ' is-out' : ''}" type="button" data-slug="${f.slug}"` +
     ` aria-label="${esc(f.nome)}${f.esgotado ? ', esgotado' : ''}"><span class="nm-t">${esc(f.nome)}</span><sup aria-hidden="true">${pad(f.n)}</sup>` +
@@ -67,9 +72,9 @@
   const nmBySlug = Object.fromEntries($$('.nm', idx).map(b => [b.dataset.slug, b]));
   const liBySlug = Object.fromEntries($$('li', grid).map(li => [li.dataset.slug, li]));
 
-  $$('.filters button').forEach(b => b.addEventListener('click', () => {
+  $$('button', fragFilters).forEach(b => b.addEventListener('click', () => {
     const k = b.dataset.f;
-    $$('.filters button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    $$('button', fragFilters).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
     F.forEach(f => {
       const on = isMatch(f, k);
       nmBySlug[f.slug].classList.toggle('is-dim', !on);
@@ -135,59 +140,51 @@
   }
 
   /* ------------------------------------------------------------ apothecary */
-  const chapters = $('#chapters');
+  // o mesmo cartão dos perfumes, agrupado por linha; os filtros mostram uma linha só
   const LINHAS = C.linhas.filter(l => !l.oculta); // "oculta": true no data.js tira a linha do site
-  chapters.innerHTML = LINHAS.map((l, li) => {
+  const apoFilters = $('#apo-filters');
+  const apoLines = $('#apo-lines');
+  apoFilters.innerHTML = `<button type="button" data-f="all" aria-pressed="true">Todas <sup>${LINHAS.reduce((n, l) => n + l.itens.length, 0)}</sup></button>` +
+    LINHAS.map(l => `<button type="button" data-f="${l.id}" aria-pressed="false">${esc(l.titulo)} <sup>${l.itens.length}</sup></button>`).join('');
+  apoLines.innerHTML = LINHAS.map((l, li) => {
     const meta = [l.linha, l.formato, l.preco].filter(Boolean).join(' · ');
     const extra = l.id === 'rede-vamp'
-      ? `<p class="ch-comp"><span>Saiba mais</span><a href="https://redevampyrica.com/" target="_blank" rel="noopener">redevampyrica.com ↗</a></p>`
-      : `<p class="ch-comp"><span>Composição</span>${esc(l.composicao)}</p>`;
-    const items = l.itens.map((it, i) => {
-      const m = it.texto && it.texto[0] ? `<span class="item-m">${esc(trunc(it.texto[0], 64))}</span>` : (it.preco ? `<span class="item-m">${esc(it.preco)}</span>` : '');
-      return `<li><button class="item" type="button" data-line="${li}" data-i="${i}"><span class="item-img">` +
-        `<img src="${it.img}" alt="" loading="lazy" decoding="async"></span><span class="item-t">${esc(it.nome)}</span>${m}</button></li>`;
-    }).join('');
-    const fotos = (l.fotos || []).map(src => `<li class="photo"><img src="${src}" alt="" loading="lazy" decoding="async"></li>`).join('');
-    const open = li === 0;
-    return `<article class="ch" id="ap-${l.id}">
-      <h3 class="ch-h"><button class="ch-head" type="button" aria-expanded="${open}" aria-controls="chb-${l.id}">
-        <span class="ch-n">${pad(li + 1)}</span>
-        <span class="ch-tw"><span class="ch-t">${esc(l.titulo)}</span><span class="ch-mm">${esc(meta)}</span></span>
-        <span class="ch-l">${esc(l.linha)}</span><span class="ch-f">${esc(l.formato)}</span><span class="ch-p">${esc(l.preco)}</span>
-        <span class="ch-c">${l.itens.length} ${l.itens.length === 1 ? 'item' : 'itens'}</span><span class="ch-i" aria-hidden="true"></span>
-      </button></h3>
-      <div class="ch-body" id="chb-${l.id}"${open ? '' : ' hidden'}>
-        <div class="ch-intro"><p class="ch-text">${esc(l.texto)}</p>${extra}</div>
-        <ul class="strip" aria-label="${esc(l.titulo)}">${items}${fotos}</ul>
-      </div>
+      ? `<p class="apo-comp"><span>Saiba mais</span><a href="https://redevampyrica.com/" target="_blank" rel="noopener">redevampyrica.com ↗</a></p>`
+      : (l.composicao ? `<p class="apo-comp"><span>Composição</span>${esc(l.composicao)}</p>` : '');
+    const cards = l.itens.map((it, i) => `<li><button class="card" type="button" data-line="${li}" data-i="${i}">` +
+      `<span class="card-img"><img src="${it.img}" alt="" loading="lazy" decoding="async"></span>` +
+      `<span class="card-n">Nº ${pad(i + 1)}</span>` +
+      `<span class="card-t">${esc(it.nome)}</span>` +
+      `<span class="card-m">${esc([it.sub || l.formato, it.preco || l.preco].filter(Boolean).join(' · '))}</span></button></li>`).join('');
+    return `<article class="apo-line" id="ap-${l.id}" data-line-id="${l.id}">
+      <header class="apo-line-head"><h3 class="apo-line-t">${esc(l.titulo)}</h3><p class="k">${esc(meta)}</p></header>
+      <div class="apo-intro"><p class="apo-text">${esc(l.texto)}</p>${extra}</div>
+      <ul class="grid" aria-label="${esc(l.titulo)}">${cards}</ul>
     </article>`;
   }).join('');
+  const lineEls = $$('.apo-line', apoLines);
 
-  chapters.addEventListener('click', e => {
-    const head = e.target.closest('.ch-head');
-    if (head) {
-      const open = head.getAttribute('aria-expanded') !== 'true';
-      head.setAttribute('aria-expanded', String(open));
-      document.getElementById(head.getAttribute('aria-controls')).hidden = !open;
-      return;
-    }
-    const item = e.target.closest('.item');
-    if (item) {
-      const l = LINHAS[+item.dataset.line];
-      openItem(l.itens, +item.dataset.i, l, true);
-    }
-  });
-
-  // links do menu para uma linha (#ap-body-splash etc.) abrem o capítulo antes de rolar até ele
-  function openChapter(id) {
-    const head = $(`#ap-${CSS.escape(id)} .ch-head`);
-    if (!head) return;
-    head.setAttribute('aria-expanded', 'true');
-    document.getElementById(head.getAttribute('aria-controls')).hidden = false;
+  // mostra uma linha (ou "all"); devolve false se a linha não existe. Os links do menu (#ap-sprays…) passam por aqui
+  function setLinha(id) {
+    if (id !== 'all' && !LINHAS.some(l => l.id === id)) return false;
+    $$('button', apoFilters).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === id)));
+    lineEls.forEach(el => { el.hidden = id !== 'all' && el.dataset.lineId !== id; });
+    return true;
   }
-  document.addEventListener('click', e => {
-    const a = e.target.closest('a[href^="#ap-"]');
-    if (a) openChapter(a.getAttribute('href').slice(4));
+  apoFilters.addEventListener('click', e => {
+    const b = e.target.closest('button[data-f]');
+    if (!b) return;
+    setLinha(b.dataset.f);
+    // o endereço acompanha o filtro (#ap-sprays), e o menu marca a linha escolhida
+    lastHash = b.dataset.f === 'all' ? '#apothecary' : '#ap-' + b.dataset.f;
+    history.replaceState(null, '', lastHash);
+    markNav(lastHash);
+  });
+  apoLines.addEventListener('click', e => {
+    const b = e.target.closest('.card[data-line]');
+    if (!b) return;
+    const l = LINHAS[+b.dataset.line];
+    openItem(l.itens, +b.dataset.i, l, true);
   });
 
   /* ------------------------------------------------------------ galerias: fine art + fotos das lojas */
@@ -394,7 +391,6 @@
     clearTimeout(closeTimer);
     if (panel.hidden) {
       lastFocus = document.activeElement;
-      if (featVideo) featVideo.pause();
       panel.hidden = false;
       document.body.classList.add('is-locked');
       requestAnimationFrame(() => panel.classList.add('is-open'));
@@ -408,11 +404,8 @@
     // aberto a partir da busca: ao fechar, volta aos resultados (a página continua travada)
     document.body.classList.toggle('is-locked', !sEl.hidden);
     PV.pause();
-    closeTimer = setTimeout(() => {
-      panel.hidden = true;
-      featSync();
-    }, reduce ? 0 : 400);
-    if (location.hash.startsWith('#frasco/')) history.replaceState(null, '', '#fragrancias');
+    closeTimer = setTimeout(() => { panel.hidden = true; }, reduce ? 0 : 400);
+    if (location.hash.startsWith('#frasco/')) history.replaceState(null, '', lastHash || '#' + page);
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   }
 
@@ -477,72 +470,6 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
-
-  /* ------------------------------------------------------------ banner "Em destaque" (com filme) */
-  const feat = F.find(f => f.destaque && f.video);
-  let featVideo = null;
-  let featVisible = false;
-  let featUserPaused = reduce; // com movimento reduzido, o filme só toca se a pessoa pedir
-  function featSync() {
-    if (!featVideo) return;
-    if (featVisible && !featUserPaused && panel.hidden && sEl.hidden) tryPlay(featVideo); else featVideo.pause();
-  }
-  if (feat) {
-    const featEl = $('#destaque');
-    const p = feat.piramide || {};
-    featEl.innerHTML = `
-      <div class="sec-k"><span>✶</span><span>Em destaque</span></div>
-      <div class="feature-grid">
-        <div class="feature-text">
-          <p class="k k--accent">${feat.colab ? 'Coven 1692 &amp; ' + esc(feat.colab) : (feat.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura')}</p>
-          <h2 class="feature-title">${esc(feat.nome)}</h2>
-          <p class="feature-frase">“${esc(feat.frase)}”</p>
-          <dl class="p-spec">${specRows([
-            ['Topo', p.topo], ['Coração', p.coracao], ['Fundo', p.fundo], ['Notas', feat.notas],
-            ['Frasco', `${feat.formato} · ${feat.volume}`], ['Valor', feat.preco, 'is-price'],
-          ])}</dl>
-          <div class="p-cta">
-            <button class="cta cta--solid" type="button" data-open>Descobrir ${esc(feat.nome)} →</button>
-            <a class="cta" href="${wa(`Olá, Coven! Quero comprar o perfume ${feat.nome} (${feat.volume} · ${feat.preco}).`)}" target="_blank" rel="noopener">Comprar ↗</a>
-          </div>
-        </div>
-        <figure class="feature-media">
-          <figcaption class="feature-caption"><span>▶ Filme</span><span>Nº ${pad(feat.n)} — ${esc(feat.nome)}</span></figcaption>
-          <div class="media-ctrl">
-            <button type="button" data-toggle>${reduce ? 'Tocar' : 'Pausar'}</button>
-            <button type="button" data-sound aria-pressed="false">Som</button>
-          </div>
-        </figure>
-      </div>`;
-    featVideo = makeVideo(feat.video, feat.poster || feat.img, 'feature-video');
-    featVideo.setAttribute('aria-label', `Filme do perfume ${feat.nome}`);
-    $('.feature-media', featEl).prepend(featVideo);
-    const toggleBtn = $('[data-toggle]', featEl);
-    soundBtns.set(featVideo, $('[data-sound]', featEl));
-    featVideo.addEventListener('play', () => { toggleBtn.textContent = 'Pausar'; });
-    featVideo.addEventListener('pause', () => { toggleBtn.textContent = 'Tocar'; });
-    toggleBtn.addEventListener('click', () => {
-      featUserPaused = !featVideo.paused;
-      if (featUserPaused) featVideo.pause(); else tryPlay(featVideo);
-    });
-    $('[data-sound]', featEl).addEventListener('click', () => { featUserPaused = false; toggleSound(featVideo); });
-    $('[data-open]', featEl).addEventListener('click', () => openFrag(feat.slug));
-    featEl.hidden = false;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([en]) => { featVisible = en.isIntersecting; featSync(); }, { threshold: 0.35 }).observe($('.feature-media', featEl));
-    }
-  } else {
-    // sem perfume em destaque (com filme), o item "Destaque" sai dos menus
-    $$('a[href="#destaque"]').forEach(a => { a.hidden = true; });
-  }
-
-  const fromHash = () => {
-    const m = location.hash.match(/^#frasco\/([\w-]+)/);
-    if (m) openFrag(m[1]);
-    else if (location.hash.startsWith('#ap-')) openChapter(location.hash.slice(4));
-  };
-  window.addEventListener('hashchange', fromHash);
-  fromHash();
 
   /* ------------------------------------------------------------ cabeçalho: a logo encolhe ao rolar */
   const siteHeader = $('.site-header');
@@ -694,7 +621,6 @@
     sEl.hidden = false;
     sBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('is-locked');
-    featSync();
     sEl.style.scrollPaddingTop = sHead.offsetHeight + 'px';
     qIn.focus(); // ainda dentro do toque, para o teclado do celular abrir
     qIn.select();
@@ -706,7 +632,6 @@
     sEl.hidden = true;
     sBtn.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('is-locked');
-    featSync();
     const back = sLastFocus && sLastFocus !== document.body && document.contains(sLastFocus) ? sLastFocus : sBtn;
     back.focus({ preventScroll: true });
   }
@@ -761,24 +686,73 @@
     }
   });
 
-  /* ------------------------------------------------------------ seção atual + revelação */
-  if ('IntersectionObserver' in window) {
-    const links = $$('.nav a');
-    const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
-    const sio = new IntersectionObserver(es => es.forEach(en => {
-      const a = byId[en.target.id];
-      if (a && en.isIntersecting) links.forEach(x => x.setAttribute('aria-current', String(x === a)));
-    }), { rootMargin: '-45% 0px -50% 0px' });
-    $$('main > section[id], .ch[id]').forEach(s => sio.observe(s));
+  /* ------------------------------------------------------------ páginas */
+  // cada <section> de <main> é uma página; o endereço (#lojas, #fragrancias, #ap-sprays, #frasco/matinta) decide qual aparece
+  const PAGES = $$('main > section[id]');
+  const pageIds = new Set(PAGES.map(sec => sec.id));
+  const HOME = PAGES[0].id; // a capa
+  const navLinks = $$('.nav a, .m-link');
+  const baseTitle = document.title;
+  let page = null;
+  let lastHash = ''; // endereço da página (ou do filtro) por baixo do painel do perfume, para onde se volta ao fechá-lo
+  const markNav = h => navLinks.forEach(a => {
+    if (a.getAttribute('href') === h) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
 
-    if (!reduce) {
-      const els = $$('.sec-head, .sobre-col > *, .feature-text, .feature-media, .frag-bar, .discovery, .apo-hero, .ch, ' +
-        '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big, .foot-contact');
-      els.forEach(el => el.classList.add('rv'));
-      const io = new IntersectionObserver(es => es.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
-      }), { rootMargin: '0px 0px -6% 0px' });
-      els.forEach(el => io.observe(el));
+  function showPage(id, current, userNav) {
+    const changed = page !== id;
+    if (changed) {
+      PAGES.forEach(sec => { sec.hidden = sec.id !== id; });
+      page = id;
+      const label = $(`#${id} .sec-k span:last-child`); // "Lojas físicas", "Perfumaria"…; a capa não tem
+      document.title = label ? `${label.textContent.trim()} — Coven 1692` : baseTitle;
     }
+    lastHash = '#' + (current || id);
+    markNav(lastHash);
+    if (changed && userNav) $('#conteudo').focus({ preventScroll: true }); // o leitor de tela começa na página nova
+    return changed;
+  }
+
+  function route(userNav) {
+    const h = decodeURIComponent(location.hash.slice(1));
+    const m = h.match(/^frasco\/([\w-]+)/);
+    if (m) {
+      showPage('fragrancias', '', userNav);
+      openFrag(m[1]);
+      return;
+    }
+    if (!panel.hidden) hide();
+    if (h.startsWith('ap-') && setLinha(h.slice(3))) {
+      const changed = showPage('apothecary', h, userNav);
+      scrollTo({ top: 0, behavior: changed || reduce ? 'instant' : 'smooth' });
+      return;
+    }
+    if (!pageIds.has(h) && page) return; // âncora desconhecida: fica onde está
+    if (h === 'apothecary') setLinha('all');
+    if (showPage(pageIds.has(h) ? h : HOME, '', userNav)) scrollTo({ top: 0, behavior: 'instant' });
+  }
+  addEventListener('hashchange', () => route(true));
+  // clicar de novo no link da página atual volta ao topo dela
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute('href') !== location.hash) return;
+    e.preventDefault();
+    if (a.getAttribute('href').startsWith('#ap-')) route(true);
+    else scrollTo({ top: 0, behavior: reduce ? 'instant' : 'smooth' });
+  });
+  // pular para o conteúdo: foco no <main>, sem mudar de página
+  $('.skip').addEventListener('click', e => { e.preventDefault(); $('#conteudo').focus(); });
+  route(false);
+
+  /* ------------------------------------------------------------ revelação */
+  if ('IntersectionObserver' in window && !reduce) {
+    const els = $$('.sec-head, .sobre-col > *, .frag-bar, .discovery, .apo-line, ' +
+      '.ritual-grid, .ritual-imgs, .blessing, .jgrid--arte, .loja, .vendas-lead, .vendas-text, .contact, .foot-big, .foot-contact');
+    els.forEach(el => el.classList.add('rv'));
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+    }), { rootMargin: '0px 0px -6% 0px' });
+    els.forEach(el => io.observe(el));
   }
 })();

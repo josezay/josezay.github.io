@@ -37,7 +37,7 @@
     <circle cx="12" cy="10" r="2.3"/>
   </symbol>
 </svg>
-<a class="skip" href="#fragrancias">Pular para as fragrâncias</a>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="site-header">
   <a class="brand" href="#topo" aria-label="Coven 1692, início"><img src="assets/img/brand/logo-header.webp" alt="" width="200" height="200"></a>
@@ -45,7 +45,6 @@
     <a href="#quem-somos">Quem somos</a>
     <a href="#lojas">Lojas físicas</a>
     <a href="#vendas-online">Vendas online</a>
-    <a href="#destaque">Destaque</a>
     <a href="#fragrancias">Perfumaria</a>
     <a href="#ap-body-splash">Body Splash</a>
     <a href="#ap-home-spray">Home Spray</a>
@@ -66,7 +65,6 @@
     <a class="m-link" href="#quem-somos"><span>I</span>Quem somos</a>
     <a class="m-link" href="#lojas"><span>II</span>Lojas físicas</a>
     <a class="m-link" href="#vendas-online"><span>III</span>Vendas online</a>
-    <a class="m-link" href="#destaque"><span>✶</span>Destaque</a>
     <a class="m-link" href="#fragrancias"><span>IV</span>Perfumaria</a>
     <a class="m-link" href="#ap-body-splash"><span>V.1</span>Body Splash</a>
     <a class="m-link" href="#ap-home-spray"><span>V.2</span>Home Spray</a>
@@ -115,7 +113,8 @@
   </div>
 </div>
 
-<main>
+<!-- cada <section> de <main> é uma página: o JS mostra uma por vez, conforme o endereço (#lojas, #fragrancias…) -->
+<main id="conteudo" tabindex="-1">
 
   <!-- ============================================================ HERO -->
   <section class="hero" id="topo" aria-label="Coven 1692">
@@ -181,7 +180,6 @@
     </div>
     <p class="lojas-cta">
       <a class="cta" href="https://www.google.com/maps/search/?api=1&amp;query=Galeria%20do%20Rock%2C%20Av.%20S%C3%A3o%20Jo%C3%A3o%2C%20439%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Como chegar ↗</a>
-      <a class="cta cta--ghost" href="https://wa.me/5511913213269?text=Ol%C3%A1%2C%20Coven!%20Quero%20agendar%20uma%20visita%20%C3%A0%20Hoodoo%20House." target="_blank" rel="noopener">Agendar visita ↗</a>
     </p>
   </section>
 
@@ -215,9 +213,6 @@
     </div>
   </section>
 
-  <!-- ============================================================ EM DESTAQUE (preenchido pelo JS a partir de data.js) -->
-  <section class="feature" id="destaque" aria-label="Em destaque" hidden></section>
-
   <!-- ============================================================ FRAGRÂNCIAS -->
   <section class="frag" id="fragrancias">
     <header class="sec-head">
@@ -227,7 +222,7 @@
     </header>
 
     <div class="frag-bar">
-      <div class="filters" role="group" aria-label="Filtrar fragrâncias">
+      <div class="filters" id="frag-filters" role="group" aria-label="Filtrar fragrâncias">
         <button type="button" data-f="all" aria-pressed="true">Todas <sup data-count="all"></sup></button>
         <button type="button" data-f="criacao" aria-pressed="false">Criações <sup data-count="criacao"></sup></button>
         <button type="button" data-f="releitura" aria-pressed="false">Releituras <sup data-count="releitura"></sup></button>
@@ -260,10 +255,11 @@
       <h2 class="sec-title">Corpo, casa <em>e pequenos rituais.</em></h2>
       <p class="sec-note">Body splashes e sprays são produzidos sob encomenda ou em pequenos lotes limitados. Consulte a disponibilidade ou faça sua reserva.</p>
     </header>
-    <figure class="apo-hero">
-      <img src="assets/img/brand/apothecary.webp" alt="Ilustração de frascos de poções antigos sobre um grimório aberto, ao lado de uma bolsa de couro com lavanda" loading="lazy">
-    </figure>
-    <div class="chapters" id="chapters"></div>
+    <!-- filtros e cartões no mesmo formato da perfumaria, agrupados por linha (preenchidos pelo JS a partir de data.js) -->
+    <div class="frag-bar">
+      <div class="filters" id="apo-filters" role="group" aria-label="Filtrar por linha"></div>
+    </div>
+    <div class="apo-lines" id="apo-lines"></div>
   </section>
 
   <!-- ============================================================ HOODOO (texto do site original, sem alterações) -->
