@@ -134,23 +134,39 @@ p { margin: 0; }
 .nav a[aria-current="page"]::before { content: "● "; font-size: 7px; vertical-align: 2px; }
 .menu-btn { display: none; }
 
-/* véu atrás dos links do menu: um retângulo arredondado com o próprio fundo da página, entre o conteúdo e o cabeçalho.
-   O que rola por baixo some atrás dele e o menu fica sempre legível; como repete o fundo, ele mesmo não aparece.
-   Fica fora do <header> porque o mix-blend-mode do cabeçalho misturaria o véu ao conteúdo em vez de cobri-lo.
-   É uma camada do tamanho da tela (a textura casa com a do body::before) recortada pelo clip-path;
-   o main.js mede a largura do menu (--nav-w) e copia o fundo da seção que passa por trás (--veil-tint, pergaminho). */
-.nav-veil {
-  --veil-h: 40px;
-  --veil-t: calc(var(--head-pad) + var(--logo) / 2 - var(--veil-h) / 2);
-  --veil-x: calc(50% - var(--nav-w, 0px) / 2 - 24px);
+/* véus atrás da logo e dos links do menu: retângulos arredondados com o próprio fundo da página, entre o conteúdo e o cabeçalho.
+   O que rola por baixo some atrás deles e o cabeçalho fica sempre legível; como repetem o fundo, eles mesmos não aparecem.
+   Ficam fora do <header> porque o mix-blend-mode do cabeçalho misturaria o véu ao conteúdo em vez de cobri-lo.
+   Cada um é uma camada do tamanho da tela (a textura casa com a do body::before) recortada pelo clip-path no
+   retângulo --v-l/--v-t/--v-w/--v-h; o main.js copia o fundo da seção que passa por trás (--veil-tint, pergaminho). */
+.veil {
   position: fixed; inset: 0; z-index: 74;
   pointer-events: none;
   background: linear-gradient(var(--veil-tint, transparent), var(--veil-tint, transparent)), var(--bg-tex);
-  clip-path: inset(var(--veil-t) var(--veil-x) calc(100% - var(--veil-t) - var(--veil-h)) var(--veil-x) round var(--veil-h));
+  clip-path: inset(var(--v-t) calc(100% - var(--v-l) - var(--v-w)) calc(100% - var(--v-t) - var(--v-h)) var(--v-l) round var(--v-r));
 }
-.site-header.is-compact + .nav-veil { --veil-t: calc(12px + var(--logo-s) / 2 - var(--veil-h) / 2); }
-.nav-veil.is-on { transition: clip-path .45s var(--ease); } /* acompanha o cabeçalho encolhendo */
-.nav-veil.is-paper { background: var(--paper-tex); background-position: var(--paper-x, 0) var(--paper-y, 0); }
+.veil.is-on { transition: clip-path .45s var(--ease); } /* acompanha o cabeçalho encolhendo */
+.veil.is-paper { background: var(--paper-tex); background-position: var(--paper-x, 0) var(--paper-y, 0); }
+body.is-locked .veil { display: none; } /* Índice, busca ou perfume abertos: não há o que apagar */
+/* logo: o quadrado da xilogravura com 10px de folga */
+.veil--brand {
+  --v-pad: 10px;
+  --v-t: calc(var(--head-pad) - var(--v-pad));
+  --v-l: calc(var(--gut) - var(--v-pad));
+  --v-w: calc(var(--logo) + 2 * var(--v-pad));
+  --v-h: var(--v-w);
+  --v-r: calc(var(--v-w) * .22);
+}
+.site-header.is-compact ~ .veil--brand { --v-t: calc(12px - var(--v-pad)); --v-w: calc(var(--logo-s) + 2 * var(--v-pad)); }
+/* menu: uma pílula de 40px na altura dos links, com a largura deles (--nav-w, medida pelo main.js) */
+.veil--nav {
+  --v-h: 40px;
+  --v-t: calc(var(--head-pad) + var(--logo) / 2 - var(--v-h) / 2);
+  --v-w: calc(var(--nav-w, 0px) + 48px);
+  --v-l: calc(50% - var(--v-w) / 2);
+  --v-r: var(--v-h);
+}
+.site-header.is-compact ~ .veil--nav { --v-t: calc(12px + var(--logo-s) / 2 - var(--v-h) / 2); }
 
 .menu {
   position: fixed; inset: 0; z-index: 70;
@@ -170,7 +186,7 @@ p { margin: 0; }
 
 /* dez itens no menu: só cabem a partir de 1280px; abaixo disso vão para o Índice em tela cheia */
 @media (max-width: 1279px) {
-  .nav, .nav-veil { display: none; }
+  .nav, .veil--nav { display: none; }
   .menu-btn { display: block; }
 }
 

@@ -737,17 +737,18 @@
   $('.skip').addEventListener('click', e => { e.preventDefault(); $('#conteudo').focus(); });
   route(false);
 
-  /* ------------------------------------------------------------ véu atrás do menu */
-  // o véu (ver .nav-veil no CSS) tem a largura do menu e copia o fundo do que passa por trás dele:
+  /* ------------------------------------------------------------ véus atrás da logo e do menu */
+  // os véus (ver .veil no CSS) copiam o fundo do que passa por trás deles:
   // textura pura, textura com véu escuro (Lojas, Fine Art) ou o pergaminho do Apothecary, alinhado à seção
+  const brandEl = $('.brand');
   const navEl = $('.nav');
-  const veil = $('.nav-veil');
+  const veils = $$('.veil');
+  const navVeil = $('.veil--nav');
   const backs = [...PAGES, $('.site-footer')];
-  const fitVeil = () => veil.style.setProperty('--nav-w', navEl.offsetWidth + 'px');
-  const paintVeil = () => {
-    const n = navEl.getBoundingClientRect();
-    if (!n.width) return; // abaixo de 1280px o menu vira o Índice e o véu não aparece
-    const y = n.top + n.height / 2;
+  const fitVeil = () => navVeil.style.setProperty('--nav-w', navEl.offsetWidth + 'px');
+  const paintVeils = () => {
+    const b = brandEl.getBoundingClientRect(); // logo e menu dividem a mesma linha: o fundo no meio dela vale para os dois
+    const y = b.top + b.height / 2;
     let r = null;
     const under = backs.find(el => {
       if (el.hidden) return false;
@@ -756,20 +757,22 @@
     });
     const cs = under && getComputedStyle(under);
     const paper = !!cs && cs.backgroundImage !== 'none';
-    veil.classList.toggle('is-paper', paper);
-    if (paper) {
-      veil.style.setProperty('--paper-x', r.left + 'px');
-      veil.style.setProperty('--paper-y', r.top + 'px');
-    } else veil.style.setProperty('--veil-tint', cs ? cs.backgroundColor : 'transparent');
+    veils.forEach(v => {
+      v.classList.toggle('is-paper', paper);
+      if (paper) {
+        v.style.setProperty('--paper-x', r.left + 'px');
+        v.style.setProperty('--paper-y', r.top + 'px');
+      } else v.style.setProperty('--veil-tint', cs ? cs.backgroundColor : 'transparent');
+    });
   };
-  new ResizeObserver(() => { fitVeil(); paintVeil(); }).observe(navEl); // a largura muda quando a fonte carrega
-  addEventListener('scroll', paintVeil, { passive: true });
-  addEventListener('resize', paintVeil);
-  addEventListener('hashchange', paintVeil);
+  new ResizeObserver(fitVeil).observe(navEl); // a largura muda quando a fonte carrega e ao marcar a página atual
+  addEventListener('scroll', paintVeils, { passive: true });
+  addEventListener('resize', paintVeils);
+  addEventListener('hashchange', paintVeils);
   fitVeil();
-  paintVeil();
-  void veil.offsetWidth; // fixa a medida inicial antes de ligar a transição: o véu não "cresce" ao abrir a página
-  veil.classList.add('is-on');
+  paintVeils();
+  void navVeil.offsetWidth; // fixa a medida inicial antes de ligar a transição: os véus não "crescem" ao abrir a página
+  veils.forEach(v => v.classList.add('is-on'));
 
   /* ------------------------------------------------------------ revelação */
   if ('IntersectionObserver' in window && !reduce) {
