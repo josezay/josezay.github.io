@@ -622,8 +622,16 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .foot-hours { max-width: 74rem; font-family: var(--mono); font-size: 11px; line-height: 1.8; letter-spacing: .06em; color: var(--bone-2); }
 @media (max-width: 1200px) { .foot-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .foot-contact { grid-template-columns: 1fr; } }
-.foot-meta { width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; color: var(--ash); margin-top: clamp(40px, 6vw, 96px); padding-top: 18px; border-top: 1px solid var(--line); }
-@media (max-width: 700px) { .foot-meta { justify-content: center; } }
+/* três colunas com laterais de mesma largura: o item do meio fica no centro exato (alinhado com o crédito abaixo) */
+.foot-meta { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px 24px; color: var(--ash); margin-top: clamp(40px, 6vw, 96px); padding-top: 18px; border-top: 1px solid var(--line); }
+.foot-meta > :first-child { text-align: left; }
+.foot-meta > :last-child { text-align: right; }
+@media (max-width: 900px) {
+  .foot-meta { grid-template-columns: 1fr; justify-items: center; }
+  .foot-meta > :first-child, .foot-meta > :last-child { text-align: center; }
+}
+/* crédito de autoria: discreto, logo abaixo da linha de meta */
+.foot-credit { margin-top: -22px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ash); opacity: .6; }
 
 /* ==========================================================================
    Painel de produto
