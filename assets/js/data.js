@@ -1095,7 +1095,7 @@ window.COVEN = {
    "colab": "Rede Vamp",
    "esgotado": false,
    "familia": "",
-   "frase": "Musa e mecena, escoltada por seus próprios tigres.",
+   "frase": "Musa e mecena, milionária e exibicionista assombrava as capitais européias com festas luxuriosas em seus diversos castelos. Patrona das artes escoltada por seus próprios tigres. Uma escultura em movimento e imortalizada no cinema e nas coleções de designers até as noites de hoje.",
    "piramide": null,
    "notas": "",
    "formato": "Parfum",
