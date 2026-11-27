@@ -172,6 +172,7 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .sec-head--shop .sec-k { margin-bottom: 16px; }
 .sec-head--shop .sec-title { font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.1; max-width: none; }
 .sec-head--shop .sec-note { justify-self: end; max-width: 92ch; font-size: 11px; line-height: 1.65; }
+.sec-head--shop .quote { margin: 0; }
 .shop .frag-bar { margin-top: clamp(18px, 2.2vw, 28px); }
 .shop .grid { margin-top: clamp(24px, 3vw, 40px); }
 @media (max-width: 820px) {
