@@ -3,6 +3,8 @@
      "video":    caminho de um MP4 (H.264) — aparece no painel do perfume, com botões Filme / Frasco / Som
      "poster":   imagem mostrada antes de o vídeo carregar (idealmente o primeiro quadro)
      "colab":    nome do parceiro (ex.: "Rede Vamp") — o painel do perfume mostra o selo "Parceria Coven 1692 & …"
+     "fotos":    lista de fotos extras do frasco, além de "img" (ex.: o verso) — o painel mostra miniaturas na lateral da foto para trocar
+     "fonte":    crédito da frase, quando ela é uma citação (ex.: "Eggers, Robert 2025") — aparece logo abaixo dela
    Campo opcional de uma linha do apothecary:
      "oculta":   true — a linha sai do site (os dados ficam aqui). Apague o campo para voltar a mostrá-la.
    Campos de uma obra (Fine Art):
@@ -1548,6 +1550,7 @@ window.COVEN = {
    "esgotado": false,
    "familia": "",
    "frase": "Nunca compartilhei meu segredo com ninguém.",
+   "fonte": "Eggers, Robert 2025",
    "piramide": {
     "topo": "Trufa, gardênia, groselha preta, ylang-ylang, jasmim, bergamota, mandarina, limão de Amalfi",
     "coracao": "Orquídea, especiarias, gardênia, notas frutadas, ylang-ylang, jasmim, lótus",
@@ -1557,6 +1560,9 @@ window.COVEN = {
    "formato": "Parfum",
    "img": "assets/img/fragrancias/nosferatu.webp",
    "thumb": "assets/img/fragrancias/nosferatu-s.webp",
+   "fotos": [
+    "assets/img/fragrancias/nosferatu-2.webp"
+   ],
    "n": 71
   },
   {

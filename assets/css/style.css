@@ -677,6 +677,22 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .media-nav--next { right: clamp(10px, 1.6vw, 24px); }
 .media-nav:hover { background: var(--bone); color: var(--bg); border-color: var(--bone); }
 .panel--gallery .media-nav { display: grid; }
+/* perfume com mais de uma foto ("fotos" no data.js): coluna de miniaturas na lateral direita, como nas lojas online.
+   A foto principal fica centrada no espaço que sobra (o padding reduz a largura lida por cqw) e mantém a vinheta. */
+.panel--fotos .panel-media { --th: clamp(48px, 5.4vw, 84px); --th-x: clamp(10px, 1.6vw, 24px); touch-action: pan-y; }
+.panel--fotos:not(.panel--film) .panel-media { padding-right: calc(var(--th) + var(--th-x)); }
+.panel--fotos .panel-media img { -webkit-user-drag: none; user-select: none; }
+.media-thumbs {
+  display: none; flex-direction: column; gap: 10px;
+  position: absolute; right: var(--th-x); top: 50%; z-index: 3; transform: translateY(-50%);
+  max-height: calc(100% - 2 * var(--pad-y)); overflow-y: auto; scrollbar-width: none;
+}
+.panel--fotos:not(.panel--film) .media-thumbs { display: flex; }
+.media-thumbs button { flex: none; width: var(--th); aspect-ratio: 1; overflow: hidden; border: 1px solid var(--line); opacity: .5; transition: opacity .3s, border-color .3s; }
+.media-thumbs button:hover { opacity: .85; }
+.media-thumbs button[aria-current="true"] { opacity: 1; border-color: var(--candle); }
+/* o frasco ocupa o centro da foto: um leve zoom na miniatura deixa ele legível */
+.media-thumbs img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.2); }
 .p-thumbs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin-top: 28px; }
 .p-thumbs button { aspect-ratio: 1; overflow: hidden; opacity: .45; transition: opacity .3s; }
 .p-thumbs button:hover { opacity: .85; }
@@ -696,6 +712,8 @@ main > section.shop:not(.hero) { padding-top: calc(var(--head-pad) + var(--logo)
 .p-sub { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--bone-2); }
 .p-frase { margin-top: clamp(24px, 4vh, 40px); font-style: italic; font-weight: 300; font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.22; max-width: 26ch; }
 .p-frase:empty, .p-desc:empty, .p-sub:empty { display: none; }
+/* crédito da frase quando ela é uma citação ("fonte" no data.js) */
+.p-fonte { display: block; margin-top: 14px; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ash); }
 /* selo de parceria (ex.: Rede Vamp) — os perfumes da parceria ficam nas releituras, sem categoria própria */
 .p-colab {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;

@@ -226,7 +226,7 @@
   const P = {
     img: $('#p-img'), n: $('#p-n'), k: $('#p-k'), title: $('#p-title'), sub: $('#p-sub'),
     frase: $('#p-frase'), desc: $('#p-desc'), spec: $('#p-spec'), wa: $('#p-wa'), ds: $('#p-ds'), fine: $('#p-fine'),
-    colab: $('#p-colab'), thumbs: $('#p-thumbs'),
+    colab: $('#p-colab'), thumbs: $('#p-thumbs'), strip: $('#p-fotos'),
   };
   // site de cada parceiro, mostrado no selo de parceria do painel
   const PARCEIROS = { 'Rede Vamp': 'https://redevampyrica.com/' };
@@ -292,11 +292,32 @@
     next.src = src;
   }
 
+  // fotos do perfume aberto: a do catálogo ("img") e as extras ("fotos"); com mais de uma, uma coluna de miniaturas
+  // à direita da foto (ver .media-thumbs no CSS), como nas lojas online
+  let fotos = [], fotoI = 0;
+  function setFotos(f) {
+    fotos = [f.img, ...(f.fotos || [])].map((src, i) => ({
+      src, thumb: i ? src : f.thumb, alt: `Frasco do perfume ${f.nome}${i ? `, foto ${i + 1}` : ''}`,
+    }));
+    const multi = fotos.length > 1;
+    panel.classList.toggle('panel--fotos', multi);
+    P.strip.innerHTML = multi ? fotos.map((a, j) =>
+      `<button type="button" data-foto="${j}" aria-label="${esc(a.alt)}"><img src="${a.thumb}" alt="" decoding="async"></button>`).join('') : '';
+    showFoto(0);
+  }
+  function showFoto(i) {
+    fotoI = (i + fotos.length) % fotos.length;
+    setImage(fotos[fotoI].src, fotos[fotoI].alt);
+    $$('button', P.strip).forEach((b, j) => b.setAttribute('aria-current', String(j === fotoI)));
+    // a foto seguinte e a anterior já ficam carregadas, para as setas responderem na hora
+    if (fotos.length > 1) [1, -1].forEach(d => { new Image().src = fotos[(fotoI + d + fotos.length) % fotos.length].src; });
+  }
+
   function renderFrag(f) {
     panel.classList.remove('panel--gallery');
     P.thumbs.hidden = true;
     P.wa.hidden = false;
-    setImage(f.img, `Frasco do perfume ${f.nome}`);
+    setFotos(f);
     setFilm(f);
     P.n.textContent = `Nº ${pad(f.n)} / ${F.length}`;
     P.k.textContent = f.tipo === 'criacao' ? 'Criação Coven 1692' : 'Releitura';
@@ -308,7 +329,7 @@
       ? `<span class="p-colab-t"><span aria-hidden="true">✶</span> Parceria Coven 1692 &amp; ${esc(f.colab)}</span>` +
         (site ? `<a href="${site}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/|\/$/g, ''))} ↗</a>` : '')
       : '';
-    P.frase.textContent = `“${f.frase}”`;
+    P.frase.innerHTML = `“${esc(f.frase)}”` + (f.fonte ? `<cite class="p-fonte">— ${esc(f.fonte)}</cite>` : '');
     P.desc.innerHTML = '';
     const p = f.piramide || {};
     P.spec.innerHTML = specRows([
@@ -332,6 +353,7 @@
     const gal = !!line.galeria;
     const loja = line.tipo === 'loja';
     panel.classList.toggle('panel--gallery', gal);
+    panel.classList.remove('panel--fotos');
     setImage(it.img, it.alt || it.nome);
     setFilm(null);
     P.thumbs.hidden = !gal;
@@ -428,25 +450,32 @@
   $('[data-prev]', panel).addEventListener('click', () => step(-1));
   $('[data-next]', panel).addEventListener('click', () => step(1));
 
-  // galerias (Fine Art, fotos das lojas): setas sobre a imagem, deslizar com o dedo e miniaturas para pular direto
-  $$('[data-step]', panel).forEach(b => b.addEventListener('click', () => step(+b.dataset.step)));
+  // galerias (Fine Art, fotos das lojas): setas sobre a imagem, deslizar com o dedo e miniaturas para pular direto.
+  // Perfume com mais de uma foto: miniaturas na lateral e deslizar trocam só a foto (Anterior/Próximo trocam o perfume).
+  const slide = d => (ctx && ctx.type === 'frag' ? showFoto(fotoI + d) : step(d));
+  const swipeable = () => panel.matches('.panel--gallery, .panel--fotos:not(.panel--film)');
+  $$('[data-step]', panel).forEach(b => b.addEventListener('click', () => slide(+b.dataset.step)));
   P.thumbs.addEventListener('click', e => {
     const b = e.target.closest('[data-thumb]');
     if (b && ctx) { ctx.i = +b.dataset.thumb; render(); }
   });
+  P.strip.addEventListener('click', e => {
+    const b = e.target.closest('[data-foto]');
+    if (b) showFoto(+b.dataset.foto);
+  });
   const media = $('.panel-media', panel);
   let swipe = null;
   media.addEventListener('pointerdown', e => {
-    swipe = panel.classList.contains('panel--gallery') && e.isPrimary ? { x: e.clientX, y: e.clientY } : null;
+    swipe = swipeable() && e.isPrimary ? { x: e.clientX, y: e.clientY } : null;
   });
   media.addEventListener('pointerup', e => {
     if (!swipe) return;
     const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y;
     swipe = null;
-    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) slide(dx < 0 ? 1 : -1);
   });
   media.addEventListener('pointercancel', () => { swipe = null; });
-  media.addEventListener('dragstart', e => { if (panel.classList.contains('panel--gallery')) e.preventDefault(); });
+  media.addEventListener('dragstart', e => { if (swipeable()) e.preventDefault(); });
 
   document.addEventListener('keydown', e => {
     if (panel.hidden) return;
